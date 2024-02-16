@@ -1,21 +1,45 @@
-export const Menu = [
+export interface MenuItem {
+    id: number;
+    name: string;
+    path: string;
+    submenu?: MenuItem[];
+  }
+
+export const menu: MenuItem[] = [
     {
         id: 1,
         name: 'Plastik Boru',
         path: '/plastikborular',
         submenu: [
             {
-                id: 1,
+                id: 10,
                 name: 'PVC Boru',
-                path: '/pvc'
+                path: '/pvc',
+                submenu: [
+                    {
+                        id: 100,
+                        name: 'PVC Boru 1',
+                        path: '/pvc1'
+                    },
+                    {
+                        id: 101,
+                        name: 'PVC Boru 2',
+                        path: '/pvc2'
+                    },
+                    {
+                        id: 102,
+                        name: 'PVC Boru 3',
+                        path: '/pvc3'
+                    }
+                ]
             },
             {
-                id: 2,
+                id: 12,
                 name: 'PE Boru',
                 path: '/pe'
             },
             {
-                id: 3,
+                id: 13,
                 name: 'PP Boru',
                 path: '/pp'
             }
@@ -27,17 +51,17 @@ export const Menu = [
         path: '/celikborular',
         submenu: [
             {
-                id: 1,
+                id: 14,
                 name: 'Dikisiz Boru',
                 path: '/dikisiz'
             },
             {
-                id: 2,
+                id: 15,
                 name: 'Dikili Boru',
                 path: '/dikili'
             },
             {
-                id: 3,
+                id: 16,
                 name: 'Dikisli Boru',
                 path: '/dikisli'
             }

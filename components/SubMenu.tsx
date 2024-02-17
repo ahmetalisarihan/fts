@@ -13,15 +13,24 @@ interface CreateMenuProps {
   menustatus: number[];
   setMenuStatus: React.Dispatch<React.SetStateAction<number[]>>;
   myref: React.MutableRefObject<HTMLLIElement>;
+  onMouseLeave: () => void;
+  clearLeaveTimeout: () => void;
 }
 
 const SubMenu: React.FC<SubMenuProps> = ({ menu }) => {
   const myref = useRef<HTMLLIElement>(null!);
   const [menustatus, setMenuStatus] = useState<number[]>([]);
+  const [leaveTimeout, setLeaveTimeout] = useState<NodeJS.Timeout | null>(
+    null
+  );
 
   useEffect(() => {
     function removeMenu(event: MouseEvent) {
       if (myref.current && !myref.current.contains(event.target as Node)) {
+        if (leaveTimeout) {
+          clearTimeout(leaveTimeout);
+          setLeaveTimeout(null);
+        }
         setMenuStatus([]);
       }
     }
@@ -30,6 +39,27 @@ const SubMenu: React.FC<SubMenuProps> = ({ menu }) => {
 
     return function cleanupListener() {
       window.removeEventListener("mousedown", removeMenu);
+    };
+  }, [leaveTimeout]);
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setMenuStatus([]);
+    }, 2000); // 200 milisaniye bekleyecek
+
+    setLeaveTimeout(timeout);
+  };
+
+  const clearLeaveTimeout = () => {
+    if (leaveTimeout) {
+      clearTimeout(leaveTimeout);
+      setLeaveTimeout(null);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      clearLeaveTimeout();
     };
   }, []);
 
@@ -44,6 +74,8 @@ const SubMenu: React.FC<SubMenuProps> = ({ menu }) => {
             menustatus={menustatus}
             setMenuStatus={setMenuStatus}
             myref={myref}
+            onMouseLeave={handleMouseLeave}
+            clearLeaveTimeout={clearLeaveTimeout}
           />
         ))}
       </ul>
@@ -57,6 +89,8 @@ const CreateMenu: React.FC<CreateMenuProps> = ({
   menustatus,
   setMenuStatus,
   myref,
+  onMouseLeave,
+  clearLeaveTimeout,
 }) => {
   const handleMouseEnter = (item: MenuItem, depth: number) => {
     if (depth === 0) {
@@ -66,12 +100,15 @@ const CreateMenu: React.FC<CreateMenuProps> = ({
     if (item.submenu) {
       setMenuStatus((oldArray) => [...oldArray, item.id]);
     }
+
+    clearLeaveTimeout();
   };
 
   return (
     <li
       ref={myref}
       onMouseEnter={(e) => handleMouseEnter(item, depth)}
+      onMouseLeave={onMouseLeave}
       className="relative border-2 border-gray-300 px-3 py-2 bg-black text-white"
     >
       <Link href={item.path}>{item.name}</Link>
@@ -92,6 +129,8 @@ const CreateMenu: React.FC<CreateMenuProps> = ({
               menustatus={menustatus}
               setMenuStatus={setMenuStatus}
               myref={myref}
+              onMouseLeave={onMouseLeave}
+              clearLeaveTimeout={clearLeaveTimeout}
             />
           ))}
         </ul>

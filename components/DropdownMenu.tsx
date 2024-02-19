@@ -9,6 +9,7 @@ const items: MenuProps['items'] = [
     key: '1',
     type: 'group',
     label: 'Boru Türleri',
+    className: 'font-bold',
     children: [
       {
         key: '1-1',
@@ -138,7 +139,7 @@ const items: MenuProps['items'] = [
 const DropdownMenu: React.FC = () => (
   <Dropdown menu={{ items }}>
     <a onClick={(e) => e.preventDefault()}>
-      <Space>
+      <Space >
         Ürünler
         <DownOutlined />
       </Space>

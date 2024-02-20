@@ -1,6 +1,6 @@
 'use client'
 import React from 'react';
-import { DownOutlined } from '@ant-design/icons';
+import { CaretDownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Dropdown, Space } from 'antd';
 
@@ -141,7 +141,7 @@ const DropdownMenu: React.FC = () => (
     <a onClick={(e) => e.preventDefault()}>
       <Space >
         Ürünler
-        <DownOutlined />
+        <CaretDownOutlined />
       </Space>
     </a>
   </Dropdown>

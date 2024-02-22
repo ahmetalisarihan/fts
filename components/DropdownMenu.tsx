@@ -121,7 +121,7 @@ const items: MenuProps['items'] = [
   },
   {
     key: '7',
-    label: 'disabled sub menu',
+    label: 'Diğer Menü',
     disabled: true,
     children: [
       {

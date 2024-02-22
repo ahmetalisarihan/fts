@@ -11,10 +11,10 @@ const Navbar = () => {
             <div className='flex items-center justify-start gap-4'>
                 <div className='bg-blue-400 p-1'><DropdownMenu /></div>
                 
-                <Link href='/' className='border-x-2 px-3'>
+                <Link href='/markalar' className='border-x-2 px-3'>
                     Markalar
                 </Link>
-                <Link href='/'>
+                <Link href='/fiyatlisteleri'>
                     Fiyat Listeleri
                 </Link>
             </div>

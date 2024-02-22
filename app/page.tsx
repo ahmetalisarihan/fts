@@ -9,21 +9,41 @@ import yanginmalzemeleri from '@/public/yanginmalzemeleri.jpeg';
 import hidroforlar from '@/public/hidroforlar.jpeg';
 import dalgicpompalar from '@/public/dalgicpompalar.png';
 import havalandirmaurunleri from '@/public/havalandirmaurunleri.jpeg';
+import { Button, Flex } from 'antd';
 
 
 export default function Home() {
   return (
     <div className='max-w-7xl m-auto'>
       <div className='flex'>
-      <div className='max-w-4xl'><Swipper /></div>
-      <div>
-        <Link href='/'>
-          <Image src={sulamaurunleri} alt='' width={360} height={360}></Image>
-        </Link>
-        <Link href='/'>
-          <Image src={korugeborular} alt='' width={360} height={360}></Image>
-        </Link>
-      </div>
+        <div className='max-w-4xl'><Swipper /></div>
+        <div>
+          <div><div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
+            <h5 className=' text-xl  hover:text-sky-300'>BAHÇE SULAMA</h5>
+            <h6 className=''>Bahçe sulama ürünleri</h6>
+            <Flex gap="small" wrap="wrap">
+              <Button type='primary' style={{ backgroundColor: 'blue-10' }}>Ürünleri İncele</Button>
+            </Flex>
+          </div>
+
+          </div>
+          <div>
+
+          </div>
+          <Link href='/'>
+            <Image src={sulamaurunleri} alt='' width={360} height={360}></Image>
+            <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
+              <h5 className=' text-xl  hover:text-sky-300'>KORUGE BORULAR</h5>
+              <h6 className=''>Koruge borular ve parçaları</h6>
+              <Flex gap="small" wrap="wrap">
+                <Button type='primary' style={{ backgroundColor: 'blue-10' }}>Ürünleri İncele</Button>
+              </Flex>
+            </div>
+          </Link>
+          <Link href='/'>
+            <Image src={korugeborular} alt='' width={360} height={360}></Image>
+          </Link>
+        </div>
       </div>
       <div className='flex'>
         <Link href='/yangin-malzemeleri'>

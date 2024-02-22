@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
 import { FacebookFilled, InstagramFilled, XOutlined } from '@ant-design/icons';
+import GoogleMap from './GoogleMap';
 
 const Footer = () => {
   return (
     <footer className='max-w-7xl m-auto'>
-      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-20 pt-20 pb-5'>
+      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10 pt-20 pb-5'>
         <div className='flex flex-col '>
           <h2 className='text-2xl text-blue-500 mb-4 font-semibold'>FETES ENDUSTRIYEL YAPI MALZEMELERI</h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -36,6 +37,7 @@ const Footer = () => {
               
             </ul>
         </div>
+        <GoogleMap />
       </div>
       {/* Copyright text */}
       <p className="mb-5 text-center text-grey-600 text-sm">

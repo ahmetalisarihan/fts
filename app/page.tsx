@@ -10,6 +10,7 @@ import hidroforlar from '@/public/hidroforlar.jpeg';
 import dalgicpompalar from '@/public/dalgicpompalar.png';
 import havalandirmaurunleri from '@/public/havalandirmaurunleri.jpeg';
 import { Button, Flex } from 'antd';
+import BestSellProducts from '@/components/BestSellProducts';
 
 
 export default function Home() {
@@ -58,6 +59,9 @@ export default function Home() {
         <Link href='/havalandirma-urunleri'>
           <Image src={havalandirmaurunleri} alt='' height={135}></Image>
         </Link>
+      </div>
+      <div>
+        <BestSellProducts />
       </div>
 
 

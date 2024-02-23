@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 
 export default function GoogleMap() {
-    const position = { lat: 36.64637932650218, lng: 29.18139168529149 };
+    const position = { lat: 36.6462017, lng: 29.1808406 };
     const [open, setOpen] = useState(false);
 
 

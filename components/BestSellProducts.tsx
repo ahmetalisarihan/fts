@@ -5,36 +5,54 @@ import boyler from '@/public/boyler.webp'
 import basincTanki from '@/public/basinc-tanki.jpeg'
 
 const BestSellProducts = () => {
-  return (
-    <div className='flex flex-auto gap-5'>
-        <Link href='' className=''>
-            <Image src={boyler} alt=''height={200} width={200}/>
-            Boyler Tank
-        </Link>
-        <Link href=''>
-            <Image src={basincTanki} alt='' height={200} width={200}/>
-            Basinc Tank
-        </Link>
-        <Link href=''>
-            <Image src={boyler} alt=''height={200} width={200}/>
-        </Link>
-        <Link href=''>
-            <Image src={basincTanki} alt=''height={200} width={200}/>
-        </Link>
-        <Link href=''>
-            <Image src={boyler} alt=''height={200} width={200}/>
-        </Link>
-        <Link href=''>
-            <Image src={basincTanki} alt=''height={200} width={200}/>
-        </Link>
-        <Link href=''>
-            <Image src={boyler} alt=''height={200} width={200}/>
-        </Link>
-        <Link href=''>
-            <Image src={basincTanki} alt=''height={200} width={200}/>
-        </Link>
-    </div>
-  )
+    return (
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={boyler} alt='' height={200} width={200} />
+                <h4>Baymak</h4>
+                <h5>Boyler Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={basincTanki} alt='' height={200} width={200} />
+                
+                <h4>Baymak</h4>
+                <h5>Basinc Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={boyler} alt='' height={200} width={200} />
+                <h4>Baymak</h4>
+                <h5>Boyler Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={basincTanki} alt='' height={200} width={200} />
+                
+                <h4>Baymak</h4>
+                <h5>Basinc Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={boyler} alt='' height={200} width={200} />
+                <h4>Baymak</h4>
+                <h5>Boyler Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={basincTanki} alt='' height={200} width={200} />
+                
+                <h4>Baymak</h4>
+                <h5>Basinc Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={boyler} alt='' height={200} width={200} />
+                <h4>Baymak</h4>
+                <h5>Boyler Tank</h5>
+            </Link>
+            <Link href='' className='flex flex-col justify-center items-center'>
+                <Image src={basincTanki} alt='' height={200} width={200} />
+                
+                <h4>Baymak</h4>
+                <h5>Basinc Tank</h5>
+            </Link>
+        </div>
+    )
 }
 
 export default BestSellProducts

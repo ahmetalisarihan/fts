@@ -2,7 +2,7 @@
 import axios from 'axios'
 import React, { ChangeEvent, FormEvent } from 'react'
 
-const UploadImage = () => {
+const ImageUpload = () => {
 
     const [image, setImage] = React.useState<File | null>(null)
 
@@ -41,4 +41,4 @@ const UploadImage = () => {
   )
 }
 
-export default UploadImage
+export default ImageUpload

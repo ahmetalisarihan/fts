@@ -8,7 +8,7 @@ import ContactPhone from './ContactPhone'
 
 const Header = () => {
   return (
-    <div className='max-w-7xl border-b border-peach m-auto pt-5'>
+    <div className='border-b border-peach pt-5'>
       <div className='flex items-center justify-between border-b'>
         <Link href='/' className='flex flex-row items-center justify-content-between align-items-center'>
         <Image src={logo} className='flex' alt='fts' width={100} height={100} />

@@ -15,9 +15,14 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: React.PropsWithChildren) => (
   <html lang="en">
     <body>
+      <div className="max-w-6xl lg:px-16 mx-auto py-8 shadow-xl min-h-screen 
+      flex flex-col px-8">
       <Header />
+      <div className="flex-auto">
       <AntdRegistry>{children}</AntdRegistry>
+      </div>
       <Footer />
+      </div>
     </body>
   </html>
 );

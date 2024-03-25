@@ -15,9 +15,9 @@ import BestSellProducts from '@/components/BestSellProducts';
 
 export default function Home() {
   return (
-    <div className='max-w-7xl m-auto'>
+    <div className=''>
       <div className='flex'>
-        <div className='max-w-4xl'><Swipper /></div>
+        <div className='max-w-xl'><Swipper /></div>
         <div>
           <div><div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
             <h5 className=' text-xl  hover:text-sky-300'>BAHÇE SULAMA</h5>

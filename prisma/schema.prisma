@@ -32,17 +32,6 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Product{
-  id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  description   String
-  price         Float
-  brand         String
-  category      String
-  inStock       Boolean
-  image         String
-}
-
 model User {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -54,7 +43,6 @@ model User {
   updateAt      DateTime @updatedAt
   role Role @default(USER)
   accounts      Account[]
-  Review        Review[]
 }
 
 enum Role{
@@ -62,8 +50,34 @@ enum Role{
     ADMIN
 }
 
+model Product{
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  description   String
+  brandName     String?
+  brand         Brand? @relation(fields: [brandName], references: [brandName])
+  imageUrl      String?
+  catName       String?
+  category      Category? @relation(fields: [catName], references: [catName])
+  image         String?
+  publicId      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Brand{
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  brandName     String   @unique
+  description   String
+  products      Product[]
+  productIDs    String[] @db.ObjectId
+
+}
+
 model Category {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  categoryName String   @unique
-  
+  catName String   @unique
+  description String
+  products Product[]
+  productIDs String[] @db.ObjectId 
 }

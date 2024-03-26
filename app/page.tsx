@@ -16,10 +16,11 @@ import BestSellProducts from '@/components/BestSellProducts';
 export default function Home() {
   return (
     <div className=''>
-      <div className='flex'>
+      <div className='grid md:grid-cols-1 lg:grid-cols-2'>
         <div className='max-w-xl'><Swipper /></div>
-        <div>
-          <div><div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
+        <div className=''>
+          <div>
+            <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
             <h5 className=' text-xl  hover:text-sky-300'>BAHÇE SULAMA</h5>
             <h6 className=''>Bahçe sulama ürünleri</h6>
             <Flex gap="small" wrap="wrap">

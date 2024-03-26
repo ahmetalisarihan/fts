@@ -3,7 +3,7 @@ import React from 'react'
 import DropdownMenu from '@/components/DropdownMenu'
 import Link from 'next/link'
 import TeklifOlustur from '../teklif-olustur/page' 
-import TeklifButton from '@/components/TeklifButton'
+import TeklifButton from '@/components/Buttons/TeklifButton'
 
 
 const Navbar = () => {

@@ -8,7 +8,7 @@ import BrandList from '@/components/BrandList';
 
 const getProducts = async ():Promise<TProduct[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products`)
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories/`)
     if(res.ok) {
       const products = await res.json()
       return products
@@ -41,7 +41,7 @@ export default async function YapiMalzemeleri() {
       </div>
       <div className='flex flex-col'>
         <h2 className='font-bold pl-4'>MALZEME PORTFÖYÜMÜZ</h2>
-        <div className='container flex flex-wrap md:flex-col sm:flex-row'>
+        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
           {products && products.length > 0 ? (
             products.map((product:TProduct) => (
             <Product

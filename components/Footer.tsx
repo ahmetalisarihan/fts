@@ -8,27 +8,26 @@ const Footer = () => {
     <footer className='max-w-7xl m-auto'>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10 pt-20 pb-5'>
         <div className='flex flex-col '>
-          <h2 className='text-2xl text-blue-500 mb-4 font-semibold'>FETES ENDUSTRIYEL YAPI MALZEMELERI</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Quas officiis dolores animi in, cum maiores iusto!
-            Quam dolorum nemo, enim reprehenderit rerum dignissimos ab
-            dolores nobis ea. Quas, quae earum?</p>
+          <h2 className='text-2xl text-blue-500 mb-4 font-semibold'>FETES<span className='text-xl flex flex-col'> ENDÜSTRİYEL YAPI MALZEMELERİ</span> </h2>
+          <p>Endüstriyel yapı malzemeleri tedarikinde deneyimimizle, projelerinizi zamanında ve bütçenize uygun şekilde tamamlamanıza yardımcı oluyoruz.</p>
         </div>
         <div className='flex flex-col mt-6'>
-            <ul>
+            <ul className='flex flex-col'>
               <li className='text-[22px] list-none font-semibold text-blue-500 py-2'>Bilgiler</li>
-              <li className='my-4 list-none '>Hakkımızda</li>
-              <li className='my-4 list-none '>Gizlilik Politikası ve KVKK</li>
-              <li className='my-4 list-none '>Gün İçinde Teslimat</li>
-              <li className='my-4 list-none '>Garanti Şartları</li>
+              <Link href={'/'} className='my-2 hover:text-sky-400 '>Anasayfa</Link>
+              <Link href={'/hakkimizda'} className='my-2 hover:text-sky-400 '>Hakkımızda</Link>
+              <Link href={'/gizlilik-politikasi'} className='my-2 hover:text-sky-400 '>Gizlilik Politikası ve KVKK</Link>
+              <Link href={'/teslimat'} className='my-2 hover:text-sky-400 '>Gün İçinde Teslimat</Link>
+              <Link href={'/garanti-sartlari'} className='my-2 hover:text-sky-400 '>Garanti Şartları</Link>
             </ul>
         </div>
         <div className='flex flex-col mt-6'>
-            <ul>
-              <li className='text-[22px] list-none font-semibold text-blue-500 py-2'>Iletisim</li>
-              <li className='my-4 list-none '>Email: info@fetesendustriyel.com.tr</li>
-              <li className='my-4 list-none '>Telefon: +90 534 618 18 74</li>
-              <li className='my-4 list-none '>Adres: Karaculha Mahallesi 338. Sokak No: 2/1 Fethiye/MUGLA</li>
+            <ul className='flex flex-col'>
+              
+              <li className='text-[22px] list-none font-semibold text-blue-500 py-2'>İletişim</li>
+              <Link href='mailto:info@fetesendustriyel.com.tr' className='my-2 hover:text-sky-400'>Email: info@fetesendustriyel.com.tr</Link>
+              <a href="tel:+90 534 618 18 74<" className='my-2 hover:text-sky-400'>Telefon: +90 534 618 18 74</a>
+              <Link href='https://www.google.com/maps/place/Fetes+End%C3%BCstriyel+Yap%C4%B1+Malzemeleri/@36.6462017,29.1782603,17z/data=!3m1!4b1!4m6!3m5!1s0x14c045b36ce002f5:0x62510c5f96e3b3ca!8m2!3d36.6462017!4d29.1808406!16s%2Fg%2F11ldhj5tjj?entry=ttu' className='my-2 hover:text-sky-400' target='_blank'>Adres: Karaçulha Mahallesi 338. Sokak No: 2/1 Fethiye/MUĞLA</Link>
               <div className='flex space-x-4'>
                 <Link href={'/'} className='hover:text-sky-400 transform  hover:scale-150 transition-all duration-150 ease-in-out'><FacebookFilled style={{ fontSize: '25px' }}/> </Link>
                 <Link href={'/'} className='hover:text-sky-400 transform  hover:scale-150 transition-all duration-150 ease-in-out'><InstagramFilled style={{ fontSize: '25px' }}/> </Link>
@@ -41,7 +40,7 @@ const Footer = () => {
       </div>
       {/* Copyright text */}
       <p className="mb-5 text-center text-grey-600 text-sm">
-            Copyright © {new Date().getFullYear()} AAS. Tüm Hakları Saklıdır..</p>
+            Copyright © {new Date().getFullYear()} <Link href={'https://ahmetalisarihan.com'} className='hover:text-sky-700' target='_blank'>AAS</Link>. Tüm Hakları Saklıdır..</p>
     </footer>
   )
 }

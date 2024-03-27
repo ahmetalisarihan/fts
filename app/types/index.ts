@@ -1,13 +1,13 @@
 export type TCategory = {
     id: string;
     catName: string;
-    //products: TProduct[];
+
 };
 
 export type TBrand = {
     id: string;
     brandName: string;
-    //products: TProduct[];
+
 };
 
 export type TProduct = {
@@ -18,4 +18,13 @@ export type TProduct = {
     publicId: string;
     brandName?: string;
     catName?: string;
+    priceName?: string;
+};
+
+export type TPriceList = {
+    id: string;
+    priceName: string;
+    price?: string;
+    pdfUrl?: string;
+
 };

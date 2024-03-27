@@ -3,7 +3,7 @@ import prisma from "@/libs/prismadb";
 import React from 'react'
 
 export async function POST(req: Request) {
-    const {name, description, selectedBrand, imageUrl, selectedCategory, publicId } =
+    const {name, description, selectedBrand, imageUrl, selectedCategory, selectedPriceList, publicId } =
     await req.json()
 
     if (!name || !description ) {
@@ -20,7 +20,8 @@ export async function POST(req: Request) {
                 brandName: selectedBrand,
                 imageUrl,
                 publicId,
-                catName: selectedCategory
+                catName: selectedCategory,
+                priceName: selectedPriceList
                     
                 
             }

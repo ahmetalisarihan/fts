@@ -1,9 +1,8 @@
 'use client'
-import { TBrand, TCategory } from '@/app/types'
+import { TBrand, TCategory, TPriceList } from '@/app/types'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CldImage, CldUploadButton } from 'next-cloudinary'
-import UploadButton from './Buttons/UploadButton'
 
 
 const CreateProductForm = () => {
@@ -13,7 +12,9 @@ const CreateProductForm = () => {
   const [selectedBrand, setSelectedBrand] = useState('')
   const [imageUrl, setImageUrl] = useState('')
   const [categories, setCategories] = useState<TCategory[]>([])
-  const [seletedCategory, setSelectedCategory] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [priceLists, setPriceLists] = useState<TPriceList[]>([])
+  const [selectedPriceList, setSelectedPriceList] = useState('')
   const [error, setError] = useState('')
 
   const router = useRouter()
@@ -37,6 +38,16 @@ const CreateProductForm = () => {
   }
     , [])
 
+  useEffect(() => {
+    const fetchAllPriceLists = async () => {
+      const res = await fetch('/api/pricelists')
+      const priceLists = await res.json()
+      setPriceLists(priceLists)
+    }
+    fetchAllPriceLists()
+  }
+    , [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name || !description) {
@@ -53,7 +64,8 @@ const CreateProductForm = () => {
         description,
         imageUrl,
         selectedBrand,
-        seletedCategory
+        selectedCategory,
+        selectedPriceList,
       })
     })
     if (res.ok) {
@@ -63,6 +75,8 @@ const CreateProductForm = () => {
       setImageUrl('')
       setSelectedBrand('')
       setSelectedCategory('')
+      setSelectedPriceList('')
+
     } else {
       const error = await res.json()
       setError(error)
@@ -88,6 +102,13 @@ const CreateProductForm = () => {
           <option value="">Kategori Seçiniz</option>
           {categories && categories.map((category) => (
             <option key={category.id} value={category.catName}>{category.catName}</option>
+          ))}
+        </select>
+
+        <select onChange={e => setSelectedPriceList(e.target.value)} className='p-3 rounded-md border appearance-none'>
+          <option value="">Fiyat Listesi Seçiniz</option>
+          {priceLists && priceLists.map((priceList) => (
+            <option key={priceList.id} value={priceList.priceName}>{priceList.priceName}</option>
           ))}
         </select>
         <div className=''>

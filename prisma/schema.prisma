@@ -59,6 +59,8 @@ model Product{
   imageUrl      String?
   catName       String?
   category      Category? @relation(fields: [catName], references: [catName])
+  priceName     String? 
+  priceList     PriceList? @relation(fields: [priceName], references: [priceName])
   image         String?
   publicId      String?
   createdAt   DateTime  @default(now())
@@ -80,4 +82,15 @@ model Category {
   description String
   products Product[]
   productIDs String[] @db.ObjectId 
+}
+
+model PriceList{
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  priceName     String  @unique
+  price         String? 
+  pdfUrl        String?
+  products      Product[]
+  productIDs String[] @db.ObjectId 
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }

@@ -1,6 +1,7 @@
 
 import CreateProductForm from '@/components/CreateProductForm'
 
+
 const AdminPage = async () => {
 
   return (

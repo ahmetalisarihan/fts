@@ -14,6 +14,7 @@ export type TProduct = {
     id: string;
     name: string;
     description?: string;
+    isRecommended?: boolean;
     imageUrl?: string;
     publicId: string;
     brandName?: string;

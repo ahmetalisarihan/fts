@@ -8,6 +8,7 @@ import { CldImage, CldUploadButton } from 'next-cloudinary'
 const CreateProductForm = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [isRecommended, setIsRecommended] = useState(false)
   const [brands, setBrands] = useState<TBrand[]>([])
   const [selectedBrand, setSelectedBrand] = useState('')
   const [imageUrl, setImageUrl] = useState('')
@@ -62,6 +63,7 @@ const CreateProductForm = () => {
       body: JSON.stringify({
         name,
         description,
+        isRecommended,
         imageUrl,
         selectedBrand,
         selectedCategory,
@@ -90,8 +92,10 @@ const CreateProductForm = () => {
       <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
         <input onChange={e => setName(e.target.value)} type="text" placeholder="Ürün Adı" />
         <textarea onChange={e => setDescription(e.target.value)} placeholder="Ürün Açıklaması" />
-
-
+        <label >
+          <input checked={isRecommended} onChange={e => setIsRecommended(e.target.checked)} type="checkbox" /> Tavsiye Edilen Ürünler
+        </label>
+        <p>Tavsiye Edilen: {isRecommended ? 'Evet' : 'Hayır'}</p>
         <select onChange={e => setSelectedBrand(e.target.value)} className='p-3 rounded-md border appearance-none'>
           <option value="">Marka Seçiniz</option>
           {brands && brands.map((brand) => (

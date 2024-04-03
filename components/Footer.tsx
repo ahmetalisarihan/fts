@@ -17,7 +17,7 @@ const Footer = () => {
               <Link href={'/'} className='my-2 hover:text-sky-400 '>Anasayfa</Link>
               <Link href={'/hakkimizda'} className='my-2 hover:text-sky-400 '>Hakkımızda</Link>
               <Link href={'/gizlilik-politikasi'} className='my-2 hover:text-sky-400 '>Gizlilik Politikası ve KVKK</Link>
-              <Link href={'/teslimat'} className='my-2 hover:text-sky-400 '>Gün İçinde Teslimat</Link>
+              {/* <Link href={'/teslimat'} className='my-2 hover:text-sky-400 '>Gün İçinde Teslimat</Link> */}
               <Link href={'/garanti-sartlari'} className='my-2 hover:text-sky-400 '>Garanti Şartları</Link>
             </ul>
         </div>

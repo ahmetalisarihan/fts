@@ -54,6 +54,7 @@ model Product{
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   name          String
   description   String
+  isRecommended Boolean
   brandName     String?
   brand         Brand? @relation(fields: [brandName], references: [brandName])
   imageUrl      String?

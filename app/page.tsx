@@ -9,8 +9,9 @@ import yanginmalzemeleri from '@/public/yanginmalzemeleri.jpeg';
 import hidroforlar from '@/public/hidroforlar.jpeg';
 import dalgicpompalar from '@/public/dalgicpompalar.png';
 import havalandirmaurunleri from '@/public/havalandirmaurunleri.jpeg';
+import whatsapp from '@/public/whatsappicon.png';
 import { Button, Flex } from 'antd';
-import BestSellProducts from '@/components/BestSellProducts';
+import RecomendedProducts from '@/components/RecomendedProducts';
 
 
 
@@ -22,12 +23,12 @@ export default function Home() {
         <div className=''>
           <div>
             <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
-            <h5 className=' text-xl  hover:text-sky-300'>BAHÇE SULAMA</h5>
-            <h6 className=''>Bahçe sulama ürünleri</h6>
-            <Flex gap="small" wrap="wrap">
-              <Button type='primary' style={{ backgroundColor: 'blue-10' }}>Ürünleri İncele</Button>
-            </Flex>
-          </div>
+              <h5 className=' text-xl  hover:text-sky-300'>BAHÇE SULAMA</h5>
+              <h6 className=''>Bahçe sulama ürünleri</h6>
+              <Flex gap="small" wrap="wrap">
+                <Button type='primary' style={{ backgroundColor: 'blue-10' }}>Ürünleri İncele</Button>
+              </Flex>
+            </div>
 
           </div>
           <div>
@@ -63,8 +64,14 @@ export default function Home() {
         </Link>
       </div>
       <div>
-        <BestSellProducts />
+        <RecomendedProducts />
       </div>
+      <div className='fixed bottom-6 right-10 z-50 max-w-6xl'>
+  <Link href="https://api.whatsapp.com/send?phone=905346181874&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
+    <Image src={whatsapp} alt="WhatsApp" width={48} height={48} />
+  </Link>
+</div>
+
 
 
 

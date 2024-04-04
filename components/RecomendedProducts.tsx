@@ -1,30 +1,48 @@
+"use client"
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { TProduct } from '@/app/types';
-import React from 'react'
-import { useQuery } from 'react-query';
+import RecommendedProductCard from './RecommendedProductCard';
 
 
-const RecomendedProducts: React.FC = async () => {
+const RecomendedProducts: React.FC = () => {
+  const [recomendedProducts, setRecomendedProducts] = useState<TProduct[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
-    const { data: recomendedProducts} = useQuery('recomendedProducts', async () => {
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
         const response = await fetch('/api/recommended-products');
-        return response.json();
+        const data = await response.json();
+        setRecomendedProducts(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error);
+        } else {
+          console.error('Beklenmedik hata:', error);
         }
-        );
-    
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (isLoading) return <div>Yükleniyor...</div>;
+  if (error) return <div>Hata: {error.message}</div>;
+
   return (
     <div>
-        <h2>Önerilen Ürünler</h2>
-        <div>
-            {recomendedProducts?.map((product: TProduct) => (
-                <div key={product.id}>
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-                    <img src={product.imageUrl} alt={product.name} />
-                </div>
-            ))}
-        </div>
+      <h2 className='p-2 font-bold'>Önerilen Ürünler</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {recomendedProducts.map((product) => (
+            <RecommendedProductCard key={product.id} product={product} /> 
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default RecomendedProducts
+export default RecomendedProducts;

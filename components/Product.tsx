@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import logo from '@/public/logo1.png'
 import React from 'react'
 
 interface IProduct {
@@ -10,6 +9,7 @@ interface IProduct {
     category?: string;
     brand?: string;
     image?: string;
+    
 }
 
 export default async function Product(

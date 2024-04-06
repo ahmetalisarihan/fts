@@ -1,20 +1,10 @@
 import React from 'react'
 import { TCategory } from '@/app/types'
 import Link from 'next/link'
+import getCategories from '@/actions/get-categories'
 
 
-const getCategories = async (): Promise<TCategory[] | null> => {
-  try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories`)
-    if(res.ok) {
-      const categories = await res.json()
-      return categories
-    }
-  } catch (error) {
-    console.log(error)
-  }
-  return null
-}
+
 
 
 export default async function CategoriesList() {

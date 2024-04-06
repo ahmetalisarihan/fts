@@ -10,22 +10,22 @@ interface ProductCardProps {
 const RecommendedProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Link href={`/products/${product.id}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center "> 
-      <div className="aspect-w-9 aspect-h-9 object-cover overflow-hidden">
+      <div className="aspect-w-6 aspect-h-6 object-cover overflow-hidden">
         {product.imageUrl ? (
           <Image
             src={product.imageUrl}
             alt={product.name}
-            width={200}
-            height={200}
-            className="w-60 h-60 "
+            width={150}
+            height={150}
+            className="w-40 h-40 "
           />
         ) : (
           <Image
             src={noimage}
             alt="Resim Yok"
-            width={200}
-            height={200}
-            className="w-60 h-60 "
+            width={150}
+            height={150}
+            className="w-40 h-40 "
           />
         )}
       </div>

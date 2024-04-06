@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className=''>
       <div className='grid md:grid-cols-1 lg:grid-cols-2'>
-        <div className='max-w-xl'><Swipper /></div>
+        <div className='max-w-3xl'><Swipper /></div>
         <div className=''>
           <div>
             <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
@@ -35,7 +35,7 @@ export default function Home() {
 
           </div>
           <Link href='/'>
-            <Image src={sulamaurunleri} alt='' width={360} height={360}></Image>
+            <Image src={sulamaurunleri} alt='' width={256} height={256}></Image>
             <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
               <h5 className=' text-xl  hover:text-sky-300'>KORUGE BORULAR</h5>
               <h6 className=''>Koruge borular ve parçaları</h6>
@@ -45,7 +45,7 @@ export default function Home() {
             </div>
           </Link>
           <Link href='/'>
-            <Image src={korugeborular} alt='' width={360} height={360}></Image>
+            <Image src={korugeborular} alt='' width={256} height={256}></Image>
           </Link>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default function Home() {
       </div>
       <div className='fixed bottom-6 right-10 z-50 max-w-6xl'>
   <Link href="https://api.whatsapp.com/send?phone=905346181874&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
-    <Image src={whatsapp} alt="WhatsApp" width={48} height={48} />
+    <Image src={whatsapp} alt="WhatsApp" width={55} height={55} />
   </Link>
 </div>
 

@@ -35,7 +35,7 @@ const RecomendedProducts: React.FC = () => {
 
   return (
     <div>
-      <h2 className='p-2 font-bold'>Önerilen Ürünler</h2>
+      <h2 className='p-2 font-bold text-2xl'>Önerilen Ürünler</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {recomendedProducts.map((product) => (
             <RecommendedProductCard key={product.id} product={product} /> 

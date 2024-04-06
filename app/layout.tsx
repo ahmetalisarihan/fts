@@ -18,7 +18,7 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
     <body>
       <div className="max-w-6xl lg:px-16 mx-auto py-2 shadow-xl min-h-screen 
       flex flex-col px-8">
-        <Banner />
+      <Banner />
       <Header />
       <div className="flex-auto">
       <AntdRegistry>{children}</AntdRegistry>

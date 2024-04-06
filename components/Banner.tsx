@@ -8,7 +8,7 @@ const Banner = () => {
         {/* <img src="/indir indirimi.jpg" alt="İndirim" className="w-6 h-6 mr-4" /> */}
         <h3 className="font-bold text-lg pl-2">Avantajlı Fiyatlarımızdan Faydalanmak İçin Teklif Alın</h3>
       </div>
-      <Link href="/contact" className="bg-white text-blue-500 px-4 py-1 rounded-md font-bold">
+      <Link href="/teklif-olustur" className="bg-white text-blue-500 px-4 py-1 rounded-md font-bold">
         Hemen Teklif Alın
       </Link>
     </div>

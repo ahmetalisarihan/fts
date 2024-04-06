@@ -7,7 +7,7 @@ import pvcborular from '@/public/pvcborular.webp';
 import susayac from '@/public/susayac.jpg';
 
 const contentStyle: React.CSSProperties = {
-  height: '630px',
+  height: '560px',
   color: '#fff',
   lineHeight: '160px',
   textAlign: 'left',

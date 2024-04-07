@@ -35,10 +35,9 @@ const RecomendedProducts: React.FC = () => {
 
   return (
     <div>
-      <h2 className='p-2 font-bold text-3xl text-blue-500 border-b border-red-500'> En Çok Aranan Ürünler</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-3">
-        {recomendedProducts.map((product, index) => (
-          index < 8 &&
+      <h2 className='p-2 font-bold text-2xl'>Önerilen Ürünler</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {recomendedProducts.map((product) => (
             <RecommendedProductCard key={product.id} product={product} /> 
         ))}
       </div>

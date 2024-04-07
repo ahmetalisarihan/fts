@@ -39,7 +39,7 @@ const Footer = () => {
         <GoogleMap />
       </div>
       {/* Copyright text */}
-      <p className="mb-3 text-center text-grey-600 text-sm">
+      <p className="mb-5 text-center text-grey-600 text-sm">
             Copyright © {new Date().getFullYear()} <Link href={'https://ahmetalisarihan.com'} className='hover:text-sky-700' target='_blank'>AAS</Link>. Tüm Hakları Saklıdır..</p>
     </footer>
   )

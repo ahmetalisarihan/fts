@@ -1,8 +1,19 @@
 import { TBrand } from '@/app/types'
 import Link from 'next/link'
 import React from 'react'
-import getBrands from '@/actions/get-brands'
 
+const getBrands = async (): Promise<TBrand[] | null> => {
+  try {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/brands`)
+    if(res.ok) {
+      const brands = await res.json()
+      return brands
+    }
+  } catch (error) {
+    console.log(error)
+  }
+  return null
+}
 
 const BrandList = async () => {
     const brands = await getBrands()

@@ -60,6 +60,8 @@ model Product{
   imageUrl      String?
   catName       String?
   category      Category? @relation(fields: [catName], references: [catName])
+  subcatName    String?
+  subcategory   Subcategory? @relation(fields: [subcatName], references: [subcatName])
   priceName     String? 
   priceList     PriceList? @relation(fields: [priceName], references: [priceName])
   image         String?
@@ -81,9 +83,21 @@ model Category {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   catName String   @unique
   description String
+  subcategories Subcategory[]
   products Product[]
   productIDs String[] @db.ObjectId 
 }
+
+model Subcategory {  
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId  
+  subcatName String   @unique  
+  description String 
+  catName String 
+  category Category? @relation(fields: [catName], references: [catName])
+  products Product[]  
+  productIDs String[] @db.ObjectId 
+  }
+
 
 model PriceList{
   id            String    @id @default(auto()) @map("_id") @db.ObjectId

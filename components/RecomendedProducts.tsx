@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { TProduct } from '@/app/types';
-import RecommendedProductCard from './RecommendedProductCard';
+import ProductCard from './ProductCard';
 
 
 const RecomendedProducts: React.FC = () => {
@@ -36,9 +36,9 @@ const RecomendedProducts: React.FC = () => {
   return (
     <div>
       <h2 className='p-2 font-bold text-2xl'>Önerilen Ürünler</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {recomendedProducts.map((product) => (
-            <RecommendedProductCard key={product.id} product={product} /> 
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {recomendedProducts.slice(0, 8).map((product) => (
+            <ProductCard key={product.id} product={product} /> 
         ))}
       </div>
     </div>

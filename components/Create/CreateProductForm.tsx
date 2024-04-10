@@ -1,5 +1,5 @@
 'use client'
-import { TBrand, TCategory, TPriceList } from '@/app/types'
+import { TBrand, TCategory, TSubCategory, TPriceList } from '@/app/types'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CldImage, CldUploadButton } from 'next-cloudinary'
@@ -14,6 +14,8 @@ const CreateProductForm = () => {
   const [imageUrl, setImageUrl] = useState('')
   const [categories, setCategories] = useState<TCategory[]>([])
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [subcategories, setSubcategories] = useState<TSubCategory[]>([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState('')
   const [priceLists, setPriceLists] = useState<TPriceList[]>([])
   const [selectedPriceList, setSelectedPriceList] = useState('')
   const [error, setError] = useState('')
@@ -28,6 +30,19 @@ const CreateProductForm = () => {
     }
     fetchAllCategories()
   }, [])
+
+  useEffect(() => {
+    const fetchSubcategories = async () => {
+      if (selectedCategory) {
+        const res = await fetch(`/api/subcategories?catName=${selectedCategory}`);
+        const subcatData = await res.json();
+        setSubcategories(subcatData);
+      } else {
+        setSubcategories([]);
+      }
+    };
+    fetchSubcategories();
+  }, [selectedCategory]);
 
   useEffect(() => {
     const fetchAllBrands = async () => {
@@ -67,6 +82,7 @@ const CreateProductForm = () => {
         imageUrl,
         selectedBrand,
         selectedCategory,
+        selectedSubcategory,
         selectedPriceList,
       })
     })
@@ -95,7 +111,6 @@ const CreateProductForm = () => {
         <label >
           <input checked={isRecommended} onChange={e => setIsRecommended(e.target.checked)} type="checkbox" /> Tavsiye Edilen Ürünler
         </label>
-        <p>Tavsiye Edilen: {isRecommended ? 'Evet' : 'Hayır'}</p>
         <select onChange={e => setSelectedBrand(e.target.value)} className='p-3 rounded-md border appearance-none'>
           <option value="">Marka Seçiniz</option>
           {brands && brands.map((brand) => (
@@ -108,6 +123,14 @@ const CreateProductForm = () => {
             <option key={category.id} value={category.catName}>{category.catName}</option>
           ))}
         </select>
+        {selectedCategory && (
+        <select onChange={e => setSelectedSubcategory(e.target.value)} className='p-3 rounded-md border appearance-none'>
+          <option value="">Alt Kategori Seçiniz</option>
+          {subcategories && subcategories.map((subcategory) => (
+            <option key={subcategory.id} value={subcategory.subCatName}>{subcategory.subCatName}</option>
+          ))}
+        </select>
+        )}
 
         <select onChange={e => setSelectedPriceList(e.target.value)} className='p-3 rounded-md border appearance-none'>
           <option value="">Fiyat Listesi Seçiniz</option>
@@ -143,7 +166,7 @@ const CreateProductForm = () => {
 
 
         </div>
-        <button className='max-w-[250px] m-auto primary-btn ' type='submit'>Ürün Oluştur</button>
+        <button className="bg-blue-500 max-w-[250px] m-auto text-white px-4 py-2 rounded" type='submit'>Ürün Oluştur</button>
         {error && <div className='p-2 text-red-500 font-bold'>{error}</div>}
 
       </form>

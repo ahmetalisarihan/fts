@@ -98,7 +98,6 @@ model Subcategory {
   productIDs String[] @db.ObjectId 
   }
 
-
 model PriceList{
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
   priceName     String  @unique

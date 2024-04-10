@@ -1,26 +1,35 @@
-import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import Image from 'next/image';
+import { TProduct } from '@/app/types';
+import noimage from '@/public/noimage.png';
 
-interface IProductCard {
-  id: string;
-  name: string;
-  image?: string;
+interface ProductCardProps {
+  product: TProduct;
 }
 
-const ProductCard: React.FC<IProductCard> = ({ id, name, image }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link href={`/products/${id}`}>
-      <div className="border rounded-lg p-4 hover:shadow-md">
-        <div className="aspect-w-9 aspect-h-9">
-          {image ? (
-            <Image src={image} alt={name} className='shadow bg-cover rounded-lg overflow-hidden border' width={300} height={300} />
-          ) : (
-            <div className="bg-gray-200 rounded-lg"></div>
-          )}
-        </div>
-        <h3 className="text-lg font-medium mt-4">{name}</h3>
+    <Link href={`/products/${product.id}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center "> 
+      <div className="aspect-w-9 aspect-h-9 object-cover overflow-hidden">
+        {product.imageUrl ? (
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            width={200}
+            height={200}
+            className="w-60 h-60 "
+          />
+        ) : (
+          <Image
+            src={noimage}
+            alt="Resim Yok"
+            width={200}
+            height={200}
+            className="w-60 h-60 "
+          />
+        )}
       </div>
+      <h3 className="text-lg font-medium mt-4">{product.name}</h3>  
     </Link>
   );
 };

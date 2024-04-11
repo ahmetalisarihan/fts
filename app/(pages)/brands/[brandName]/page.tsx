@@ -1,7 +1,6 @@
 import { TProduct } from '@/app/types';
 import Product from '@/components/Product';
 import ProductCard from '@/components/ProductCard';
-import RecommendedProductCard from '@/components/RecommendedProductCard';
 import React from 'react';
 
 const getProducts = async (brandName: string): Promise<TProduct[] | null> => {
@@ -37,7 +36,7 @@ const ProductsBrand = async ({ params }: { params: { brandName: string } }) => {
       <h2 className='font-bold pl-4 py-1 text-blue-500'>Ürün Sayımız: {productCount}</h2> 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         {products.map((product: TProduct) => (
-          <RecommendedProductCard key={product.id} product={product} /> 
+          <ProductCard key={product.id} product={product} /> 
          
         ))}
       </div>

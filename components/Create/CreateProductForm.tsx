@@ -124,15 +124,25 @@ const CreateProductForm = () => {
           ))}
         </select>
         {selectedCategory && (
-        <select onChange={e => setSelectedSubcategory(e.target.value)} className='p-3 rounded-md border appearance-none'>
+        <select
+          onChange={(e) => setSelectedSubcategory(e.target.value)}
+          className='p-3 rounded-md border appearance-none'
+          disabled={!subcategories.length}
+        >
           <option value="">Alt Kategori Seçiniz</option>
-          {subcategories && subcategories.map((subcategory) => (
-            <option key={subcategory.id} value={subcategory.subCatName}>{subcategory.subCatName}</option>
-          ))}
+          {subcategories.length > 0 &&
+            subcategories.map((subcategory) => (
+              <option key={subcategory.id} value={subcategory.subCatName}>
+                {subcategory.subCatName}
+              </option>
+            ))}
+          {!subcategories.length && (
+            <option disabled>Seçili kategori için alt kategori bulunamadı.</option>
+          )}
         </select>
-        )}
+      )}
 
-        <select onChange={e => setSelectedPriceList(e.target.value)} className='p-3 rounded-md border appearance-none'>
+      <select onChange={e => setSelectedPriceList(e.target.value)} className='p-3 rounded-md border appearance-none'>
           <option value="">Fiyat Listesi Seçiniz</option>
           {priceLists && priceLists.map((priceList) => (
             <option key={priceList.id} value={priceList.priceName}>{priceList.priceName}</option>

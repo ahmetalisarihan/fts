@@ -20,6 +20,10 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
     const products = await getProducts();
     const product = products?.find(product => product.id === params.id);
 
+    const categoryHierarchy = product?.catName && product?.subcatName
+        ? `${decodeURIComponent(product.catName)} > ${decodeURIComponent(product.subcatName)}`
+        : decodeURIComponent(product?.catName || ""); // Sadece kategori varsa onu göster
+
     return (
         <div>
             <div className='flex'>
@@ -41,28 +45,43 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
 
                     <div>
                         <span className="font-bold">Kategori: </span>{" "}
-                        <Link 
-                        href={`/categories/${product?.catName || ""}`}
-                        className='text-blue-500'>
-                            {decodeURIComponent(product?.catName || "")}
-                        </Link>
+                        {product?.catName && product?.subcatName ? (
+                            // Kategori ve alt kategori varsa
+                            <span>
+                                <Link href={`/categories/${product.catName}`} className="text-blue-500">
+                                    {decodeURIComponent(product.catName)}
+                                </Link>{" "}
+                                /{" "}
+                                <Link
+                                    href={`/categories/${product.catName}/subcategories/${product.subcatName}`}
+                                    className="text-blue-500"
+                                >
+                                    {decodeURIComponent(product.subcatName)}
+                                </Link>
+                            </span>
+                        ) : (
+                            // Sadece kategori varsa
+                            <Link href={`/categories/${product?.catName || ""}`} className="text-blue-500">
+                                {decodeURIComponent(product?.catName || "")}
+                            </Link>
+                        )}
                     </div>
                     <div>
                         <span className="font-bold">Marka: </span>{" "}
                         <Link href={`/brands/${product?.brandName || ""}`}
-                        className='text-blue-500'>
+                            className='text-blue-500'>
 
                             {decodeURIComponent(product?.brandName || "")}
                         </Link>
                     </div>
                     <div>
                         <span className="font-bold">Fiyat Listesi: </span>{" "}
-                        <Link 
-                        href={`/fiyat-listesi/${product?.priceName || ""}`}
-                        target='_blank'
-                        className='text-blue-500'>
+                        <Link
+                            href={`/fiyat-listesi/${product?.priceName || ""}`}
+                            target='_blank'
+                            className='text-blue-500'>
                             {decodeURIComponent(product?.priceName || "")}
-                        
+
                         </Link>
 
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { TProduct } from '../types'
-import Product from '@/components/Product'
 import Link from 'next/link';
 import CategoriesList from '@/components/CategoriesList';
 import BrandList from '@/components/BrandList';
@@ -51,21 +50,6 @@ export default async function YapiMalzemeleri() {
 ) : (
   <div className="py-6">Ürün bulunamadı</div>
 )}
-          {/* {products && products.length > 0 ? (
-            products.map((product:TProduct) => (
-            <Product
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            image={product.imageUrl}
-            description={product.description}
-            category={product.catName}
-            brand={product.brandName}
-            
-            />
-          ))
-          ):(<div className='py-6'>Ürün bulunamadı</div>
-          )} */}
         </div>
       </div>
     </div>

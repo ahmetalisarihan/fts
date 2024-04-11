@@ -52,6 +52,7 @@ export type TProduct = {
     publicId: string;
     brandName?: string;
     catName?: string;
+    subcatName?: string;
     priceName?: string;
 };
 

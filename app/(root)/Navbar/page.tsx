@@ -1,8 +1,6 @@
 import React from 'react'
-
 import DropdownMenu from '@/components/DropdownMenu'
 import Link from 'next/link'
-import TeklifOlustur from '../teklif-olustur/page' 
 
 
 const Navbar = () => {

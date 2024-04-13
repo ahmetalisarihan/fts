@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
   description: "Fetes Endustriyel Yapi",
 };
 
+const query = new QueryClient();
+
 const RootLayout = ({ children }: React.PropsWithChildren) => (
   <html lang="en">
     <body>
@@ -21,7 +24,9 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
       <Banner />
       <Header />
       <div className="flex-auto">
+      <QueryClientProvider client={query}>
       <AntdRegistry>{children}</AntdRegistry>
+      </QueryClientProvider>
       </div>
       <Footer />
       </div>

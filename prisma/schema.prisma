@@ -86,6 +86,7 @@ model Category {
   subcategories Subcategory[]
   products Product[]
   productIDs String[] @db.ObjectId 
+
 }
 
 model Subcategory {  
@@ -96,6 +97,7 @@ model Subcategory {
   category Category? @relation(fields: [catName], references: [catName])
   products Product[]  
   productIDs String[] @db.ObjectId 
+
   }
 
 model PriceList{
@@ -107,4 +109,20 @@ model PriceList{
   productIDs String[] @db.ObjectId 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model CarouselItem {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl     String
+  carouselLink String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Carousel {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  imageUrl     String
+  link         String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 }

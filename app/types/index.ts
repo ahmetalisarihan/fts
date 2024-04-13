@@ -21,21 +21,21 @@ export type SubcategoryData = {
     catName: string;
 };
 
-export type Category = {
-    id: string;
-    catName: string;
-    description: string;
-    subcategories: Subcategory[];
-  };
+// export type Category = {
+//     id: string;
+//     catName: string;
+//     description: string;
+//     subcategories: Subcategory[];
+//   };
   
-  export type Subcategory = {
-    id: string;
-    subcatName: string;
-    description: string;
-    catName: string; // Ana kategori adı (ilişkisel alan)
-    category?: Category; // Opsiyonel olarak ana kategori nesnesi
-    parentCategory: string;
-  };
+//   export type Subcategory = {
+//     id: string;
+//     subcatName: string;
+//     description: string;
+//     catName: string; // Ana kategori adı (ilişkisel alan)
+//     category?: Category; // Opsiyonel olarak ana kategori nesnesi
+//     parentCategory: string;
+//   };
 
 export type TBrand = {
     id: string;
@@ -62,4 +62,10 @@ export type TPriceList = {
     price?: string;
     pdfUrl?: string;
 
+};
+
+export type TCarousel = {
+    id: string;
+    imageUrl?: string;
+    carouselLink?: string;
 };

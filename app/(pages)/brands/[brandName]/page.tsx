@@ -1,5 +1,4 @@
 import { TProduct } from '@/app/types';
-import Product from '@/components/Product';
 import ProductCard from '@/components/ProductCard';
 import React from 'react';
 

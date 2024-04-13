@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { CategoryData, SubcategoryData } from '@/app/types';
+import { Button } from '../ui/button';
+import { Textarea } from '../ui/textarea';
+import { Input } from '../ui/input';
 
 const CreateSubcategoryForm = () => {
   const [subcatName, setSubcatName] = useState('');
@@ -58,13 +61,14 @@ const CreateSubcategoryForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <input
+      <p className='text-2xl font-bold my-4'>Alt Kategori Oluştur</p>
+      <Input
         type="text"
         value={subcatName}
         onChange={(e) => setSubcatName(e.target.value)}
         placeholder="Alt Kategori Adı"
       />
-      <textarea
+      <Textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Açıklama"
@@ -78,10 +82,7 @@ const CreateSubcategoryForm = () => {
           </option>
         ))}
       </select>
-
-      <button type="submit" className="bg-blue-500 max-w-[250px] m-auto text-white px-4 py-2 rounded">
-        Alt Kategori Oluştur
-      </button>
+      <Button type='submit' variant='default' size='default' className='max-w-[250px] m-auto'>Alt Kategori Oluştur</Button>
 
       {error && <p className="text-red-500">{error}</p>}
       {success && <p className="text-green-500">{success}</p>}

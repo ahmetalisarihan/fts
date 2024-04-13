@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { CategoryData } from '@/app/types'; // Tip tanımını içe aktarın
+import { Button } from '../ui/button';
+import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
 
 const CreateCategoryForm = () => {
     const [catName, setCatName] = useState('');
@@ -39,22 +42,21 @@ const CreateCategoryForm = () => {
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <p className="text-2xl font-bold my-4">Kategori Oluştur</p>
 
-                <input
+                <Input
                     type="text"
                     value={catName}
                     onChange={(e) => setCatName(e.target.value)}
                     placeholder="Kategori Adı"
                 />
 
-
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    placeholder="Açıklama"
+                <Textarea
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder="Açıklama"
                 />
-
-                <button type="submit" className="bg-blue-500 max-w-[250px] m-auto  text-white px-4 py-2 rounded">Kategori Oluştur</button>
+               <Button type='submit' variant='default' size='default' className='max-w-[250px] m-auto'>Kategori Oluştur</Button>
                 {error && <p className="text-red-500">{error}</p>}
                 {success && <p className="text-green-500">{success}</p>}
             

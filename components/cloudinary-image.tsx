@@ -1,16 +1,16 @@
-'use client'
-import React from 'react'
-import { CldImage } from 'next-cloudinary';
+// 'use client'
+// import React from 'react'
+// import { CldImage } from 'next-cloudinary';
 
-const CloudinaryImage = (props: any) => {
-    return (
-        <div>
-            <CldImage
-                {...props}
-            />
+// const CloudinaryImage = (props: any) => {
+//     return (
+//         <div>
+//             <CldImage
+//                 {...props}
+//             />
 
-        </div>
-    )
-}
+//         </div>
+//     )
+// }
 
-export default CloudinaryImage
+// export default CloudinaryImage

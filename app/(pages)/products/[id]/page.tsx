@@ -30,17 +30,18 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
                 <div>
 
                     <img src={product?.imageUrl || ""} alt={product?.name || ""} width={400} height={400} />
+                    <div className='text-wrap'>
+                        <span className="font-bold">Malzeme Açıklaması: </span>{" "}
+                        <pre>{product?.description || ""}</pre>
+                    </div>
                 </div>
                 <div className='p-4'>
-                    <h1>
-                        <span className="font-bold">Malzeme Adı: </span>{" "}
-                        {decodeURIComponent(product?.name || "")}
+                    <h1 className='font-bold text-xl'>
+                        <span className="">Malzeme Adı: </span>{" "}
+                        <span className=''>{decodeURIComponent(product?.name || "")}</span>
                     </h1>
 
-                    <div>
-                        <span className="font-bold">Malzeme Açıklaması: </span>{" "}
-                        <p>{product?.description || ""}</p>
-                    </div>
+
 
 
                     <div>

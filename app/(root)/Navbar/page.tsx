@@ -1,9 +1,11 @@
 import React from 'react'
 import DropdownMenu from '@/components/DropdownMenu'
 import Link from 'next/link'
+import Nav from '@/components/Nav';
 
 
 const Navbar = () => {
+    
     return (
         <div className='m-2 font-bold'>
             <div className='max-w-7xl m-auto flex justify-between'>
@@ -18,6 +20,7 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className=''>
+                <Nav />
                 </div>
 
             </div>

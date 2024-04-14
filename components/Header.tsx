@@ -20,7 +20,7 @@ const Header = () => {
         <SearchBar />
         <ContactPhone />
       </div>
-      <Navbar />
+      <Navbar/>
 
 
     </div>

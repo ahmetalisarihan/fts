@@ -1,6 +1,5 @@
 'use client'
-import React from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect, useState } from 'react';
 import {
     NavigationMenu,
     NavigationMenuList,
@@ -13,6 +12,7 @@ import {
 interface Category {
     id: string;
     catName: string;
+    subcategories: Subcategory[];
 }
 
 interface Subcategory {
@@ -22,59 +22,47 @@ interface Subcategory {
 }
 
 const Navbar = () => {
-    const { data: categories } = useQuery('categories', async () => {
-        const response = await fetch('/api/categories');
-        if (!response.ok) {
-            throw new Error('Kategoriler getirilemedi.');
-        }
-        return response.json();
-    });
+    const [categories, setCategories] = useState<Category[]>([]);
 
-    const { data: allSubcategories } = useQuery('subcategories', async () => {
-        const response = await fetch('/api/subcategories');
-        if (!response.ok) {
-            throw new Error('Alt kategoriler getirilemedi.');
-        }
-        return response.json();
-    });
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch('/api/categories');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error(error);
+                // Hata mesajı gösterin
+            }
+        };
 
-    const getSubcategoriesForCategory = (catName: string): Subcategory[] => {
-        return allSubcategories.filter((subcategory: Subcategory) => subcategory.catName === catName);
-    };
+        fetchCategories();
+    }, []);
 
 
     return (
-            <div>
-                <NavigationMenu>
-                    <NavigationMenuList>
-                        {categories?.map((category: Category) => (
-
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger>{category.catName}</NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <ul>
-                                        {getSubcategoriesForCategory(category.catName).map((subcategory) => (
-                                            <NavigationMenuLink key={subcategory.id} href={`/products/${subcategory.subcatName}`}>
+            <NavigationMenu>
+                <NavigationMenuList>
+                    {categories.map((category: Category) => (
+                        <NavigationMenuItem key={category.id}>
+                            <NavigationMenuTrigger>{category.catName}</NavigationMenuTrigger>
+                            <NavigationMenuContent>
+                                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                
+                                    {category.subcategories.map((subcategory) => (
+                                        <li key={subcategory.id} className="row-span-3">
+                                            <NavigationMenuLink href={`/categories/${subcategory.subcatName}`}>
                                                 {subcategory.subcatName}
                                             </NavigationMenuLink>
-                                        ))}
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </NavigationMenuContent>
+                        </NavigationMenuItem>
+                    ))}
+                </NavigationMenuList>
+            </NavigationMenu>
+    );
+};
 
-                        ))
-
-                        }
-
-                    </NavigationMenuList>
-                </NavigationMenu>
-
-
-            </div>
-
-        );
-
-    };
-
-
-    export default Navbar;
+export default Navbar;

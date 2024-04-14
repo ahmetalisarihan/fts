@@ -12,6 +12,9 @@ import havalandirmaurunleri from '@/public/havalandirmaurunleri.jpeg';
 import whatsapp from '@/public/whatsappicon.png';
 import { Button, Flex } from 'antd';
 import RecomendedProducts from '@/components/RecomendedProducts';
+import Navbar from '@/components/Nav';
+import { CarouselPlugin } from '@/components/Carousel';
+
 
 
 
@@ -66,14 +69,14 @@ export default function Home() {
       <div>
         <RecomendedProducts />
       </div>
+      <div>
+      <CarouselPlugin />
+      </div>
       <div className='fixed bottom-6 right-10 z-50 max-w-6xl'>
   <Link href="https://api.whatsapp.com/send?phone=905346181874&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
     <Image src={whatsapp} alt="WhatsApp" width={55} height={55} />
   </Link>
 </div>
-
-
-
 
     </div>
   );

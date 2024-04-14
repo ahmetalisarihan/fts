@@ -111,13 +111,6 @@ model PriceList{
   updatedAt   DateTime  @updatedAt
 }
 
-model CarouselItem {
-  id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  imageUrl     String
-  carouselLink String?
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-}
 
 model Carousel {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId

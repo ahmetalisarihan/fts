@@ -1,42 +1,41 @@
-"use client"
-import React, { useState } from 'react';
+'use client'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { TProduct } from "@/app/types";
 import { useRouter } from 'next/navigation';
-import { Input, Space } from 'antd';
-import type { SearchProps } from 'antd/es/input/Search';
 
-const { Search } = Input;
+interface SearchBarProps {
+  onSearch: (products: TProduct[]) => void;
+}
 
-const SearchBar: React.FC = () => {
-  const router = useRouter();
+export default function SearchBar({ onSearch }: SearchBarProps) {
+  const [query, setQuery] = useState("");
+  // const router = useRouter();
 
-  const onSearch: SearchProps['onSearch'] = async (value) => {
+  const handleSearch = async () => {
     try {
-      // API endpoint'ine istek gönderin
-      const response = await fetch(`/api/products?search=${value}`);
-
-      // Arama sonuçlarını işleyin
+      const response = await fetch(`/api/search?query=${query}`);
       const products = await response.json();
-
-      // Arama sonuçlarını görüntülemek için sayfayı yönlendirin
-      router.replace(`/search`, undefined);
+      onSearch(products);
+      // router.push(`/search?query=${query}`);
     } catch (error) {
-      // Hata işleme
-      console.error(error);
-      // Kullanıcıya hata mesajı gösterin veya başka bir işlem yapın
+      console.error("Ürünler alınırken bir hata oluştu:", error);
     }
   };
 
   return (
-    <Space direction="vertical">
-      <Search
-        placeholder="Ürün, Katagori, Marka Ara..."
-        onSearch={onSearch}
-        enterButton
-        style={{ width: 250 }}
-        size="middle"
+    <div className="flex items-center space-x-2">
+      <Input
+        type="text"
+        className="px-3 py-2 w-80"
+        placeholder="Ürün Ara..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
-    </Space>
+      <Button className="px-3 py-2" onClick={handleSearch}>
+        Ara
+      </Button>
+    </div>
   );
-};
-
-export default SearchBar;
+}

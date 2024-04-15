@@ -54,7 +54,7 @@ export function CarouselPlugin() {
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                    <Link href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+                    <Link href={item.link} rel="noopener noreferrer">
                         <Image src={item.imageUrl} alt={`Carousel Item ${index + 1}`} width={560} height={560} className="w-full h-96 object-cover" />
                     </Link>
                 </CardContent>

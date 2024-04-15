@@ -1,3 +1,4 @@
+'use client'
 import Navbar from '@/app/(root)/Navbar/page'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -5,8 +6,12 @@ import logo from '@/public/logo.png'
 import React from 'react'
 import SearchBar from './SearchBar'
 import ContactPhone from './ContactPhone'
+import { TProduct } from '@/app/types'
 
 const Header = () => {
+  const handleSearchResults = (products: TProduct[]) => {
+    console.log(products)
+  }
   return (
     <div className='border-b border-peach pt-5'>
       <div className='flex items-center justify-between border-b'>
@@ -17,7 +22,7 @@ const Header = () => {
           <h2 className="text-lg font-bold">Yapı Malzemeleri</h2>
         </div>
         </Link>
-        <SearchBar />
+        <SearchBar onSearch={handleSearchResults} />
         <ContactPhone />
       </div>
       <Navbar/>

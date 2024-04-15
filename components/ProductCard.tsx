@@ -9,27 +9,29 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link href={`/products/${product.id}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center "> 
-      <div className="aspect-w-9 aspect-h-9 object-cover overflow-hidden">
-        {product.imageUrl ? (
-          <Image
-            src={product.imageUrl}
-            alt={product.name}
-            width={200}
-            height={200}
-            className="w-60 h-60 "
-          />
-        ) : (
-          <Image
-            src={noimage}
-            alt="Resim Yok"
-            width={200}
-            height={200}
-            className="w-60 h-60 "
-          />
-        )}
-      </div>
-      <h3 className="text-lg font-medium mt-4">{product.name}</h3>  
+    <Link href={`/products/${product.id}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center">
+      <div> {/* Bu div etiketi, ürün kartının tamamını kapsar */}
+        <div className="aspect-w-9 aspect-h-9 object-cover overflow-hidden">
+          {product.imageUrl ? (
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              width={200}
+              height={200}
+              className="w-60 h-60"
+            />
+          ) : (
+            <Image
+              src={noimage}
+              alt="Resim Yok"
+              width={200}
+              height={200}
+              className="w-60 h-60"
+            />
+          )}
+        </div>
+        <h3 className="text-lg font-medium mt-4">{product.name}</h3>
+      </div> {/* div etiketi kapatıldı */}
     </Link>
   );
 };

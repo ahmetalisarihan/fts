@@ -10,6 +10,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
+import Link from 'next/link';
+import Image from 'next/image';
 
 interface CarouselItemProps {
   imageUrl: string;
@@ -18,7 +20,7 @@ interface CarouselItemProps {
 
 export function CarouselPlugin() {
   const [carousels, setCarousels] = useState<CarouselItemProps[]>([]);
-  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
   useEffect(() => {
     const fetchCarousels = async () => {
@@ -52,9 +54,9 @@ export function CarouselPlugin() {
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    <img src={item.imageUrl} alt={`Carousel Item ${index + 1}`} className="w-full h-full object-cover" />
-                  </a>
+                    <Link href={item.imageUrl} target="_blank" rel="noopener noreferrer">
+                        <Image src={item.imageUrl} alt={`Carousel Item ${index + 1}`} width={560} height={560} className="w-full h-96 object-cover" />
+                    </Link>
                 </CardContent>
               </Card>
             </div>

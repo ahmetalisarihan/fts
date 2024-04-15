@@ -22,7 +22,10 @@ export default function Home() {
   return (
     <div className=''>
       <div className='grid md:grid-cols-1 lg:grid-cols-2'>
-        <div className='max-w-3xl'><Swipper /></div>
+        {/* <div className='max-w-3xl'><Swipper /></div> */}
+        <div>
+      <CarouselPlugin />
+      </div>
         <div className=''>
           <div>
             <div className='absolute m-2  p-3 bg-slate-700 rounded-lg leading-loose opacity-70 text-white font-bold'>
@@ -69,9 +72,7 @@ export default function Home() {
       <div>
         <RecomendedProducts />
       </div>
-      <div>
-      <CarouselPlugin />
-      </div>
+
       <div className='fixed bottom-6 right-10 z-50 max-w-6xl'>
   <Link href="https://api.whatsapp.com/send?phone=905346181874&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
     <Image src={whatsapp} alt="WhatsApp" width={55} height={55} />

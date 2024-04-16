@@ -22,6 +22,7 @@ const CreateProductForm = () => {
   const [priceLists, setPriceLists] = useState<TPriceList[]>([])
   const [selectedPriceList, setSelectedPriceList] = useState('')
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('');
 
   const router = useRouter()
 
@@ -67,90 +68,147 @@ const CreateProductForm = () => {
   }
     , [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!name || !description) {
-      setError('Lütfen isim ve açıklama alanlarını doldurunuz.')
-      return
+    const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!name || !description) {
+        setError('Lütfen isim ve açıklama alanlarını doldurunuz.');
+        return;
+      }
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          description,
+          isRecommended,
+          imageUrl,
+          selectedBrand,
+          selectedCategory,
+          selectedSubcategory,
+          selectedPriceList,
+        }),
+      });
+      if (res.ok) {
+        setName('');
+        setDescription('');
+        setSelectedBrand('');
+        setSelectedCategory('');
+        setSelectedSubcategory('');
+        setSelectedPriceList('');
+        setImageUrl('');
+        setIsRecommended(false);
+        setSuccess('Başarıyla ürün eklendi!');
+        setError('');
+      } else {
+        const error = await res.json();
+        setError(error);
+        setSuccess('');
+      }
+    };
+    interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+      value: string;
     }
-    const res = await fetch('/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        isRecommended,
-        imageUrl,
-        selectedBrand,
-        selectedCategory,
-        selectedSubcategory,
-        selectedPriceList,
-      })
-    })
-    if (res.ok) {
-      setError('')
-      setName('')
-      setDescription('')
-      setImageUrl('')
-      setSelectedBrand('')
-      setSelectedCategory('')
-      setSelectedPriceList('')
+    
+    const Input = React.forwardRef<HTMLInputElement, InputProps>(
+      ({ value, onChange, ...props }, ref) => (
+        <input ref={ref} value={value} onChange={onChange} {...props} />
+      ),
+    );
 
-    } else {
-      const error = await res.json()
-      setError(error)
+    interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+      value: string;
     }
-  }
+    
+    const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+      ({ value, onChange, ...props }, ref) => (
+        <textarea ref={ref} value={value} onChange={onChange} {...props} />
+      ),
+    );
 
 
   return (
     <div>
       <p className='text-2xl font-bold my-4'>Ürün Oluştur</p>
       <form onSubmit={handleSubmit} className='flex flex-col gap-2'>
-        <Input onChange={e => setName(e.target.value)} type="text" placeholder="Ürün Adı" />
-        <Textarea onChange={e => setDescription(e.target.value)} placeholder="Ürün Açıklaması" />
+      <Input
+    value={name}
+    onChange={e => setName(e.target.value)}
+    type="text"
+    placeholder="Ürün Adı"
+    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+  />
+  <Textarea
+    value={description}
+    onChange={e => setDescription(e.target.value)}
+    placeholder="Ürün Açıklaması"
+    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+  />
         <label >
           <input checked={isRecommended} onChange={e => setIsRecommended(e.target.checked)} type="checkbox" /> Tavsiye Edilen Ürünler
         </label>
-        <select onChange={e => setSelectedBrand(e.target.value)} className='p-3 rounded-md border appearance-none'>
-          <option value="">Marka Seçiniz</option>
-          {brands && brands.map((brand) => (
-            <option key={brand.id} value={brand.brandName}>{brand.brandName}</option>
-          ))}
-        </select>
-        <select onChange={e => setSelectedCategory(e.target.value)} className='p-3 rounded-md border appearance-none'>
-          <option value="">Kategori Seçiniz</option>
-          {categories && categories.map((category) => (
-            <option key={category.id} value={category.catName}>{category.catName}</option>
-          ))}
-        </select>
-        {selectedCategory && (
         <select
-          onChange={(e) => setSelectedSubcategory(e.target.value)}
-          className='p-3 rounded-md border appearance-none'
-          disabled={!subcategories.length}
-        >
-          <option value="">Alt Kategori Seçiniz</option>
-          {subcategories.length > 0 &&
-            subcategories.map((subcategory) => (
-              <option key={subcategory.id} value={subcategory.subCatName}>
-                {subcategory.subCatName}
-              </option>
-            ))}
-          {!subcategories.length && (
-            <option disabled>Seçili kategori için alt kategori bulunamadı.</option>
-          )}
-        </select>
-      )}
+  value={selectedBrand}
+  onChange={(e) => setSelectedBrand(e.target.value)}
+  className="p-3 rounded-md border appearance-none"
+>
+  <option value="">Marka Seçiniz</option>
+  {brands &&
+    brands.map((brand) => (
+      <option key={brand.id} value={brand.brandName}>
+        {brand.brandName}
+      </option>
+    ))}
+</select>
 
-      <select onChange={e => setSelectedPriceList(e.target.value)} className='p-3 rounded-md border appearance-none'>
-          <option value="">Fiyat Listesi Seçiniz</option>
-          {priceLists && priceLists.map((priceList) => (
-            <option key={priceList.id} value={priceList.priceName}>{priceList.priceName}</option>
-          ))}
-        </select>
+<select
+  value={selectedCategory}
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="p-3 rounded-md border appearance-none"
+>
+  <option value="">Kategori Seçiniz</option>
+  {categories &&
+    categories.map((category) => (
+      <option key={category.id} value={category.catName}>
+        {category.catName}
+      </option>
+    ))}
+</select>
+
+{selectedCategory && (
+  <select
+    value={selectedSubcategory}
+    onChange={(e) => setSelectedSubcategory(e.target.value)}
+    className="p-3 rounded-md border appearance-none"
+    disabled={!subcategories.length}
+  >
+    <option value="">Alt Kategori Seçiniz</option>
+    {subcategories.length > 0 &&
+      subcategories.map((subcategory) => (
+        <option key={subcategory.id} value={subcategory.subcatName}>
+          {subcategory.subcatName}
+        </option>
+      ))}
+    {!subcategories.length && (
+      <option disabled>Seçili kategori için alt kategori bulunamadı.</option>
+    )}
+  </select>
+)}
+
+<select
+  value={selectedPriceList}
+  onChange={(e) => setSelectedPriceList(e.target.value)}
+  className="p-3 rounded-md border appearance-none"
+>
+  <option value="">Fiyat Listesi Seçiniz</option>
+  {priceLists &&
+    priceLists.map((priceList) => (
+      <option key={priceList.id} value={priceList.priceName}>
+        {priceList.priceName}
+      </option>
+    ))}
+</select>
         <div className=''>
           <Button className="max-w-[180px] p-6 flex justify-center items-center  bg-sky-500 hover:bg-sky-700 focus:ring-sky-500 focus:ring-offset-sky-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
             <svg width="20" height="20" fill="currentColor" className="mr-2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
@@ -182,6 +240,7 @@ const CreateProductForm = () => {
         <Button type='submit' variant='default' size='default' className='max-w-[250px] m-auto'>Ürün Oluştur</Button>
 
         {error && <div className='p-2 text-red-500 font-bold'>{error}</div>}
+        {success && <p className="p-2 text-green-500 font-bold">{success}</p>}
 
       </form>
     </div>

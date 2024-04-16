@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
+import { TSubCategory } from "@/app/types";
 
 export async function POST(req: Request) {
     const { subcatName, description, catName } = await req.json();

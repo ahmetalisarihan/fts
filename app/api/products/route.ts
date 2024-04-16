@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from "@/libs/prismadb";
 import React from 'react'
+import { TSubCategory } from '@/app/types';
 
 export async function POST(req: Request) {
     const {
@@ -54,3 +55,28 @@ export async function GET() {
         return NextResponse.json({message:'Bir hata oluştu. Lütfen tekrar deneyin.'}, { status: 500 });
     }
 }
+
+
+export const getProductsBySubCategory = async (catName: string): Promise<TSubCategory[]> => {
+    try {
+      const category = await prisma.category.findUnique({
+        where: { catName },
+      });
+  
+      if (!category) {
+        throw new Error(`Category with name "${catName}" not found`);
+      }
+  
+      const subCategories = await prisma.subcategory.findMany({
+        where: {
+          category: {
+            id: category.id,
+          },
+        },
+      });
+      return subCategories;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  }

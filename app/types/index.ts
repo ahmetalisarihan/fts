@@ -6,7 +6,7 @@ export type TCategory = {
 
 export type TSubCategory = {
     id: string;
-    subCatName: string;
+    subcatName: string;
 };
 
 export type CategoryData = {

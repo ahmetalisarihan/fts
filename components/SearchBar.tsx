@@ -13,7 +13,6 @@ interface SearchBarProps {
 const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<TProduct[]>([]);
-  const [showResults, setShowResults] = useState(false); // Sonuçları göstermek için state
   const router = useRouter();
 
   useEffect(() => {
@@ -22,41 +21,43 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         try {
           const response = await fetch(`/api/search?query=${query}`);
           const products = await response.json();
-          console.log(products)
           setResults(products);
-          setShowResults(true); // Sonuçlar geldiğinde sonuçları göster
         } catch (error) {
           console.error('Ürünler alınırken bir hata oluştu:', error);
-          setShowResults(false); // Hata durumunda sonuçları gizle
         }
       } else {
         setResults([]);
-        setShowResults(false); // Sonuç yoksa sonuçları gizle
       }
     };
 
     fetchResults();
   }, [query]);
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     onSearch(results);
-    setShowResults(false); // Arama yapıldığında sonuçları gizle
     router.push(`/search?query=${query}`);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center space-x-2 relative"> {/* Popover için relative pozisyon */}
-    <div className='flex'>
+    <div className="flex flex-col items-center relative">
+      <div className='flex space-x-1 '>
       <Input
         type="text"
         className="px-3 py-2 w-80"
         placeholder="Ürün Ara..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
-      <Button onClick={handleSearch}>Ara</Button></div>
+      <Button onClick={handleSearch}>Ara</Button>
+      </div>
       
-      {/* SearchResults bileşenini burada çağır ve showResults prop'unu geçir */}
       <SearchResults results={results} />
     </div>
   );

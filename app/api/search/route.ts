@@ -1,12 +1,12 @@
-// app/api/search/route.ts
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
+import { URL } from 'node:url';
 
 const prisma = new PrismaClient();
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('query');
+  const url = new URL(request.url);
+  const query = decodeURIComponent(url.searchParams.get('query') || '');
 
   try {
     if (!query) {

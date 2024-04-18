@@ -1,4 +1,4 @@
-import { useProducts } from "@/app/api/(action)/products";
+import { useProducts } from "@/utils/products";
 
 
 export async function metadata({ params }: { params: { id: string } }) {

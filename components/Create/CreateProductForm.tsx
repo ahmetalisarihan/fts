@@ -38,9 +38,13 @@ const CreateProductForm = () => {
   useEffect(() => {
     const fetchSubcategories = async () => {
       if (selectedCategory) {
-        const res = await fetch(`/api/subcategories?catName=${selectedCategory}`);
-        const subcatData = await res.json();
-        setSubcategories(subcatData);
+        const res = await fetch(`/api/categories/${selectedCategory}/subcategories`);
+        if (res.ok) {
+          const subcatData = await res.json();
+          setSubcategories(subcatData);
+        } else {
+          setSubcategories([]);
+        }
       } else {
         setSubcategories([]);
       }
@@ -107,25 +111,6 @@ const CreateProductForm = () => {
         setSuccess('');
       }
     };
-    interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-      value: string;
-    }
-    
-    const Input = React.forwardRef<HTMLInputElement, InputProps>(
-      ({ value, onChange, ...props }, ref) => (
-        <input ref={ref} value={value} onChange={onChange} {...props} />
-      ),
-    );
-
-    interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-      value: string;
-    }
-    
-    const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-      ({ value, onChange, ...props }, ref) => (
-        <textarea ref={ref} value={value} onChange={onChange} {...props} />
-      ),
-    );
 
 
   return (

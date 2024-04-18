@@ -30,28 +30,31 @@ export async function POST(req: Request) {
 
   export async function GET(req: Request) {
     try {
-      const { searchParams } = new URL(req.url);
-      const catName = searchParams.get('catName'); 
-  
-      let subcategories;
-  
-      if (catName) {
+        const { searchParams } = new URL(req.url);
+        const catName = searchParams.get('catName');
+        
+        if (!catName) {
+            return NextResponse.json({ message: 'Kategori adı belirtilmelidir.' }, { status: 400 });
+        }
 
-        subcategories = await prisma.subcategory.findMany({
-          where: {
-            category: {
-              catName,
-            },
-          },
+        const category = await prisma.category.findUnique({
+            where: { catName },
+            include: {
+                subcategories: {
+                    include: {
+                        products: true
+                    }
+                }
+            }
         });
-      } else {
-        // Tüm alt kategorileri bul (opsiyonel)
-        subcategories = await prisma.subcategory.findMany();
-      }
-  
-      return NextResponse.json(subcategories);
+
+        if (!category) {
+            return NextResponse.json({ message: 'Belirtilen kategori bulunamadı.' }, { status: 404 });
+        }
+
+        return NextResponse.json(category);
     } catch (error) {
-      console.error(error);
-      return NextResponse.json({ message: 'Alt kategoriler alınamadı.' }, { status: 500 });
+        console.error(error);
+        return NextResponse.json({ message: 'Alt kategoriler ve ürünler alınamadı.' }, { status: 500 });
     }
-  }
+}

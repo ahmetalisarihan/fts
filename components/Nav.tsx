@@ -51,7 +51,7 @@ const Navbar = () => {
                                 
                                     {category.subcategories.map((subcategory) => (
                                         <li key={subcategory.id} className="row-span-3">
-                                            <NavigationMenuLink href={`/categories/${subcategory.subcatName}`}>
+                                            <NavigationMenuLink href={`/categories/${category.catName}/subcategories/${subcategory.subcatName}`}>
                                                 {subcategory.subcatName}
                                             </NavigationMenuLink>
                                         </li>

@@ -27,14 +27,18 @@ export async function POST(req: Request) {
 
 export async function GET() {
     try {
-       const categories = await prisma.category.findMany({
+      const categories = await prisma.category.findMany({
+        include: {
+          subcategories: {
             include: {
-                subcategories: true
-            }
-       });
-         return NextResponse.json(categories);
+              products: true,
+            },
+          },
+        },
+      });
+      return NextResponse.json(categories);
     } catch (error) {
-        return NextResponse.json('Bir hata oluştu. Lütfen tekrar deneyin.');
+      return NextResponse.json('Bir hata oluştu. Lütfen tekrar deneyin.');
     }
     
 

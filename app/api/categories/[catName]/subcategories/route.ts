@@ -6,19 +6,16 @@ export async function GET(req: Request, { params }: { params: { catName: string 
 
     try {
         const catName  = params.catName; 
-        const products = await prisma.category.findUnique({
-            where: {catName},
+        const subcategory = await prisma.subcategory.findMany({
+            where: 
+            { catName
+            },
             include: {
-                subcategories: {
-                    include: {
-                        products: true,
-                    }
-                },
                 products: true,
-                
-            }
+      
+                },
         });
-        return NextResponse.json(products);
+        return NextResponse.json(subcategory);
     
     } catch (error) {
         console.log(error);

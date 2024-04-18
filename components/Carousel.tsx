@@ -44,7 +44,7 @@ export function CarouselPlugin() {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-full max-w-xl"
+      className="w-11/12"
       onMouseEnter={() => plugin.current.stop()}
       onMouseLeave={() => plugin.current.reset()}
     >
@@ -53,7 +53,7 @@ export function CarouselPlugin() {
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
+                <CardContent className="flex items-center justify-center p-6">
                     <Link href={item.link} rel="noopener noreferrer">
                         <Image src={item.imageUrl} alt={`Carousel Item ${index + 1}`} width={560} height={560} className="w-full h-96 object-cover" />
                     </Link>

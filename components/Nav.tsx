@@ -43,9 +43,9 @@ const Navbar = () => {
     return (
             <NavigationMenu>
                 <NavigationMenuList>
-                    {categories.map((category: Category) => (
+                    {categories.slice(0, 6).map((category: Category) => (
                         <NavigationMenuItem key={category.id}>
-                            <NavigationMenuTrigger>{category.catName}</NavigationMenuTrigger>
+                            <NavigationMenuTrigger><NavigationMenuLink href={`/categories/${category.catName}`}>{category.catName}</NavigationMenuLink></NavigationMenuTrigger>
                             <NavigationMenuContent>
                                 <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                                 

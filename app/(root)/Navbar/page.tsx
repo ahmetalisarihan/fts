@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className='m-2 font-bold'>
             <div className='max-w-7xl m-auto flex justify-between'>
                 <div className='flex items-center justify-start gap-4'>
-                    <div className='bg-blue-400 p-1'><DropdownMenu /></div>
+                    <div><DropdownMenu /></div>
 
                     <Link href='/markalar' className='border-x-2 px-3'>
                         Markalar

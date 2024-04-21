@@ -27,6 +27,7 @@ interface Subcategory {
 
 const MenuDropdown = () => {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -36,7 +37,6 @@ const MenuDropdown = () => {
         setCategories(data);
       } catch (error) {
         console.error(error);
-        // Hata mesajı gösterin
       }
     };
 
@@ -44,28 +44,29 @@ const MenuDropdown = () => {
   }, []);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline"><Menu />Tüm Kategoriler</Button>
+        <Button variant="outline" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
+          <Menu />Tüm Kategoriler
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className="w-56" onMouseEnter={() => setIsOpen(true)} onMouseLeave={() => setIsOpen(false)}>
         <DropdownMenuSeparator />
         {categories.map((category) => (
           <DropdownMenuGroup key={category.id}>
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger><Link href={`/categories/${category.catName}`}>{category.catName}</Link></DropdownMenuSubTrigger>
-              
+              <DropdownMenuSubTrigger>
+                <Link href={`/categories/${category.catName}`}>{category.catName}</Link>
+              </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
-              {category.subcategories.length > 0 && (
-                category.subcategories.map((subcategory) => (
+                {category.subcategories.map((subcategory) => (
                   <DropdownMenuItem key={subcategory.id}>
                     <Link href={`/categories/${category.catName}/subcategories/${subcategory.subcatName}`}>
-                    {subcategory.subcatName}
+                      {subcategory.subcatName}
                     </Link>
                   </DropdownMenuItem>
-                )))}
+                ))}
               </DropdownMenuSubContent>
-             
             </DropdownMenuSub>
             <DropdownMenuSeparator />
           </DropdownMenuGroup>

@@ -46,10 +46,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
   return (
     <div className="flex flex-col items-center relative">
-      <div className='flex space-x-1 '>
+      <div className='flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-2 '>
       <Input
         type="text"
-        className="px-3 py-2 w-80"
+        className="w-full md:w-auto px-4 py-2 border rounded-md"
         placeholder="Ürün Ara..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}

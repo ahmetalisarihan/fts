@@ -14,7 +14,7 @@ const Header = () => {
   }
   return (
     <div className='border-b border-peach pt-5'>
-      <div className='flex items-center justify-between border-b'>
+      <div className='flex items-center justify-between border-b md:flex-row flex-col'>
         <Link href='/' className='flex flex-row items-center justify-content-between align-items-center'>
         <Image src={logo} className='flex' alt='fts' width={100} height={100} />
         <div className='flex flex-col ml-2'>
@@ -25,8 +25,9 @@ const Header = () => {
         <SearchBar onSearch={handleSearchResults} />
         <ContactPhone />
       </div>
+      <div>
       <Navbar/>
-
+      </div>
 
     </div>
   )

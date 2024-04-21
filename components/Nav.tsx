@@ -32,7 +32,6 @@ const Navbar = () => {
                 setCategories(data);
             } catch (error) {
                 console.error(error);
-                // Hata mesajı gösterin
             }
         };
 

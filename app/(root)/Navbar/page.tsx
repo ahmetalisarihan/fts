@@ -9,17 +9,17 @@ const Navbar = () => {
     return (
         <div className='m-2 font-bold'>
             <div className='max-w-7xl m-auto flex justify-between'>
-                <div className='flex items-center justify-start gap-4'>
+                <div className='flex items-center justify-start'>
                     <div><DropdownMenu /></div>
 
-                    <Link href='/markalar' className='border-x-2 px-3'>
+                    <Link href='/Markalar' >
                         Markalar
                     </Link>
                     <Link href='/fiyatlisteleri'>
                         Fiyat Listeleri
                     </Link>
                 </div>
-                <div className=''>
+                <div className='hidden md:flex'>
                 <Nav />
                 </div>
 

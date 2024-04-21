@@ -21,6 +21,9 @@ const CreateProductForm = () => {
   const [selectedSubcategory, setSelectedSubcategory] = useState('')
   const [priceLists, setPriceLists] = useState<TPriceList[]>([])
   const [selectedPriceList, setSelectedPriceList] = useState('')
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDescription, setMetaDescription] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('');
 
@@ -92,6 +95,9 @@ const CreateProductForm = () => {
           selectedCategory,
           selectedSubcategory,
           selectedPriceList,
+          metaTitle,
+          metaDescription,
+          metaKeywords,
         }),
       });
       if (res.ok) {
@@ -193,7 +199,28 @@ const CreateProductForm = () => {
         {priceList.priceName}
       </option>
     ))}
+
 </select>
+<Input
+          value={metaTitle}
+          onChange={e => setMetaTitle(e.target.value)}
+          type="text"
+          placeholder="Meta Title"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          />
+        <Textarea
+          value={metaDescription}
+          onChange={e => setMetaDescription(e.target.value)}
+          placeholder="Meta Description"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          />
+        <Input
+          value={metaKeywords}
+          onChange={e => setMetaKeywords(e.target.value)}
+          type="text"
+          placeholder="Meta Keywords"
+          className="..."
+        />
         <div className=''>
           <Button className="max-w-[180px] p-6 flex justify-center items-center  bg-sky-500 hover:bg-sky-700 focus:ring-sky-500 focus:ring-offset-sky-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
             <svg width="20" height="20" fill="currentColor" className="mr-2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">

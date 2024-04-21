@@ -1,4 +1,5 @@
 import { TProduct } from '@/app/types';
+import Head from 'next/head';
 import Link from 'next/link';
 import React from 'react'
 
@@ -26,6 +27,11 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
 
     return (
         <div>
+            <Head>
+                <title>{`${product?.name || ""} - ${product?.metaTitle || ""} | FTS`}</title>
+                <meta name="description" content={product?.metaDescription || ""} />
+                <meta name="keywords" content={product?.metaKeywords || ""} />
+            </Head>
             <div className='flex'>
                 <div>
 

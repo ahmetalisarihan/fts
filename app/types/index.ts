@@ -21,21 +21,6 @@ export type SubcategoryData = {
     catName: string;
 };
 
-// export type Category = {
-//     id: string;
-//     catName: string;
-//     description: string;
-//     subcategories: Subcategory[];
-//   };
-  
-//   export type Subcategory = {
-//     id: string;
-//     subcatName: string;
-//     description: string;
-//     catName: string; // Ana kategori adı (ilişkisel alan)
-//     category?: Category; // Opsiyonel olarak ana kategori nesnesi
-//     parentCategory: string;
-//   };
 
 export type TBrand = {
     id: string;
@@ -54,6 +39,9 @@ export type TProduct = {
     catName?: string;
     subcatName?: string;
     priceName?: string;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaKeywords?: string;
 };
 
 export type TPriceList = {

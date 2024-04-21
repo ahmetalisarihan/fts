@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import prisma from "@/libs/prismadb";
 import React from 'react'
-import { TSubCategory } from '@/app/types';
+// import { TSubCategory } from '@/app/types';
 
 export async function POST(req: Request) {
     const {
@@ -13,7 +13,10 @@ export async function POST(req: Request) {
         selectedCategory, 
         selectedSubcategory, 
         selectedPriceList, 
-        publicId } =
+        publicId,
+        metaTitle,
+        metaDescription,
+        metaKeywords, } =
     await req.json()
 
     if (!name || !description ) {
@@ -33,7 +36,10 @@ export async function POST(req: Request) {
                 publicId,
                 catName: selectedCategory,
                 subcatName: selectedSubcategory,
-                priceName: selectedPriceList
+                priceName: selectedPriceList,
+                metaTitle,
+                metaDescription,
+                metaKeywords,
                     
                 
             }
@@ -57,26 +63,26 @@ export async function GET() {
 }
 
 
-export const getProductsBySubCategory = async (catName: string): Promise<TSubCategory[]> => {
-    try {
-      const category = await prisma.category.findUnique({
-        where: { catName },
-      });
+// export const getProductsBySubCategory = async (catName: string): Promise<TSubCategory[]> => {
+//     try {
+//       const category = await prisma.category.findUnique({
+//         where: { catName },
+//       });
   
-      if (!category) {
-        throw new Error(`Category with name "${catName}" not found`);
-      }
+//       if (!category) {
+//         throw new Error(`Category with name "${catName}" not found`);
+//       }
   
-      const subCategories = await prisma.subcategory.findMany({
-        where: {
-          category: {
-            id: category.id,
-          },
-        },
-      });
-      return subCategories;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  }
+//       const subCategories = await prisma.subcategory.findMany({
+//         where: {
+//           category: {
+//             id: category.id,
+//           },
+//         },
+//       });
+//       return subCategories;
+//     } catch (error) {
+//       console.error(error);
+//       return [];
+//     }
+//   }

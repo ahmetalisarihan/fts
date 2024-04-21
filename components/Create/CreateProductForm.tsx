@@ -201,24 +201,31 @@ const CreateProductForm = () => {
     ))}
 
 </select>
-<Input
+<p className='font-bold text-lg'>SEO</p>
+        <p className='text-gray-500 text-sm'>Başlıklar genellikle 60-70 karakter arasında olmalıdır.</p>
+        <Input
           value={metaTitle}
           onChange={e => setMetaTitle(e.target.value)}
           type="text"
           placeholder="Meta Title"
+          maxLength={60}
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
+          <p className='text-gray-500 text-sm'>Meta açıklamalar 150-160 karakter arasında olmalıdır.</p>
         <Textarea
           value={metaDescription}
           onChange={e => setMetaDescription(e.target.value)}
           placeholder="Meta Description"
+          maxLength={160}
           className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           />
+          <p className='text-gray-500 text-sm'>Meta anahtar kelimeler artık SEO için kullanılmamaktadır. Ama istenirse 255 karaktere kadar virgüller ile ayırarak yazilabilir.</p>
         <Input
           value={metaKeywords}
           onChange={e => setMetaKeywords(e.target.value)}
           type="text"
           placeholder="Meta Keywords"
+          maxLength={255}
           className="..."
         />
         <div className=''>

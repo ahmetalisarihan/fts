@@ -15,6 +15,7 @@ export type CategoryData = {
     description: string;
 };
 
+
 export type SubcategoryData = {
     subcatName: string;
     description: string;
@@ -45,7 +46,7 @@ export type TProduct = {
 };
 
 export type TPriceList = {
-    id: string;
+    id?: string;
     priceName: string;
     price?: string;
     pdfUrl?: string;

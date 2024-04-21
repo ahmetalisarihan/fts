@@ -52,9 +52,9 @@ const CreateCategoryForm = () => {
                 />
 
                 <Textarea
-                                    value={description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    placeholder="Açıklama"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    placeholder="Açıklama"
                 />
                <Button type='submit' variant='default' size='default' className='max-w-[250px] m-auto'>Kategori Oluştur</Button>
                 {error && <p className="text-red-500">{error}</p>}

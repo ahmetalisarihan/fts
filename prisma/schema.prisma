@@ -66,6 +66,9 @@ model Product{
   priceList     PriceList? @relation(fields: [priceName], references: [priceName])
   image         String?
   publicId      String?
+  metaTitle     String?
+  metaDescription String?
+  metaKeywords  String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -111,11 +114,20 @@ model PriceList{
   updatedAt   DateTime  @updatedAt
 }
 
-
 model Carousel {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   imageUrl     String
   link         String?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+}
+
+model Teklif {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  company   String
+  name      String
+  email     String   
+  phone     String
+  address   String?
+  createdAt DateTime @default(now())
 }

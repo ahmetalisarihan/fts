@@ -15,7 +15,7 @@ const Navbar = () => {
                     <Link href='/Markalar' >
                         Markalar
                     </Link>
-                    <Link href='/fiyatlisteleri'>
+                    <Link href='/fiyat-listeleri'>
                         Fiyat Listeleri
                     </Link>
                 </div>

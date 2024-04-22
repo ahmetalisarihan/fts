@@ -1,29 +1,59 @@
 import { TProduct } from '@/app/types';
+import type { Metadata, ResolvingMetadata } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+
 import React from 'react'
 
 
-const getProducts = async (): Promise<TProduct[] | null> => {
+type Props = {
+    params: { id: string };
+    searchParams: { [key: string]: string | string[] | undefined };
+  };
+  
+  // Ürün verilerini getiren fonksiyon
+  const getProducts = async (): Promise<TProduct[] | null> => {
     try {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/`)
-        if (res.ok) {
-            const products = await res.json()
-            return products
-        }
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/`);
+      if (res.ok) {
+        const products = await res.json();
+        return products;
+      }
     } catch (error) {
-        console.log(error)
+      console.error(error);
     }
-    return null
-};
+    return null;
+  };
+  
+  // Dinamik meta verileri oluşturan fonksiyon
+  export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+  ): Promise<Metadata> {
+    const products = await getProducts();
+    const product = products?.find((p) => p.id === params.id);
+  
+    // Ebeveyn meta verilerine erişip genişletin
+    const previousImages = (await parent).openGraph?.images || [];
+  
+    // Ürün bilgilerine göre meta verileri döndürün
+    return {
+      title: `${product?.name || ''} - ${product?.metaTitle || 'FTS'}`,
+      description: product?.metaDescription || '',
+      keywords: product?.metaKeywords || '',
+      openGraph: {
+        images: [product?.imageUrl || '@/public/logo.png', ...previousImages],
+      },
+    };
+  }
 
 const ProductDetail = async ({ params }: { params: { id: string } }) => {
     const products = await getProducts();
     const product = products?.find(product => product.id === params.id);
 
-    const categoryHierarchy = product?.catName && product?.subcatName
-        ? `${decodeURIComponent(product.catName)} > ${decodeURIComponent(product.subcatName)}`
-        : decodeURIComponent(product?.catName || ""); // Sadece kategori varsa onu göster
+    // const categoryHierarchy = product?.catName && product?.subcatName
+    //     ? `${decodeURIComponent(product.catName)} > ${decodeURIComponent(product.subcatName)}`
+    //     : decodeURIComponent(product?.catName || ""); // Sadece kategori varsa onu göster
 
     return (
         <div>

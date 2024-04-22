@@ -2,6 +2,7 @@ import { TPriceList } from '@/app/types'
 import Link from 'next/link'
 import React from 'react'
 
+
 const getPriceList = async ():Promise<TPriceList[] | null> => {
     try {
         const res = await fetch(`${process.env.NEXTAUTH_URL}/api/pricelists`)
@@ -25,7 +26,7 @@ const PriceList = async () => {
             <Link 
             key={priceList.id} 
             href={`/pricelists/${priceList.priceName}`}
-            className='flex text-sm cursor-pointer hover:text-blue-500'>
+            className='flex text-base cursor-pointer border-b py-2 hover:text-blue-500 hover:bg-blue-50'>
                 {priceList.priceName}
             </Link>
         ))}

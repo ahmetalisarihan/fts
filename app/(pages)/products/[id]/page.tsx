@@ -84,7 +84,7 @@ const ProductDetail = async ({ params }: { params: { id: string } }) => {
                     <div>
                         <span className="font-bold">Fiyat Listesi: </span>{" "}
                         <Link
-                            href={`/fiyat-listesi/${product?.priceName || ""}`}
+                            href={`/pricelists/${product?.priceName || ""}`}
                             target='_blank'
                             className='text-blue-500'>
                             {decodeURIComponent(product?.priceName || "")}

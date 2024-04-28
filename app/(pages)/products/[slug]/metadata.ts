@@ -1,10 +1,10 @@
 import { useProducts } from "@/utils/products";
 
 
-export async function metadata({ params }: { params: { id: string } }) {
+export async function metadata({ params }: { params: { slug: string } }) {
     const products = useProducts();
 
-    const product = products?.find(p => p.id === params.id);
+    const product = products?.find(p => p.slug === params.slug);
   
     if (!product) {
       return {
@@ -20,7 +20,7 @@ export async function metadata({ params }: { params: { id: string } }) {
       openGraph: {
         title: decodeURIComponent(product.name),
         description: product.description,
-        url: `${process.env.NEXTAUTH_URL}/products/${product.id}`,
+        url: `${process.env.NEXTAUTH_URL}/products/${product.slug}`,
         images: [
           {
             url: product.imageUrl,

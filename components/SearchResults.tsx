@@ -20,7 +20,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
       {isOpen && (
         <PopoverContent className="w-80">
           {results.map((result) => (
-            <Link key={result.id} href={`/products/${result.id}`}>
+            <Link key={result.slug} href={`/products/${result.slug}`}>
             <div className="mb-2 hover:bg-gray-200 cursor-pointer">
               {result.name}
             </div>

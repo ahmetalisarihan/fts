@@ -1,13 +1,13 @@
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: { params: { slug: string } }) {
 
 try {
-    const { id } = params; 
+    const { slug } = params; 
     const product = await prisma.product.findUnique({
         where: {
-            id: params.id, 
+            slug: params.slug, 
         },
     });
     return NextResponse.json(product);
@@ -18,15 +18,17 @@ try {
 }
 }
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: { slug: string } }) {
     const { name, description,isRecommended, selectedBrand, imageUrl, selectedCategory, selectedPriceList, publicId } = await req.json();
+    const slug = name.toLowerCase().replace(/ /g, "-");
     try {
         const updatedProduct = await prisma.product.update({
             where: {
-                id: params.id,
+                slug: params.slug,
             },
             data: {
                 name,
+                slug,
                 description,
                 brandName: selectedBrand,
                 isRecommended,
@@ -43,11 +45,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: { slug: string } }) {
     try {
         const deletedProduct = await prisma.product.delete({
             where: {
-                id: params.id,
+                slug: params.slug,
             },
         });
         return NextResponse.json(deletedProduct);

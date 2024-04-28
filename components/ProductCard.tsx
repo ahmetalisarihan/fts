@@ -9,7 +9,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link href={`/products/${product.id}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center transform transition duration-500 hover:scale-105">
+    <Link href={`/products/${product.slug}`} className="border rounded-lg p-4 hover:shadow-md flex flex-col items-center transform transition duration-500 hover:scale-105">
       <div> {/* Bu div etiketi, ürün kartının tamamını kapsar */}
         <div className="aspect-w-9 aspect-h-9 object-cover overflow-hidden">
           {product.imageUrl ? (

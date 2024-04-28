@@ -32,6 +32,7 @@ export type TBrand = {
 export type TProduct = {
     id: string;
     name: string;
+    slug: string;
     description?: string;
     isRecommended?: boolean;
     imageUrl?: string;

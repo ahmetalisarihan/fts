@@ -7,7 +7,7 @@ import React from 'react'
 
 
 type Props = {
-    params: { id: string };
+    params: { slug: string };
     searchParams: { [key: string]: string | string[] | undefined };
   };
   
@@ -31,7 +31,7 @@ type Props = {
     parent: ResolvingMetadata
   ): Promise<Metadata> {
     const products = await getProducts();
-    const product = products?.find((p) => p.id === params.id);
+    const product = products?.find((p) => p.slug === params.slug);
   
     // Ebeveyn meta verilerine erişip genişletin
     const previousImages = (await parent).openGraph?.images || [];
@@ -47,9 +47,9 @@ type Props = {
     };
   }
 
-const ProductDetail = async ({ params }: { params: { id: string } }) => {
+const ProductDetail = async ({ params }: { params: { slug: string } }) => {
     const products = await getProducts();
-    const product = products?.find(product => product.id === params.id);
+    const product = products?.find(product => product.slug === params.slug);
 
     // const categoryHierarchy = product?.catName && product?.subcatName
     //     ? `${decodeURIComponent(product.catName)} > ${decodeURIComponent(product.subcatName)}`

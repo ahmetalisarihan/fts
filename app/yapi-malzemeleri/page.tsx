@@ -44,7 +44,7 @@ export default async function YapiMalzemeleri() {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4'>
         {products && products.length > 0 ? (
   products.map((product: TProduct) => (
-    <ProductCard key={product.id} product={product}
+    <ProductCard key={product.slug} product={product}
     />
   ))
 ) : (

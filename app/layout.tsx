@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { ClerkProvider } from '@clerk/nextjs'
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Banner from "@/components/Banner";
@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 
 const RootLayout = ({ children }: React.PropsWithChildren) => (
+  <ClerkProvider>
   <html lang="en">
     <body className={roboto.className}>
       <div className="max-w-6xl lg:px-16 mx-auto py-2 shadow-xl min-h-screen 
@@ -25,12 +26,13 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
       <Banner />
       <Header />
       <div className="flex-auto">
-      <AntdRegistry>{children}</AntdRegistry>
+      {children}
       </div>
       <Footer />
       </div>
     </body>
   </html>
+  </ClerkProvider>
 );
 
 export default RootLayout;

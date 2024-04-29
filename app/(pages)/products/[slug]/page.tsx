@@ -51,33 +51,24 @@ const ProductDetail = async ({ params }: { params: { slug: string } }) => {
     const products = await getProducts();
     const product = products?.find(product => product.slug === params.slug);
 
-    // const categoryHierarchy = product?.catName && product?.subcatName
-    //     ? `${decodeURIComponent(product.catName)} > ${decodeURIComponent(product.subcatName)}`
-    //     : decodeURIComponent(product?.catName || ""); // Sadece kategori varsa onu göster
 
     return (
         <div>
             <Head>
-                <title>{`${product?.name || ""} - ${product?.metaTitle || ""} | FTS`}</title>
+                <title>{`${product?.name ? product.name + " - " : ""}${product?.metaTitle ? product.metaTitle + " | " : ""}FTS`}</title>
                 <meta name="description" content={product?.metaDescription || ""} />
                 <meta name="keywords" content={product?.metaKeywords || ""} />
             </Head>
-            <div className='flex'>
+            <div className='grid grid-cols-1 sm:grid-cols-2'>
                 <div>
 
                     <img src={product?.imageUrl || ""} alt={product?.name || ""} width={400} height={400} />
-                    <div className='text-wrap'>
-                        <span className="font-bold">Malzeme Açıklaması: </span>{" "}
-                        <pre>{product?.description || ""}</pre>
-                    </div>
                 </div>
                 <div className='p-4'>
-                    <h1 className='font-bold text-xl'>
+                    <h1 className='font-bold text-xl py-2'>
                         <span className="">Malzeme Adı: </span>{" "}
-                        <span className=''>{decodeURIComponent(product?.name || "")}</span>
+                        <span className="text-blue-500">{decodeURIComponent(product?.name || "")}</span>
                     </h1>
-
-
 
 
                     <div>
@@ -124,6 +115,12 @@ const ProductDetail = async ({ params }: { params: { slug: string } }) => {
 
                     </div>
                 </div>
+            </div>
+            <div>
+            <div className='text-wrap pl-4'>
+                        <span className="font-bold">Malzeme Açıklaması: </span>{" "}
+                        <pre>{product?.description || ""}</pre>
+                    </div>
             </div>
 
         </div>

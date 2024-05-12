@@ -26,19 +26,20 @@ const PriceListPage = async ({ params }: { params: { priceName: string } }) => {
 
   return (
     <div>
-<h1 className="font-bold text-xl py-2">
-  <span>Fiyat Listesi: </span> {decodeURIComponent(priceName)}
-</h1>
-<h2 className='mt-2'>Marka: <span className='text-blue-500'>{decodeURIComponent(priceName)}</span></h2>
+      <h1 className="font-bold text-xl py-2">
+        <span>Fiyat Listesi: </span> {decodeURIComponent(priceName)}
+      </h1>
+      <h2 className='mt-2'>Marka: <span className='text-blue-500'>{decodeURIComponent(priceName)}</span></h2>
       {prices.pdfUrl && (
         <div className='sm:flex flex-row items-center justify-center sm:justify-between mt-4 border rounded-md px-2 py-5'>
           <Link href={prices.pdfUrl} target='_blank'><Button>Fiyat Listesini Görüntüle</Button></Link>
-          <p className='flex flex-col'>Oluşturulma Tarihi <span>{new Date(prices.createdAt).toLocaleDateString()}</span></p>
-          <p className='flex flex-col'>Güncelleme Tarihi <span>{new Date(prices.updatedAt).toLocaleDateString()}</span></p>
+          <p className='flex flex-col'>Oluşturulma Tarihi <span>{prices.createdAt ? new Date(prices.createdAt).toLocaleDateString() : ''}</span></p>
+          <p className='flex flex-col'>Güncelleme Tarihi <span>{prices.updatedAt ? new Date(prices.updatedAt).toLocaleDateString() : ''}</span></p>
         </div>
       )}
     </div>
   );
-};
+}
+
 
 export default PriceListPage;

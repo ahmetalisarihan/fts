@@ -47,12 +47,13 @@ export type TProduct = {
 };
 
 export type TPriceList = {
-    createdAt: string | number | Date;
+    
     id?: string;
     priceName: string;
     price?: string;
     pdfUrl: string;
-    updatedAt: string | number | Date;
+    createdAt?: string | number | Date;
+    updatedAt?: string | number | Date;
 };
 
 export type TCarousel = {

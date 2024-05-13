@@ -1,19 +1,15 @@
 import { TProduct } from '@/app/types';
-import { use } from 'react';
 
-export const getProducts = async (): Promise<TProduct[] | null> => {
+// Belirli bir ürün ID'si için ürün bilgilerini çekme
+export const getProductById = async (slug: string): Promise<TProduct | null> => {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products`);
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/${slug}`);
     if (res.ok) {
-      const products = await res.json();
-      return products;
+      const product = await res.json();
+      return product;
     }
   } catch (error) {
-    console.log(error);
+    console.error('Failed to fetch product:', error);
   }
   return null;
 };
-
-export function useProducts() {
-  return use(getProducts());
-}

@@ -1,40 +1,45 @@
-import { useProducts } from "@/utils/products";
+import { Metadata, ResolvingMetadata } from 'next';
+import { getProductById } from '@/utils/products'; 
 
 
-export async function metadata({ params }: { params: { slug: string } }) {
-    const products = useProducts();
+type Props = {
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
 
-    const product = products?.find(p => p.slug === params.slug);
-  
-    if (!product) {
-      return {
-        title: 'Ürün Bulunamadı',
-        description: 'Aradığınız ürün şu anda mevcut değil.',
-      };
-    }
-  
-    // Open Graph metadata'sını oluşturun
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const product = await getProductById(params.slug);
+
+  if (!product) {
     return {
-      title: decodeURIComponent(product.name),
-      description: product.description,
-      openGraph: {
-        title: decodeURIComponent(product.name),
+      title: 'Ürün Bulunamadı',
+      description: 'Aradığınız ürün şu anda mevcut değil.'
+    };
+  }
+
+  const previousImages = (await parent).openGraph?.images || [];
+  
+  return {
+    title: product.name,
+    description: product.description,
+    openGraph: {
+        title: product.name,
         description: product.description,
         url: `${process.env.NEXTAUTH_URL}/products/${product.slug}`,
         images: [
-          {
-            url: product.imageUrl,
-            width: 800,
-            height: 600,
-          },
+            { url: product.imageUrl ?? '', width: 800, height: 600 },
+            ...previousImages
         ],
-        type: 'product',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: decodeURIComponent(product.name),
-        description: product.description,
-        images: [product.imageUrl],
-      },
-    };
+        type: 'website' // Change the type to one of the allowed values
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: product.name,
+      description: product.description,
+      images: product.imageUrl
+    }
   }
+}

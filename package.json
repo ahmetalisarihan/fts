@@ -4,13 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "postinstall": "prisma generate",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.3.0",
-    "@ant-design/nextjs-registry": "^1.0.0",
     "@auth/prisma-adapter": "^1.5.0",
     "@clerk/clerk-sdk-node": "^5.0.2",
     "@clerk/nextjs": "^5.0.3",
@@ -24,7 +23,6 @@
     "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-slot": "^1.0.2",
     "@vis.gl/react-google-maps": "^0.7.0",
-    "antd": "^5.14.1",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
     "cloudinary": "^2.0.1",
@@ -35,7 +33,6 @@
     "eslint-config-prettier": "^9.1.0",
     "lucide-react": "^0.367.0",
     "mongodb": "^6.4.0",
-    "mongoose": "^8.2.0",
     "multer": "^1.4.5-lts.1",
     "next": "14.2.0",
     "next-cloudinary": "^6.0.1",

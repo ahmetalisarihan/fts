@@ -1,21 +1,27 @@
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 
+export const dynamic = 'force-dynamic'; // Her istek için yeni veri al
+export const revalidate = 0; // Önbelleğe almayı devre dışı bırak
+
 export async function GET(req: Request, { params }: { params: { slug: string } }) {
+    try {
+        const { slug } = params;
+        const product = await prisma.product.findUnique({
+            where: {
+                slug: slug,
+            },
+        });
 
-try {
-    const { slug } = params; 
-    const product = await prisma.product.findUnique({
-        where: {
-            slug: params.slug, 
-        },
-    });
-    return NextResponse.json(product);
+        if (!product) {
+            return NextResponse.json({ message: "Ürün bulunamadı" }, { status: 404 });
+        }
 
-} catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Bir hata oluştu. Lütfen tekrar deneyin." });
-}
+        return NextResponse.json(product);
+    } catch (error) {
+        console.error("Ürün getirilirken hata oluştu:", error);
+        return NextResponse.json({ message: "Bir hata oluştu. Lütfen tekrar deneyin." }, { status: 500 });
+    }
 }
 
 export async function PUT(req: Request, { params }: { params: { slug: string } }) {

@@ -15,6 +15,12 @@ export type CategoryData = {
     description: string;
 };
 
+export type BrandData = {
+    id?: string;
+    brandName: string;
+    description: string;
+};
+
 
 export type SubcategoryData = {
     subcatName: string;

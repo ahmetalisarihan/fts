@@ -50,7 +50,7 @@ export default function Home() {
         <RecomendedProducts />
       </div>
       <div className='fixed bottom-6 right-10 z-50 max-w-6xl'>
-        <Link href="https://api.whatsapp.com/send?phone=905346181874&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
+        <Link href="https://api.whatsapp.com/send?phone=905395160183&text=Merhaba,%20bilgi%20almak%20istiyorum?" title='WhatsApp İletişim' target="_blank" rel="noopener noreferrer">
           <Image src={whatsapp} alt="WhatsApp" width={55} height={55} />
         </Link>
       </div>

@@ -5,7 +5,7 @@ const ContactPhone = () => {
   return (
     <div className='flex md:flex-row flex-col gap-2 text-sm'>
         <p>Bize Ulaşın</p>
-        <a className='font-bold' href="tel:+905346181874">+90 534 618 18 74</a>
+        <a className='font-bold' href="tel:+905395160183">+90 539 516 01 83</a>
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import CreateCategoryForm from '@/components/Create/CreateCategoryForm';
+import CreateBrandForm from '@/components/Create/CreateBrand';
 import CreateProductForm from '@/components/Create/CreateProductForm';
 import CreateSubcategoryForm from '@/components/Create/CreateSubcategoryForm';
 import CreateCarousel from '@/components/Create/CreateCarousel';
@@ -14,7 +15,7 @@ const Dashboard: React.FC = () => {
 
     const [selectedForm, setSelectedForm] = useState('product');
 
-    const handleFormChange = (formType: 'product' | 'category' | 'subcategory' | 'carousel' | 'priceList') => {
+    const handleFormChange = (formType: 'product' | 'category' | 'subcategory'  | 'brand' | 'carousel' | 'priceList') => {
       setSelectedForm(formType);
     };
   
@@ -54,6 +55,15 @@ const Dashboard: React.FC = () => {
 
           <Button
             className={`px-4 py-2 rounded ${
+              selectedForm === 'brand' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+            }`}
+            onClick={() => handleFormChange('brand')}
+          >
+            Marka Oluştur
+          </Button>
+
+          <Button
+            className={`px-4 py-2 rounded ${
               selectedForm === 'carousel' ? 'bg-blue-500 text-white' : 'bg-gray-200'
             }`}
             onClick={() => handleFormChange('carousel')}
@@ -73,6 +83,7 @@ const Dashboard: React.FC = () => {
         {selectedForm === 'product' && <CreateProductForm />}
         {selectedForm === 'category' && <CreateCategoryForm />}
         {selectedForm === 'subcategory' && <CreateSubcategoryForm />} 
+        {selectedForm === 'brand' && <CreateBrandForm />}
         {selectedForm === 'carousel' && <CreateCarousel />}
         {selectedForm === 'priceList' && <CreatePriceList />}
       </div>

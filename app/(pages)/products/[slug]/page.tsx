@@ -40,6 +40,8 @@ export async function generateMetadata(
     description: product?.metaDescription || '',
     keywords: product?.metaKeywords || '',
     openGraph: {
+      title: `${product?.name || ''} - ${product?.metaTitle || 'FTS'}`,
+      description: product?.metaDescription || '',
       images: [
         `${metadataBase}${product?.imageUrl || '/public/logo.png'}`,
         ...previousImages.map((img) => `${metadataBase}${img}`),

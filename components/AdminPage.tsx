@@ -13,7 +13,7 @@ import { UserButton } from '@clerk/nextjs';
 
 const Dashboard: React.FC = () => {
 
-    const [selectedForm, setSelectedForm] = useState('product');
+    const [selectedForm, setSelectedForm] = useState<'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList'>('product');
 
     const handleFormChange = (formType: 'product' | 'category' | 'subcategory'  | 'brand' | 'carousel' | 'priceList') => {
       setSelectedForm(formType);
@@ -24,7 +24,7 @@ const Dashboard: React.FC = () => {
         <div>
             <div className='flex'><span className='ml-auto'><UserButton /></span></div>
         
-          <h1 className="text-2xl font-bold">Yönetim Paneli</h1>
+          <div className="text-2xl font-bold">Yönetim Paneli</div>
         </div>
         <div className="flex gap-4 my-4 items-center justify-center">
           <Button

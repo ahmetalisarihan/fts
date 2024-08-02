@@ -28,10 +28,13 @@ const Navbar = () => {
         const fetchCategories = async () => {
             try {
                 const response = await fetch('/api/categories');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 const data = await response.json();
                 setCategories(data);
             } catch (error) {
-                console.error(error);
+                console.error('Fetch error:', error);
             }
         };
 

@@ -25,13 +25,13 @@ export function CarouselPlugin() {
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
-        console.log('Fetching data from /api/carousels');
+        // console.log('Fetching data from /api/carousels');
         const response = await fetch('/api/carousels');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data: CarouselItemProps[] = await response.json();
-        console.log('Data received:', data);
+        // console.log('Data received:', data);
         setCarousels(data);
       } catch (error) {
         console.error('Failed to fetch carousels:', error);
@@ -44,7 +44,7 @@ export function CarouselPlugin() {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-11/12"
+      // className="w-12/12"
       onMouseEnter={() => plugin.current.stop()}
       onMouseLeave={() => plugin.current.reset()}
     >
@@ -63,8 +63,8 @@ export function CarouselPlugin() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className='left-0'/>
+      <CarouselNext className='right-0'/>
     </Carousel>
   );
 }

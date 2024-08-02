@@ -12,8 +12,10 @@ type Props = {
 const getProducts = async (): Promise<TProduct[] | null> => {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/`);
+    console.log('Fetch URL:', `${process.env.NEXTAUTH_URL}/api/products/`);
     if (res.ok) {
       const products: TProduct[] = await res.json();
+      console.log('Fetched products:', products);
       return products;
     } else {
       console.error('Failed to fetch products:', res.statusText);
@@ -52,6 +54,9 @@ export async function generateMetadata(
 
 export async function generateStaticParams() {
   const products = await getProducts();
+  console.log('Generated static params:', products?.map((product) => ({
+    slug: product.slug,
+  })) || []);
   return products?.map((product) => ({
     slug: product.slug,
   })) || [];
@@ -59,6 +64,7 @@ export async function generateStaticParams() {
 
 const ProductDetail = async ({ params }: { params: { slug: string } }) => {
   const products = await getProducts();
+  console.log('Fetched products in ProductDetail:', products);
   const product = products?.find((product) => product.slug === params.slug);
 
   if (!product) {
@@ -120,5 +126,3 @@ const ProductDetail = async ({ params }: { params: { slug: string } }) => {
     </div>
   );
 };
-
-export default ProductDetail;

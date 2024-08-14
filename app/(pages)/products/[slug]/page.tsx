@@ -52,13 +52,15 @@ export async function generateMetadata(
   };
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ params: {slug: string} }[]> {
   const products = await getProducts();
   console.log('Generated static params:', products?.map((product) => ({
     slug: product.slug,
   })) || []);
   return products?.map((product) => ({
-    slug: product.slug,
+    params: {
+      slug: product.slug,
+    },
   })) || [];
 }
 
@@ -126,3 +128,4 @@ const ProductDetail = async ({ params }: { params: { slug: string } }) => {
     </div>
   );
 };
+export default ProductDetail;

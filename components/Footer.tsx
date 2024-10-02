@@ -27,7 +27,7 @@ const Footer = () => {
               <li className='text-[22px] list-none font-semibold text-blue-500 py-2'>İletişim</li>
               <Link href='mailto:info@fetesendustriyelyapi.com.tr' className='my-2 hover:text-sky-400'>Email: info@fetesendustriyelyapi.com.tr</Link>
               <a href="tel:+90 539 516 01 83<" className='my-2 hover:text-sky-400'>Telefon: +90 539 516 01 83</a>
-              <Link href='https://www.google.com/maps/place/Fetes+End%C3%BCstriyel+Yap%C4%B1+Malzemeleri/@36.6462017,29.1782603,17z/data=!3m1!4b1!4m6!3m5!1s0x14c045b36ce002f5:0x62510c5f96e3b3ca!8m2!3d36.6462017!4d29.1808406!16s%2Fg%2F11ldhj5tjj?entry=ttu' className='my-2 hover:text-sky-400' target='_blank'>Adres: Karaçulha Mahallesi 338. Sokak No: 2/1 Fethiye/MUĞLA</Link>
+              <Link href='https://www.google.com/maps/place/Fetes+End%C3%BCstriyel+Yap%C4%B1+Malzemeleri/@36.6462017,29.1782603,17z/data=!3m1!4b1!4m6!3m5!1s0x14c045b36ce002f5:0x62510c5f96e3b3ca!8m2!3d36.6462017!4d29.1808406!16s%2Fg%2F11ldhj5tjj?entry=ttu' className='my-2 hover:text-sky-400' target='_blank'>Adres: Karaçulha Mahallesi Dr. Devlet Bahçeli Bulvarı No:36/A Fethiye/MUĞLA</Link>
               <div className='flex space-x-4'>
                 <Link href={'/'} className='hover:text-sky-400 transform  hover:scale-150 transition-all duration-150 ease-in-out'><FacebookFilled style={{ fontSize: '25px' }}/> </Link>
                 <Link href={'/'} className='hover:text-sky-400 transform  hover:scale-150 transition-all duration-150 ease-in-out'><InstagramFilled style={{ fontSize: '25px' }}/> </Link>

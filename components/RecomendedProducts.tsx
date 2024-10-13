@@ -1,8 +1,8 @@
 "use client"
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { TProduct } from '@/app/types';
 import ProductCard from './ProductCard';
+import RecommendedProductsSkeleton from './Skeleton/RecommendedProductsSkeleton';
 
 
 const RecomendedProducts: React.FC = () => {
@@ -30,7 +30,7 @@ const RecomendedProducts: React.FC = () => {
     fetchProducts();
   }, []);
 
-  if (isLoading) return <div>Yükleniyor...</div>;
+  if (isLoading) return <RecommendedProductsSkeleton count={recomendedProducts.length || 4} />; // Ürün sayısına göre skeleton göster
   if (error) return <div>Hata: {error.message}</div>;
 
   return (

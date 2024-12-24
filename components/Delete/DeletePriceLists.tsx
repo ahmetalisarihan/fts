@@ -36,15 +36,20 @@ const DeletePriceLists: React.FC = () => {
             console.error("Price list priceName is undefined.");
             return;
         }
-
+    
         try {
-            const response = await fetch(`/api/pricelists/${priceName}`, {
+            const response = await fetch(`/api/pricelists/${encodeURIComponent(priceName)}`, {
                 method: 'DELETE',
             });
+    
             if (!response.ok) {
                 throw new Error('Fiyat listesi silinemedi.');
             }
-            setPriceLists(priceLists.filter((list) => list.priceName !== priceName));
+    
+            // Verileri yeniden çek
+            const updatedResponse = await fetch('/api/pricelists', { method: 'GET' });
+            const updatedData: PriceList[] = await updatedResponse.json();
+            setPriceLists(updatedData);
         } catch (err) {
             setError((err as Error).message);
         }

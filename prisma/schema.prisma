@@ -132,3 +132,13 @@ model Teklif {
   address   String?
   createdAt DateTime @default(now())
 }
+
+model Campaigns {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  title     String?
+  description String?
+  imageUrl  String
+  link      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime   @updatedAt
+}

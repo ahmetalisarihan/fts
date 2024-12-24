@@ -9,16 +9,20 @@ import CreateCarousel from '@/components/Create/CreateCarousel';
 import { Button } from '@/components/ui/button';
 import CreatePriceList from '@/components/Create/CreatePriceList';
 import DeletePriceLists from './Delete/DeletePriceLists';
-import DeleteCarousel from './Delete/DeleteCarousel'; // Yeni bileşeni import ettik
-
+import DeleteCarousel from './Delete/DeleteCarousel';
 import { UserButton } from '@clerk/nextjs';
+import CreateCampaigns from './Create/CreateCampaigns';
+import DeleteCampaign from './Delete/DeleteCampain';
+
 
 const Dashboard: React.FC = () => {
     const [selectedForm, setSelectedForm] = useState<
-        'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList'
+        'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList' | 'campaign'
     >('product');
 
-    const handleFormChange = (formType: 'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList') => {
+    const handleFormChange = (
+        formType: 'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList' | 'campaign'
+    ) => {
         setSelectedForm(formType);
     };
 
@@ -81,6 +85,14 @@ const Dashboard: React.FC = () => {
                 >
                     Fiyat Listesi Yönetimi
                 </Button>
+                <Button
+                    className={`px-4 py-2 rounded ${
+                        selectedForm === 'campaign' ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                    }`}
+                    onClick={() => handleFormChange('campaign')}
+                >
+                    Kampanya Yönetimi
+                </Button>
             </div>
 
             {selectedForm === 'product' && <CreateProductForm />}
@@ -90,13 +102,19 @@ const Dashboard: React.FC = () => {
             {selectedForm === 'carousel' && (
                 <div>
                     <CreateCarousel />
-                    <DeleteCarousel /> {/* Carousel silme bileşeni */}
+                    <DeleteCarousel />
                 </div>
             )}
             {selectedForm === 'priceList' && (
                 <div>
                     <CreatePriceList />
                     <DeletePriceLists />
+                </div>
+            )}
+            {selectedForm === 'campaign' && (
+                <div>
+                    <CreateCampaigns />
+                    <DeleteCampaign />  {/* Kampanyaları yönetme ve silme işlemi */}
                 </div>
             )}
         </div>

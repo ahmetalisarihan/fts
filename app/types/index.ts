@@ -67,3 +67,10 @@ export type TCarousel = {
     imageUrl?: string;
     carouselLink?: string;
 };
+
+export type TCampaigns = {
+    id: string;
+    title?: string;
+    imageUrl: string;
+    link?: string;
+};

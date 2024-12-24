@@ -40,6 +40,8 @@ const CreateCarousel = () => {
         }
     };
 
+    
+
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <p className='text-2xl font-bold my-4'>Carousel Oluştur</p>

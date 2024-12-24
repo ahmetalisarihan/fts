@@ -8,12 +8,15 @@ import CreateSubcategoryForm from '@/components/Create/CreateSubcategoryForm';
 import CreateCarousel from '@/components/Create/CreateCarousel';
 import { Button } from '@/components/ui/button';
 import CreatePriceList from '@/components/Create/CreatePriceList';
+import DeletePriceLists from './Delete/DeletePriceLists';
+import DeleteCarousel from './Delete/DeleteCarousel'; // Yeni bileşeni import ettik
 
 import { UserButton } from '@clerk/nextjs';
-import DeletePriceLists from './Delete/DeletePriceLists';
 
 const Dashboard: React.FC = () => {
-    const [selectedForm, setSelectedForm] = useState<'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList'>('product');
+    const [selectedForm, setSelectedForm] = useState<
+        'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList'
+    >('product');
 
     const handleFormChange = (formType: 'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList') => {
         setSelectedForm(formType);
@@ -68,7 +71,7 @@ const Dashboard: React.FC = () => {
                     }`}
                     onClick={() => handleFormChange('carousel')}
                 >
-                    Carousel Oluştur
+                    Carousel Yönetimi
                 </Button>
                 <Button
                     className={`px-4 py-2 rounded ${
@@ -84,11 +87,16 @@ const Dashboard: React.FC = () => {
             {selectedForm === 'category' && <CreateCategoryForm />}
             {selectedForm === 'subcategory' && <CreateSubcategoryForm />}
             {selectedForm === 'brand' && <CreateBrandForm />}
-            {selectedForm === 'carousel' && <CreateCarousel />}
+            {selectedForm === 'carousel' && (
+                <div>
+                    <CreateCarousel />
+                    <DeleteCarousel /> {/* Carousel silme bileşeni */}
+                </div>
+            )}
             {selectedForm === 'priceList' && (
                 <div>
                     <CreatePriceList />
-                    <DeletePriceLists /> {/* Fiyat listesi yönetimi */}
+                    <DeletePriceLists />
                 </div>
             )}
         </div>

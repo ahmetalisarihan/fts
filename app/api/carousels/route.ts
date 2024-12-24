@@ -56,3 +56,44 @@ export async function POST(request: NextRequest) {
         });
     }
 }
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const id = searchParams.get("id");
+
+        if (!id) {
+            return new Response(JSON.stringify({ error: "ID gerekli." }), {
+                status: 400,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        }
+
+        // Veritabanından silme işlemi
+        await prisma.carousel.delete({
+            where: { id },
+        });
+
+        return new Response(JSON.stringify({ message: "Carousel başarıyla silindi." }), {
+            status: 200,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+    } catch (error) {
+        console.error(error);
+        return new Response(
+            JSON.stringify({
+                message: "Carousel silinirken bir hata oluştu.",
+            }),
+            {
+                status: 500,
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    }
+}

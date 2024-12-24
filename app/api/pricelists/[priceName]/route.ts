@@ -21,3 +21,26 @@ export async function GET(req: Request, { params }: { params: { priceName: strin
     return NextResponse.json({ message: "Bir hata oluştu. Lütfen tekrar deneyin." }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request, { params }: { params: { priceName: string } }) {
+  const { priceName } = params;  // URL'den priceName parametresini al
+
+  if (!priceName) {  // priceName yoksa hata döndür
+    return NextResponse.json({ error: 'priceName alanı gereklidir.' }, { status: 400 });
+  }
+
+  try {
+    // priceName'e göre fiyat listesini sil
+    await prisma.priceList.delete({
+      where: { priceName },
+    });
+
+    return NextResponse.json({ message: 'Fiyat listesi başarıyla silindi.' });
+  } catch (error) {  // Silme işlemi sırasında hata oluşursa
+    console.error(error);  // Hatayı konsola yaz
+    return NextResponse.json(
+      { error: 'Fiyat listesi silinirken bir hata oluştu.', details: error },
+      { status: 500 }
+    );
+  }
+}

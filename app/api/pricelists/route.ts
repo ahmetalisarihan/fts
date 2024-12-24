@@ -31,3 +31,24 @@ export async function GET() {
     
 
 }
+
+export async function DELETE(req: Request) {
+    try {
+        const { priceName } = await req.json();
+
+        if (!priceName) {
+            return NextResponse.json({ error: 'priceName alanı gereklidir.' }, { status: 400 });
+        }
+
+        await prisma.priceList.delete({
+            where: { priceName },
+        });
+
+        return NextResponse.json({ message: 'Fiyat listesi başarıyla silindi.' });
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Fiyat listesi silinirken bir hata oluştu.', details: error },
+            { status: 500 }
+        );
+    }
+}

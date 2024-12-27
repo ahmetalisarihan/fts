@@ -1,38 +1,37 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
-import { TSubCategory } from "@/app/types";
 
+// POST: Yeni alt kategori oluşturma
 export async function POST(req: Request) {
     const { subcatName, description, catName } = await req.json();
-  
+
     if (!subcatName || !description || !catName) {
-      return NextResponse.json({ error: 'Alt kategori adı, açıklama ve ana kategori adı zorunludur!' }, { status: 400 });
+        return NextResponse.json({ error: 'Alt kategori adı, açıklama ve ana kategori adı zorunludur!' }, { status: 400 });
     }
-  
+
     try {
-      const newSubcategory = await prisma.subcategory.create({
-        data: {
-          subcatName,
-          description,
-          category: {
-              connect: { catName },
+        const newSubcategory = await prisma.subcategory.create({
+            data: {
+                subcatName,
+                description,
+                category: {
+                    connect: { catName },
+                },
             },
-        },
-      });
-      return NextResponse.json(newSubcategory);
+        });
+        return NextResponse.json(newSubcategory);
     } catch (error) {
-      console.error(error);
-      return NextResponse.json({ message: 'Alt kategori oluşturulamadı.' }, { status: 500 });
+        console.error(error);
+        return NextResponse.json({ message: 'Alt kategori oluşturulamadı.' }, { status: 500 });
     }
-  }
+}
 
-
-
-  export async function GET(req: Request) {
+// GET: Alt kategorileri ve ürünleri getir
+export async function GET(req: Request) {
     try {
         const { searchParams } = new URL(req.url);
         const catName = searchParams.get('catName');
-        
+
         if (!catName) {
             return NextResponse.json({ message: 'Kategori adı belirtilmelidir.' }, { status: 400 });
         }
@@ -42,10 +41,10 @@ export async function POST(req: Request) {
             include: {
                 subcategories: {
                     include: {
-                        products: true
-                    }
-                }
-            }
+                        products: true,
+                    },
+                },
+            },
         });
 
         if (!category) {
@@ -57,4 +56,54 @@ export async function POST(req: Request) {
         console.error(error);
         return NextResponse.json({ message: 'Alt kategoriler ve ürünler alınamadı.' }, { status: 500 });
     }
+}
+
+// PATCH: Alt kategoriyi güncelle
+export async function PATCH(req: Request) {
+  try {
+    const { subcatName, description, catName, id } = await req.json();
+
+    console.log('Gelen Veri:', { subcatName, description, catName, id });
+
+    if (!subcatName || !catName || !id) {
+      console.error('Eksik veri:', { subcatName, catName, id });
+      return NextResponse.json(
+        { message: 'Alt kategori adı, ana kategori adı ve id zorunludur.' },
+        { status: 400 }
+      );
+    }
+
+    const updatedSubcategory = await prisma.subcategory.update({
+      where: { id },  // id'yi kullanarak güncelleme yapıyoruz
+      data: { subcatName, description, catName },
+    });
+
+    console.log('Güncellenen Alt Kategori:', updatedSubcategory);
+    
+    return NextResponse.json(updatedSubcategory, { status: 200 });
+  } catch (error) {
+    console.error('Alt kategori güncelleme hatası:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Bilinmeyen bir hata oluştu';
+    return NextResponse.json({ message: `Alt kategori güncellenemedi: ${errorMessage}` }, { status: 500 });
+  }
+}
+
+// DELETE: Alt kategoriyi sil
+export async function DELETE(req: Request) {
+  try {
+    const { subcatName } = await req.json();
+
+    if (!subcatName) {
+      return NextResponse.json({ message: 'Alt kategori adı belirtilmelidir.' }, { status: 400 });
+    }
+
+    const deletedSubcategory = await prisma.subcategory.delete({
+      where: { subcatName },
+    });
+
+    return NextResponse.json(deletedSubcategory, { status: 200 });
+  } catch (error) {
+    console.error('Alt kategori silme hatası:', error);
+    return NextResponse.json({ message: 'Alt kategori silinemedi.' }, { status: 500 });
+  }
 }

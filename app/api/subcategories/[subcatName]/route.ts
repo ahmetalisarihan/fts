@@ -18,4 +18,4 @@ export async function GET(req: Request, { params }: { params: { subcatName: stri
         console.log(error);
         return NextResponse.json({ message: "Bir hata oluştu. Lütfen tekrar deneyin." });
     }
-    }
+}

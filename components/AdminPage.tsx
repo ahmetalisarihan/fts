@@ -13,15 +13,16 @@ import DeleteCarousel from './Delete/DeleteCarousel';
 import { UserButton } from '@clerk/nextjs';
 import CreateCampaigns from './Create/CreateCampaigns';
 import DeleteCampaign from './Delete/DeleteCampain';
+import ManageSubcategories from './ManageSubcategories';
 
 
 const Dashboard: React.FC = () => {
     const [selectedForm, setSelectedForm] = useState<
-        'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList' | 'campaign'
+        'product' | 'category' | 'subcategory' | 'subcategorymanage' | 'brand' | 'carousel' | 'priceList' | 'campaign'
     >('product');
 
     const handleFormChange = (
-        formType: 'product' | 'category' | 'subcategory' | 'brand' | 'carousel' | 'priceList' | 'campaign'
+        formType: 'product' | 'category' | 'subcategory' | 'subcategorymanage' | 'brand' | 'carousel' | 'priceList' | 'campaign'
     ) => {
         setSelectedForm(formType);
     };
@@ -62,6 +63,14 @@ const Dashboard: React.FC = () => {
                     Alt Kategori Oluştur
                 </Button>
                 <Button
+                    className={`py-2 px-4 border ${
+                        selectedForm === 'subcategorymanage' ? 'bg-blue-500 text-white' : ''
+                    }`}
+                    onClick={() => setSelectedForm('subcategorymanage')}
+                    >
+                    Alt Kategorileri Yönet
+                </Button>
+                <Button
                     className={`px-4 py-2 rounded ${
                         selectedForm === 'brand' ? 'bg-blue-500 text-white' : 'bg-gray-200'
                     }`}
@@ -98,6 +107,7 @@ const Dashboard: React.FC = () => {
             {selectedForm === 'product' && <CreateProductForm />}
             {selectedForm === 'category' && <CreateCategoryForm />}
             {selectedForm === 'subcategory' && <CreateSubcategoryForm />}
+            {selectedForm === 'subcategorymanage' && <ManageSubcategories />}
             {selectedForm === 'brand' && <CreateBrandForm />}
             {selectedForm === 'carousel' && (
                 <div>

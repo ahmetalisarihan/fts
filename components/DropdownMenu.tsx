@@ -15,6 +15,7 @@ import {
 import { Button } from './ui/button';
 import Link from 'next/link';
 import { Menu } from 'lucide-react';
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 interface Category {
   id: string;
@@ -34,8 +35,7 @@ const MenuDropdown = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('/api/categories');
-        const data = await response.json();
+        const data = await OptimizedAPI.getCategories();
         setCategories(data);
       } catch (error) {
         console.error(error);

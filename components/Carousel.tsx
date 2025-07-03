@@ -12,6 +12,7 @@ import {
 import Link from 'next/link';
 import Image from 'next/image';
 import CarouselSkeleton from './Skeleton/CarouselSkeleton';
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 
 interface CarouselItemProps {
@@ -27,11 +28,7 @@ export function CarouselPlugin() {
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
-        const response = await fetch('/api/carousels');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data: CarouselItemProps[] = await response.json();
+        const data: CarouselItemProps[] = await OptimizedAPI.getCarousels();
         setCarousels(data);
       } catch (error) {
         console.error('Failed to fetch carousels:', error);

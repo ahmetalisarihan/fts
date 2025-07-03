@@ -25,11 +25,14 @@ export async function POST(req: Request) {
 
 export async function GET() {
     try {
-       const brands = await prisma.brand.findMany();
-         return NextResponse.json(brands);
+        const brands = await prisma.brand.findMany();
+        return NextResponse.json(brands);
     } catch (error) {
-        return NextResponse.json('Bir hata oluştu. Lütfen tekrar deneyin.');
+        console.log(error)
+        return NextResponse.json({message:'Bir hata oluştu. Lütfen tekrar deneyin.'}, { status: 500 });
     }
-    
-
 }
+
+// Cache'i devre dışı bırak
+export const dynamic = 'force-dynamic'
+export const revalidate = 0

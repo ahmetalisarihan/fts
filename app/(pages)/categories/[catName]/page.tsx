@@ -1,17 +1,12 @@
 import { TProduct } from '@/app/types';
 import ProductCard from '@/components/ProductCard';
 import React from 'react'
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 const getProducts = async (catName : string):Promise<TProduct[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/categories/${catName}`,
-    // {cache: "no-store"}
-    )
-    if(res.ok) {
-      const categories = await res.json()
-      const products = categories.products;
-      return products
-    }
+    const categories = await OptimizedAPI.getCategoryProducts(catName);
+    return categories.products;
   } catch (error) {
     console.log(error)
   }

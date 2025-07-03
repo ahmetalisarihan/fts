@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import axios from 'axios';
 import Link from 'next/link';
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 export type TCampaigns = {
   id: string;
@@ -17,8 +17,8 @@ const CampaignsList = () => {
 
   const fetchCampaigns = async () => {
     try {
-      const response = await axios.get('/api/campaigns');
-      setCampaigns(response.data);
+      const data = await OptimizedAPI.getCampaigns();
+      setCampaigns(data);
     } catch {
       setError('Kampanyalar yüklenemedi.');
     }

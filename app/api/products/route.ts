@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { CacheManager } from '@/utils/cache'
 import prisma from "@/libs/prismadb";
 import React from 'react'
 
@@ -49,6 +50,10 @@ export async function POST(req: Request) {
             }
         })
         console.log('Urun eklendi')
+        
+        // Cache'leri temizle
+        await CacheManager.invalidateProductCaches()
+        
         return NextResponse.json(newProduct)
     } catch (error) {
         return NextResponse.json({message:'Bir hata oluştu. Lütfen tekrar deneyin.'})
@@ -65,4 +70,8 @@ export async function GET() {
         return NextResponse.json({message:'Bir hata oluştu. Lütfen tekrar deneyin.'}, { status: 500 });
     }
 }
+
+// Cache'i devre dışı bırak
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 

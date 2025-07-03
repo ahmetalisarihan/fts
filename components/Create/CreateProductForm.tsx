@@ -109,8 +109,16 @@ const CreateProductForm = () => {
         setSelectedPriceList('');
         setImageUrl('');
         setIsRecommended(false);
-        setSuccess('Başarıyla ürün eklendi!');
+        setMetaTitle('');
+        setMetaDescription('');
+        setMetaKeywords('');
+        setSuccess('Başarıyla ürün eklendi! Sayfa yenileniyor...');
         setError('');
+        
+        // Cache'leri temizlemek için kısa bir bekleme sonrası yenile
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         const error = await res.json();
         setError(error);

@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="text-2xl font-bold">Yönetim Paneli</div>
             </div>
-            <div className="flex gap-4 my-4 items-center justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 my-4 items-center justify-center">
                 <Button
                     className={`px-4 py-2 rounded ${
                         selectedForm === 'product' ? 'bg-blue-500 text-white' : 'bg-gray-200'

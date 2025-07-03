@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { TProduct } from '@/app/types';
 import ProductCard from './ProductCard';
 import RecommendedProductsSkeleton from './Skeleton/RecommendedProductsSkeleton';
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 
 const RecomendedProducts: React.FC = () => {
@@ -13,8 +14,7 @@ const RecomendedProducts: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/recommended-products');
-        const data = await response.json();
+        const data = await OptimizedAPI.getRecommendedProducts();
         setRecomendedProducts(data);
       } catch (error) {
         if (error instanceof Error) {

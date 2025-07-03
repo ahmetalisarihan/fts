@@ -39,6 +39,8 @@ export async function GET() {
     } catch (error) {
       return NextResponse.json('Bir hata oluştu. Lütfen tekrar deneyin.');
     }
-    
-
 }
+
+// Cache'i devre dışı bırak
+export const dynamic = 'force-dynamic'
+export const revalidate = 0

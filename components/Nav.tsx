@@ -9,6 +9,7 @@ import {
     NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
 import NavbarSkeleton from './Skeleton/NavbarSkeleton';
+import { OptimizedAPI } from '@/utils/api-optimization';
 
 
 interface Category {
@@ -30,11 +31,7 @@ const Navbar = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('/api/categories');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
+                const data = await OptimizedAPI.getCategories();
                 setCategories(data);
             } catch (error) {
                 console.error('Fetch error:', error);

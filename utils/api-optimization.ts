@@ -89,10 +89,16 @@ export async function optimizedFetch<T>(
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
     const responseData = await response.json() as ApiResponse<T>;
     
+    // Null response kontrolü
+    if (!responseData) {
+      throw new Error('API returned null response');
+    }
+    
     // Extract data from API response wrapper
-    const data = responseData.success ? responseData.data : responseData as T;
+    const data = (responseData as any).success ? (responseData as any).data : responseData as T;
     
     // Cache the result
     if (useMemoryCache) {
@@ -156,7 +162,7 @@ export class OptimizedAPI {
   }
 
   static async getCategoryProducts(catName: string, forceRefresh = false) {
-    return optimizedFetch<{products: TProduct[]}>(`/api/categories/${encodeURIComponent(catName)}`, {}, {
+    return optimizedFetch<TCategory>(`/api/categories/${catName}`, {}, {
       ttl: CACHE_TTL.products,
       forceRefresh
     });

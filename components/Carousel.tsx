@@ -13,25 +13,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import CarouselSkeleton from './Skeleton/CarouselSkeleton';
 import { OptimizedAPI } from '@/utils/api-optimization';
-
-
-interface CarouselItemProps {
-  imageUrl: string;
-  link: string;
-}
+import { TCarousel } from '@/app/types';
 
 export function CarouselPlugin() {
-  const [carousels, setCarousels] = useState<CarouselItemProps[]>([]);
+  const [carousels, setCarousels] = useState<TCarousel[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
   useEffect(() => {
     const fetchCarousels = async () => {
       try {
-        const data: CarouselItemProps[] = await OptimizedAPI.getCarousels();
-        setCarousels(data);
+        const response = await OptimizedAPI.getCarousels();
+        setCarousels(Array.isArray(response) ? response : []);
       } catch (error) {
         console.error('Failed to fetch carousels:', error);
+        setCarousels([]);
       } finally {
         setIsLoading(false);
       }
@@ -56,15 +52,21 @@ export function CarouselPlugin() {
             <div className="p-1">
               <Card>
                 <CardContent className="flex items-center justify-center p-6">
-                  <Link href={item.link} rel="noopener noreferrer">
-                    <Image
-                      src={item.imageUrl}
-                      alt={`Carousel Item ${index + 1}`}
-                      width={560}
-                      height={560}
-                      className="w-full h-96 object-cover"
-                    />
-                  </Link>
+                  {item.imageUrl ? (
+                    <Link href={item.carouselLink || '#'} rel="noopener noreferrer">
+                      <Image
+                        src={item.imageUrl}
+                        alt={`Carousel Item ${index + 1}`}
+                        width={560}
+                        height={560}
+                        className="w-full h-96 object-cover"
+                      />
+                    </Link>
+                  ) : (
+                    <div className="w-full h-96 bg-gray-200 flex items-center justify-center">
+                      <span className="text-gray-500">Resim bulunamadı</span>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

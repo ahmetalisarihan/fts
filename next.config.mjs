@@ -2,14 +2,13 @@
 const nextConfig = {
     images: {
         domains: ['res.cloudinary.com'],
+        formats: ['image/webp', 'image/avif'],
+        minimumCacheTTL: 60,
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     },
-    // Cache ayarları
-    experimental: {
-        staleTimes: {
-            dynamic: 0,
-            static: 0,
-        },
-    },
+    compress: true,
+    poweredByHeader: false,
     // API route'lar için cache devre dışı
     async headers() {
         return [

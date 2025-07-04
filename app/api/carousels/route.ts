@@ -23,8 +23,8 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
-        const { imageUrl, link } = await request.json();
-        if (!imageUrl || !link) {
+        const { imageUrl, carouselLink } = await request.json();
+        if (!imageUrl || !carouselLink) {
             return new Response(JSON.stringify({ error: 'Resim URL i ve bağlantı gerekli.' }), {
                 status: 400,
                 headers: {
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         const newCarousel = await prisma.carousel.create({
             data: {
                 imageUrl,
-                link,
+                carouselLink,
             },
         });
 

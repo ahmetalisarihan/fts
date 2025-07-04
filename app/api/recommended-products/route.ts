@@ -7,6 +7,20 @@ export async function GET() {
       where: {
         isRecommended: true,
       },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        imageUrl: true,
+        brandName: true,
+        catName: true,
+        subcatName: true,
+        isRecommended: true,
+        metaTitle: true,
+        metaDescription: true,
+        createdAt: true,
+      },
       orderBy: {
         createdAt: 'desc',
       },

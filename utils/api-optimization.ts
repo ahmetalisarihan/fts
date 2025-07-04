@@ -28,6 +28,13 @@ interface CacheOptions {
 /**
  * Optimized fetch wrapper with caching and deduplication
  */
+// API Response wrapper type
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+}
+
 export async function optimizedFetch<T>(
   url: string, 
   options: RequestInit = {},
@@ -63,7 +70,15 @@ export async function optimizedFetch<T>(
   loadingStates.set(cacheKey, true);
 
   // Create request promise
-  const requestPromise = fetch(url, {
+  let fullUrl = url;
+  
+  // If URL is relative, make it absolute
+  if (url.startsWith('/')) {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    fullUrl = `${baseUrl}${url}`;
+  }
+  
+  const requestPromise = fetch(fullUrl, {
     ...options,
     // Only disable cache in development for debugging
     ...(process.env.NODE_ENV === 'development' ? {} : {
@@ -74,7 +89,10 @@ export async function optimizedFetch<T>(
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
+    const responseData = await response.json() as ApiResponse<T>;
+    
+    // Extract data from API response wrapper
+    const data = responseData.success ? responseData.data : responseData as T;
     
     // Cache the result
     if (useMemoryCache) {
@@ -228,7 +246,10 @@ export function cleanupExpiredCache() {
   const now = Date.now();
   let deletedCount = 0;
   
-  for (const [key, value] of apiCache.entries()) {
+  // Convert entries to array to avoid iteration issues
+  const entries = Array.from(apiCache.entries());
+  
+  for (const [key, value] of entries) {
     if (now - value.timestamp > value.ttl) {
       apiCache.delete(key);
       deletedCount++;

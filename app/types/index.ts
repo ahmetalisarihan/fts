@@ -2,11 +2,15 @@
 export type TCategory = {
     id: string;
     catName: string;
+    description?: string;
+    subcategories?: TSubCategory[];
 };
 
 export type TSubCategory = {
     id: string;
     subcatName: string;
+    description?: string;
+    catName: string;
 };
 
 export type CategoryData = {

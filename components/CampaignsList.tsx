@@ -3,13 +3,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { OptimizedAPI } from '@/utils/api-optimization';
-
-export type TCampaigns = {
-  id: string;
-  title?: string;
-  imageUrl: string;
-    link: string;
-};
+import { TCampaigns } from '@/app/types';
 
 const CampaignsList = () => {
   const [campaigns, setCampaigns] = useState<TCampaigns[]>([]);
@@ -17,10 +11,11 @@ const CampaignsList = () => {
 
   const fetchCampaigns = async () => {
     try {
-      const data = await OptimizedAPI.getCampaigns();
-      setCampaigns(data);
+      const response = await OptimizedAPI.getCampaigns();
+      setCampaigns(Array.isArray(response) ? response : []);
     } catch {
       setError('Kampanyalar yüklenemedi.');
+      setCampaigns([]);
     }
   };
 
@@ -39,15 +34,25 @@ const CampaignsList = () => {
             className="relative bg-white border rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 transform transition duration-500 hover:scale-105"
           >
             <div className="flex items-center justify-center border rounded-md">
+              {campaign.link ? (
                 <Link href={campaign.link}>
-              <Image
-                className="object-contain h-40 w-96"
-                src={campaign.imageUrl}
-                alt={campaign.title || 'Kampanya'}
-                width={384}
-                height={160}
-              />
-              </Link>
+                  <Image
+                    className="object-contain h-40 w-96"
+                    src={campaign.imageUrl}
+                    alt={campaign.title || 'Kampanya'}
+                    width={384}
+                    height={160}
+                  />
+                </Link>
+              ) : (
+                <Image
+                  className="object-contain h-40 w-96"
+                  src={campaign.imageUrl}
+                  alt={campaign.title || 'Kampanya'}
+                  width={384}
+                  height={160}
+                />
+              )}
             </div>
             <h3 className="text-center mt-2 font-semibold">{campaign.title}</h3>
           </div>

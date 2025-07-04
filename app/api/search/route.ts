@@ -1,30 +1,96 @@
-import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
-import { URL } from 'node:url';
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '@/libs/prismadb';
+import { 
+  handleApiError, 
+  createSuccessResponse, 
+  validateRequest, 
+  withErrorHandling,
+  schemas,
+  checkRateLimit,
+  AppError,
+  ErrorCode
+} from '@/utils/api-helpers';
 
-const prisma = new PrismaClient();
-
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  const query = decodeURIComponent(url.searchParams.get('query') || '');
-
+export async function GET(req: NextRequest) {
   try {
-    if (!query) {
-      return NextResponse.json({ error: 'Arama sorgusu boş olamaz.' }, { status: 400 });
+    // Rate limiting
+    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
+    if (!checkRateLimit(ip, 20, 60000)) { // 20 requests per minute for search
+      return NextResponse.json(
+        { success: false, error: { message: 'Çok fazla arama isteği. Lütfen bir dakika bekleyin.' } },
+        { status: 429 }
+      );
     }
 
-    const products = await prisma.product.findMany({
-      where: {
-        OR: [
-          { name: { contains: query, mode: 'insensitive' } },
-          { description: { contains: query, mode: 'insensitive' } },
-        ],
-      },
+    const url = new URL(req.url);
+    const query = url.searchParams.get('query');
+
+    // Validate search query
+    if (!query || query.trim().length === 0) {
+      throw new AppError(
+        ErrorCode.VALIDATION_ERROR,
+        'Arama terimi boş olamaz',
+        400
+      );
+    }
+
+    const validatedQuery = validateRequest(schemas.search, { query: query.trim() });
+
+    // Prevent very short queries to avoid too many results
+    if (validatedQuery.query.length < 2) {
+      throw new AppError(
+        ErrorCode.VALIDATION_ERROR,
+        'Arama terimi en az 2 karakter olmalıdır',
+        400
+      );
+    }
+
+    const products = await withErrorHandling(async () => {
+      return await prisma.product.findMany({
+        where: {
+          OR: [
+            { name: { contains: validatedQuery.query, mode: 'insensitive' } },
+            { description: { contains: validatedQuery.query, mode: 'insensitive' } },
+            { brandName: { contains: validatedQuery.query, mode: 'insensitive' } },
+            { catName: { contains: validatedQuery.query, mode: 'insensitive' } },
+            { subcatName: { contains: validatedQuery.query, mode: 'insensitive' } },
+            { metaKeywords: { contains: validatedQuery.query, mode: 'insensitive' } },
+          ],
+        },
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          description: true,
+          imageUrl: true,
+          brandName: true,
+          catName: true,
+          subcatName: true,
+          isRecommended: true,
+          metaTitle: true,
+          metaDescription: true,
+        },
+        take: 50, // Limit results to prevent performance issues
+        orderBy: [
+          { isRecommended: 'desc' }, // Recommended products first
+          { name: 'asc' }
+        ]
+      });
     });
 
-    return NextResponse.json(products);
+    // Add search analytics/logging here if needed
+    console.log(`Search performed: "${validatedQuery.query}" - ${products.length} results`);
+
+    return createSuccessResponse(
+      products, 
+      `${products.length} sonuç bulundu`
+    );
+    
   } catch (error) {
-    console.error('Ürünler alınırken bir hata oluştu:', error);
-    return NextResponse.json({ error: 'Ürünler alınırken bir hata oluştu.' }, { status: 500 });
+    return handleApiError(error);
   }
 }
+
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;

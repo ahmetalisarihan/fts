@@ -33,36 +33,62 @@
       --ring: 222.2 84% 4.9%;
 
       --radius: 0.5rem;
+      
+      /* Custom brand colors */
+      --brand-primary: 203 89% 53%;
+      --brand-secondary: 271 81% 56%;
+      --success: 142 76% 36%;
+      --warning: 38 92% 50%;
+      --error: 0 84% 60%;
+      
+      /* Additional semantic colors */
+      --sidebar: var(--background);
+      --sidebar-foreground: var(--foreground);
+      --header: var(--background);
+      --header-foreground: var(--foreground);
     }
 
     .dark {
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
+      --background: 224 71% 4%;
+      --foreground: 213 31% 91%;
 
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
+      --card: 224 71% 4%;
+      --card-foreground: 213 31% 91%;
 
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
+      --popover: 224 71% 4%;
+      --popover-foreground: 213 31% 91%;
 
       --primary: 210 40% 98%;
       --primary-foreground: 222.2 47.4% 11.2%;
 
-      --secondary: 217.2 32.6% 17.5%;
+      --secondary: 215 27.9% 16.9%;
       --secondary-foreground: 210 40% 98%;
 
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 215 20.2% 65.1%;
+      --muted: 215 27.9% 16.9%;
+      --muted-foreground: 217.9 10.6% 64.9%;
 
-      --accent: 217.2 32.6% 17.5%;
+      --accent: 215 27.9% 16.9%;
       --accent-foreground: 210 40% 98%;
 
       --destructive: 0 62.8% 30.6%;
       --destructive-foreground: 210 40% 98%;
 
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 212.7 26.8% 83.9%;
+      --border: 215 27.9% 16.9%;
+      --input: 215 27.9% 16.9%;
+      --ring: 216 34% 17%;
+      
+      /* Custom brand colors for dark mode */
+      --brand-primary: 203 89% 53%;
+      --brand-secondary: 271 81% 56%;
+      --success: 142 69% 48%;
+      --warning: 38 92% 50%;
+      --error: 0 84% 60%;
+      
+      /* Dark mode specific colors */
+      --sidebar: 222 84% 5%;
+      --sidebar-foreground: 210 40% 98%;
+      --header: 224 71% 4%;
+      --header-foreground: 213 31% 91%;
     }
   }
 
@@ -72,5 +98,75 @@
     }
     body {
       @apply bg-background text-foreground;
+    }
+  }
+
+  @layer utilities {
+    .mobile-menu-item {
+      @apply block w-full text-left px-4 py-2 text-sm hover:bg-accent hover:text-accent-foreground;
+    }
+    
+    .responsive-image {
+      @apply w-full h-auto max-w-full;
+    }
+    
+    .container-padding {
+      @apply px-4 sm:px-6 md:px-8 lg:px-12;
+    }
+    
+    .smooth-transition {
+      @apply transition-all duration-300 ease-in-out;
+    }
+    
+    .card-hover {
+      @apply hover:shadow-lg hover:scale-105 transition-all duration-300;
+    }
+    
+    /* Dark mode specific utilities */
+    .glass-effect {
+      @apply backdrop-blur-sm bg-background/80 border border-border/50;
+    }
+    
+    .dark-card {
+      @apply bg-card border border-border shadow-sm;
+    }
+    
+    .dark-input {
+      @apply bg-background border-input focus:border-ring;
+    }
+    
+    .dark-button {
+      @apply bg-primary text-primary-foreground hover:bg-primary/90;
+    }
+    
+    .dark-shadow {
+      @apply shadow-lg dark:shadow-2xl dark:shadow-black/25;
+    }
+    
+    .theme-transition {
+      @apply transition-colors duration-200 ease-in-out;
+    }
+    
+    /* Scrollbar styling for dark mode */
+    .dark-scrollbar {
+      scrollbar-width: thin;
+      scrollbar-color: hsl(var(--muted)) hsl(var(--background));
+    }
+    
+    .dark-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .dark-scrollbar::-webkit-scrollbar-track {
+      background: hsl(var(--background));
+    }
+    
+    .dark-scrollbar::-webkit-scrollbar-thumb {
+      background: hsl(var(--muted));
+      border-radius: 3px;
+    }
+    
+    .dark-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: hsl(var(--muted-foreground));
     }
   }

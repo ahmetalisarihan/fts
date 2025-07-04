@@ -7,7 +7,12 @@
     "postinstall": "prisma generate",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "quality": "npm run type-check && npm run lint && npm run format:check"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.0",
@@ -23,6 +28,7 @@
     "@radix-ui/react-hover-card": "^1.0.7",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-popover": "^1.0.7",
+    "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@vis.gl/react-google-maps": "^0.7.0",
     "antd": "^5.14.1",
@@ -47,7 +53,8 @@
     "react-dom": "^18",
     "react-query": "^3.39.3",
     "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.25.71"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

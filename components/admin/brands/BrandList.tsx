@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react';
 import { TBrand } from '@/app/types';
 import DataTable, { Column, DataTableAction } from '../shared/DataTable';
 import ConfirmDialog from '../shared/ConfirmDialog';
-import { Edit, Trash2, Tag } from 'lucide-react';
+import { Edit, Trash2, Tag, Save, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import toast from 'react-hot-toast';
 
 export default function BrandList() {
@@ -18,6 +22,20 @@ export default function BrandList() {
     isOpen: false,
     brand: null,
     isDeleting: false,
+  });
+  
+  const [editDialog, setEditDialog] = useState<{
+    isOpen: boolean;
+    brand: TBrand | null;
+    isEditing: boolean;
+    brandName: string;
+    description: string;
+  }>({
+    isOpen: false,
+    brand: null,
+    isEditing: false,
+    brandName: '',
+    description: '',
   });
 
   // Markaları getir
@@ -62,6 +80,60 @@ export default function BrandList() {
     fetchBrands();
   }, []);
 
+  // Marka düzenleme işlemi
+  const handleEdit = (brand: TBrand) => {
+    setEditDialog({
+      isOpen: true,
+      brand,
+      isEditing: false,
+      brandName: brand.brandName,
+      description: brand.description || '',
+    });
+  };
+
+  // Marka güncelleme işlemi
+  const handleUpdate = async () => {
+    if (!editDialog.brand) return;
+
+    if (!editDialog.brandName.trim()) {
+      toast.error('Marka adı gereklidir');
+      return;
+    }
+
+    setEditDialog(prev => ({ ...prev, isEditing: true }));
+
+    try {
+      const response = await fetch('/api/admin/brands/edit', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: editDialog.brand.id,
+          brandName: editDialog.brandName.trim(),
+          description: editDialog.description.trim(),
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        toast.success('Marka başarıyla güncellendi');
+        setBrands(brands.map(b => 
+          b.id === editDialog.brand!.id ? result.data : b
+        ));
+        setEditDialog({ isOpen: false, brand: null, isEditing: false, brandName: '', description: '' });
+      } else {
+        toast.error(result.error?.message || 'Marka güncellenemedi');
+      }
+    } catch (error) {
+      console.error('Error updating brand:', error);
+      toast.error('Bir hata oluştu');
+    } finally {
+      setEditDialog(prev => ({ ...prev, isEditing: false }));
+    }
+  };
+
   // Marka silme işlemi
   const handleDelete = async () => {
     if (!deleteDialog.brand) return;
@@ -69,17 +141,18 @@ export default function BrandList() {
     setDeleteDialog(prev => ({ ...prev, isDeleting: true }));
 
     try {
-      const response = await fetch(`/api/brands/${deleteDialog.brand.brandName}`, {
+      const response = await fetch(`/api/admin/brands/edit?id=${deleteDialog.brand.id}`, {
         method: 'DELETE',
       });
 
-      if (response.ok) {
+      const result = await response.json();
+      
+      if (result.success) {
         toast.success('Marka başarıyla silindi');
         setBrands(brands.filter(b => b.id !== deleteDialog.brand!.id));
         setDeleteDialog({ isOpen: false, brand: null, isDeleting: false });
       } else {
-        const errorData = await response.json();
-        toast.error(errorData.error?.message || 'Marka silinemedi');
+        toast.error(result.error?.message || 'Marka silinemedi');
       }
     } catch (error) {
       console.error('Error deleting brand:', error);
@@ -107,6 +180,15 @@ export default function BrandList() {
       label: 'Açıklama',
       render: (value) => value || '-',
     },
+    {
+      key: 'products',
+      label: 'Ürün Sayısı',
+      render: (value) => (
+        <span className="text-sm text-muted-foreground">
+          {value?.length || 0} ürün
+        </span>
+      ),
+    },
   ];
 
   // Tablo aksiyon butonları
@@ -115,7 +197,7 @@ export default function BrandList() {
       label: 'Düzenle',
       icon: Edit,
       onClick: (brand) => {
-        toast.info('Düzenleme özelliği yakında gelecek');
+        handleEdit(brand);
       },
     },
     {
@@ -153,6 +235,69 @@ export default function BrandList() {
         pageSize={10}
       />
 
+      {/* Düzenleme Dialog'u */}
+      <Dialog
+        open={editDialog.isOpen}
+        onOpenChange={(open) => {
+          if (!open && !editDialog.isEditing) {
+            setEditDialog({ isOpen: false, brand: null, isEditing: false, brandName: '', description: '' });
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Marka Düzenle</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 pt-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Marka Adı *</label>
+              <Input
+                value={editDialog.brandName}
+                onChange={(e) => setEditDialog(prev => ({ ...prev, brandName: e.target.value }))}
+                placeholder="Marka adı"
+                disabled={editDialog.isEditing}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Açıklama</label>
+              <Textarea
+                value={editDialog.description}
+                onChange={(e) => setEditDialog(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Açıklama (opsiyonel)"
+                disabled={editDialog.isEditing}
+                rows={3}
+              />
+            </div>
+            <div className="flex justify-end space-x-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setEditDialog({ isOpen: false, brand: null, isEditing: false, brandName: '', description: '' })}
+                disabled={editDialog.isEditing}
+              >
+                <X className="h-4 w-4 mr-2" />
+                İptal
+              </Button>
+              <Button
+                onClick={handleUpdate}
+                disabled={editDialog.isEditing || !editDialog.brandName.trim()}
+              >
+                {editDialog.isEditing ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Güncelleniyor...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-2" />
+                    Kaydet
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      
       {/* Silme Onay Dialog'u */}
       <ConfirmDialog
         isOpen={deleteDialog.isOpen}

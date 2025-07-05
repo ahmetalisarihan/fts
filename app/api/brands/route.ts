@@ -1,90 +1,80 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
-import { 
-  handleApiError, 
-  createSuccessResponse, 
-  validateRequest, 
-  withErrorHandling,
-  schemas,
-  checkRateLimit 
-} from '@/utils/api-helpers';
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limiting
-    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
-    if (!checkRateLimit(ip, 10, 60000)) { // 10 requests per minute
+    const body = await req.json();
+    const { brandName, description } = body;
+
+    if (!brandName) {
       return NextResponse.json(
-        { success: false, error: { message: 'Çok fazla istek. Lütfen bir dakika bekleyin.' } },
-        { status: 429 }
+        { success: false, error: { message: 'Marka adı gereklidir' } },
+        { status: 400 }
       );
     }
 
-    // Parse and validate request body
-    const body = await req.json();
-    const validatedData = validateRequest(schemas.createBrand, body);
-
     // Check if brand already exists
-    const existingBrand = await withErrorHandling(async () => {
-      return await prisma.brand.findUnique({
-        where: { brandName: validatedData.brandName }
-      });
+    const existingBrand = await prisma.brand.findUnique({
+      where: { brandName }
     });
 
     if (existingBrand) {
       return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'DUPLICATE_ENTRY',
-            message: 'Bu marka adı zaten kullanımda',
-            details: { field: 'brandName', value: validatedData.brandName }
-          }
-        },
+        { success: false, error: { message: 'Bu marka adı zaten kullanımda' } },
         { status: 409 }
       );
     }
 
     // Create brand
-    const newBrand = await withErrorHandling(async () => {
-      return await prisma.brand.create({
-        data: {
-          brandName: validatedData.brandName,
-          description: validatedData.description || null,
-        },
-      });
+    const newBrand = await prisma.brand.create({
+      data: {
+        brandName,
+        description: description || null,
+      },
     });
 
-    return createSuccessResponse(newBrand, 'Marka başarıyla oluşturuldu', 201);
+    return NextResponse.json(
+      { success: true, data: newBrand, message: 'Marka başarıyla oluşturuldu' },
+      { status: 201 }
+    );
     
   } catch (error) {
-    return handleApiError(error);
+    console.error('Brand creation error:', error);
+    return NextResponse.json(
+      { success: false, error: { message: 'Marka oluşturulamadı' } },
+      { status: 500 }
+    );
   }
 }
 
 export async function GET(req: NextRequest) {
   try {
-    // Rate limiting
-    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
-    if (!checkRateLimit(ip, 50, 60000)) { // 50 requests per minute for GET
-      return NextResponse.json(
-        { success: false, error: { message: 'Çok fazla istek. Lütfen bir dakika bekleyin.' } },
-        { status: 429 }
-      );
-    }
-
-    const brands = await withErrorHandling(async () => {
-      return await prisma.brand.findMany({
-        orderBy: {
-          brandName: 'asc'
+    const brands = await prisma.brand.findMany({
+      include: {
+        products: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          }
         }
-      });
+      },
+      orderBy: {
+        brandName: 'asc'
+      }
     });
     
-    return createSuccessResponse(brands, 'Markalar başarıyla getirildi');
+    return NextResponse.json(
+      { success: true, data: brands, message: 'Markalar başarıyla getirildi' },
+      { status: 200 }
+    );
     
   } catch (error) {
-    return handleApiError(error);
+    console.error('Brands fetch error:', error);
+    return NextResponse.json(
+      { success: false, error: { message: 'Markalar getirilemedi' } },
+      { status: 500 }
+    );
   }
 }
 

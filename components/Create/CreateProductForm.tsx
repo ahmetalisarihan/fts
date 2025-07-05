@@ -33,7 +33,7 @@ const CreateProductForm = () => {
     const fetchAllCategories = async () => {
       const res = await fetch('/api/categories')
       const catNames = await res.json()
-      setCategories(catNames)
+      setCategories(catNames.data)
     }
     fetchAllCategories()
   }, [])
@@ -44,7 +44,7 @@ const CreateProductForm = () => {
         const res = await fetch(`/api/categories/${selectedCategory}/subcategories`);
         if (res.ok) {
           const subcatData = await res.json();
-          setSubcategories(subcatData);
+          setSubcategories(subcatData.data);
         } else {
           setSubcategories([]);
         }
@@ -52,6 +52,8 @@ const CreateProductForm = () => {
         setSubcategories([]);
       }
     };
+
+    setSelectedSubcategory('');
     fetchSubcategories();
   }, [selectedCategory]);
 
@@ -59,7 +61,7 @@ const CreateProductForm = () => {
     const fetchAllBrands = async () => {
       const res = await fetch('/api/brands')
       const brandNames = await res.json()
-      setBrands(brandNames)
+      setBrands(brandNames.data)
     }
     fetchAllBrands()
   }
@@ -69,7 +71,7 @@ const CreateProductForm = () => {
     const fetchAllPriceLists = async () => {
       const res = await fetch('/api/pricelists')
       const priceLists = await res.json()
-      setPriceLists(priceLists)
+      setPriceLists(priceLists.data)
     }
     fetchAllPriceLists()
   }

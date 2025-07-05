@@ -19,7 +19,7 @@ const ManageSubcategories = () => {
       try {
         const response = await fetch('/api/categories');
         const data = await response.json();
-        setCategories(data);
+        setCategories(data.data);
       } catch (error) {
         console.error(error);
         setError('Kategoriler getirilemedi.');

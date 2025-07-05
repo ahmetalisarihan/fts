@@ -21,8 +21,8 @@ const DeleteCampaign: React.FC = () => {
                 if (!response.ok) {
                     throw new Error('Kampanyalar getirilemedi.');
                 }
-                const data: Campaign[] = await response.json();
-                setCampaigns(data);
+                const data = await response.json();
+                setCampaigns(data.data);
             } catch (err) {
                 setError((err as Error).message);
             }

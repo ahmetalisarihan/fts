@@ -20,7 +20,7 @@ const CreateSubcategoryForm = () => {
       try {
         const response = await fetch('/api/categories'); // Kategorileri çeken API endpoint'iniz
         const data = await response.json();
-        setCategories(data);
+        setCategories(data.data);
       } catch (error) {
         console.error(error);
         setError('Kategoriler getirilemedi.');

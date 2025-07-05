@@ -182,16 +182,16 @@ const CreateProductForm = () => {
     value={selectedSubcategory}
     onChange={(e) => setSelectedSubcategory(e.target.value)}
     className="p-3 rounded-md border appearance-none"
-    disabled={!subcategories.length}
+    disabled={!subcategories?.length}
   >
     <option value="">Alt Kategori Seçiniz</option>
-    {subcategories.length > 0 &&
+    {subcategories?.length > 0 &&
       subcategories.map((subcategory) => (
         <option key={subcategory.id} value={subcategory.subcatName}>
           {subcategory.subcatName}
         </option>
       ))}
-    {!subcategories.length && (
+    {!subcategories?.length && (
       <option disabled>Seçili kategori için alt kategori bulunamadı.</option>
     )}
   </select>

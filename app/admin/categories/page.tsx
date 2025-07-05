@@ -4,6 +4,7 @@ import AdminLayout from "@/components/admin/layout/AdminLayout";
 import CreateCategoryForm from "@/components/Create/CreateCategoryForm";
 import CreateSubcategoryForm from "@/components/Create/CreateSubcategoryForm";
 import ManageSubcategories from "@/components/ManageSubcategories";
+import CategoryList from "@/components/admin/categories/CategoryList";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function CategoriesPage() {
@@ -44,9 +45,7 @@ export default function CategoriesPage() {
           </TabsContent>
           
           <TabsContent value="list-categories" className="space-y-4">
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">Kategori listesi yakında eklenecek...</p>
-            </div>
+            <CategoryList />
           </TabsContent>
         </Tabs>
       </div>

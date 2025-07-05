@@ -86,6 +86,7 @@ model Category {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   catName String   @unique
   description String?
+  order Int? 
   subcategories Subcategory[]
   products Product[]
   productIDs String[] @db.ObjectId 
@@ -96,6 +97,7 @@ model Subcategory {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId  
   subcatName String   @unique  
   description String? 
+  order Int?
   catName String 
   category Category? @relation(fields: [catName], references: [catName])
   products Product[]  

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { TProduct } from '@/app/types';
 import DataTable, { Column, DataTableAction } from '../shared/DataTable';
 import ConfirmDialog from '../shared/ConfirmDialog';
+import EditProductForm from './EditProductForm';
 import { Edit, Trash2, Eye, Tag } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import toast from 'react-hot-toast';
@@ -20,6 +21,14 @@ export default function ProductList() {
     isOpen: false,
     product: null,
     isDeleting: false,
+  });
+  
+  const [editDialog, setEditDialog] = useState<{
+    isOpen: boolean;
+    product: TProduct | null;
+  }>({
+    isOpen: false,
+    product: null,
   });
 
   // Ürünleri getir
@@ -169,8 +178,10 @@ export default function ProductList() {
       label: 'Düzenle',
       icon: Edit,
       onClick: (product) => {
-        // Düzenleme sayfasına yönlendir
-        toast.info('Düzenleme özelliği yakında gelecek');
+        setEditDialog({
+          isOpen: true,
+          product,
+        });
       },
     },
     {
@@ -220,6 +231,18 @@ export default function ProductList() {
         isLoading={deleteDialog.isDeleting}
         variant="destructive"
       />
+      
+      {/* Düzenleme Form Dialog'u */}
+      {editDialog.isOpen && editDialog.product && (
+        <EditProductForm
+          product={editDialog.product}
+          onClose={() => setEditDialog({ isOpen: false, product: null })}
+          onSave={() => {
+            fetchProducts(); // Ürün listesini yenile
+            setEditDialog({ isOpen: false, product: null });
+          }}
+        />
+      )}
     </div>
   );
 }

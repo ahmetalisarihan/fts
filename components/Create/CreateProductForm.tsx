@@ -71,7 +71,7 @@ const CreateProductForm = () => {
     const fetchAllPriceLists = async () => {
       const res = await fetch('/api/pricelists')
       const priceLists = await res.json()
-      setPriceLists(priceLists.data)
+      setPriceLists(priceLists)
     }
     fetchAllPriceLists()
   }

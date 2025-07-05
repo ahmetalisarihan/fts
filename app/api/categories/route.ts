@@ -1,106 +1,100 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
-import { 
-  handleApiError, 
-  createSuccessResponse, 
-  validateRequest, 
-  withErrorHandling,
-  schemas,
-  checkRateLimit 
-} from '@/utils/api-helpers';
 
 export async function POST(req: NextRequest) {
   try {
-    // Rate limiting
-    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
-    if (!checkRateLimit(ip, 10, 60000)) { // 10 requests per minute
+    const body = await req.json();
+    const { catName, description } = body;
+
+    if (!catName) {
       return NextResponse.json(
-        { success: false, error: { message: 'Çok fazla istek. Lütfen bir dakika bekleyin.' } },
-        { status: 429 }
+        { success: false, error: { message: 'Kategori adı gereklidir' } },
+        { status: 400 }
       );
     }
 
-    // Parse and validate request body
-    const body = await req.json();
-    const validatedData = validateRequest(schemas.createCategory, body);
-
     // Check if category already exists
-    const existingCategory = await withErrorHandling(async () => {
-      return await prisma.category.findUnique({
-        where: { catName: validatedData.catName }
-      });
+    const existingCategory = await prisma.category.findUnique({
+      where: { catName }
     });
 
     if (existingCategory) {
       return NextResponse.json(
-        {
-          success: false,
-          error: {
-            code: 'DUPLICATE_ENTRY',
-            message: 'Bu kategori adı zaten kullanımda',
-            details: { field: 'catName', value: validatedData.catName }
-          }
-        },
+        { success: false, error: { message: 'Bu kategori adı zaten kullanımda' } },
         { status: 409 }
       );
     }
 
     // Create category
-    const newCategory = await withErrorHandling(async () => {
-      return await prisma.category.create({
-        data: {
-          catName: validatedData.catName,
-          description: validatedData.description || null,
-        },
-      });
+    const newCategory = await prisma.category.create({
+      data: {
+        catName,
+        description: description || null,
+      },
     });
 
-    return createSuccessResponse(newCategory, 'Kategori başarıyla oluşturuldu', 201);
+    return NextResponse.json(
+      { success: true, data: newCategory, message: 'Kategori başarıyla oluşturuldu' },
+      { status: 201 }
+    );
     
   } catch (error) {
-    return handleApiError(error);
+    console.error('Category creation error:', error);
+    return NextResponse.json(
+      { success: false, error: { message: 'Kategori oluşturulamadı' } },
+      { status: 500 }
+    );
   }
 }
 
-
 export async function GET(req: NextRequest) {
   try {
-    // Rate limiting
-    const ip = req.ip || req.headers.get('x-forwarded-for') || 'unknown';
-    if (!checkRateLimit(ip, 50, 60000)) { // 50 requests per minute for GET
-      return NextResponse.json(
-        { success: false, error: { message: 'Çok fazla istek. Lütfen bir dakika bekleyin.' } },
-        { status: 429 }
-      );
-    }
-
-    const categories = await withErrorHandling(async () => {
-      return await prisma.category.findMany({
-        include: {
-          subcategories: {
-            include: {
-              products: {
-                select: {
-                  id: true,
-                  name: true,
-                  slug: true,
-                  imageUrl: true,
-                  isRecommended: true,
-                }
-              },
+    const categories = await prisma.category.findMany({
+      include: {
+        subcategories: {
+          include: {
+            products: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                imageUrl: true,
+                isRecommended: true,
+              }
             },
           },
+          orderBy: [
+            { order: 'asc' },
+            { subcatName: 'asc' }
+          ]
         },
-        orderBy: {
-          catName: 'asc'
-        }
-      });
+        products: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            imageUrl: true,
+            isRecommended: true,
+          }
+        },
+      },
+      orderBy: [
+        { order: 'asc' },
+        { catName: 'asc' }
+      ]
     });
     
-    return createSuccessResponse(categories, 'Kategoriler başarıyla getirildi');
+    return NextResponse.json(
+      { success: true, data: categories, message: 'Kategoriler başarıyla getirildi' },
+      { status: 200 }
+    );
     
   } catch (error) {
-    return handleApiError(error);
+    console.error('Categories fetch error:', error);
+    return NextResponse.json(
+      { success: false, error: { message: 'Kategoriler getirilemedi' } },
+      { status: 500 }
+    );
   }
 }
 

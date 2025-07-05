@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/libs/prismadb';
 import { 
   handleApiError, 
@@ -6,7 +5,17 @@ import {
   withErrorHandling 
 } from '@/utils/api-helpers';
 
-export async function GET(req: NextRequest) {
+interface Activity {
+  id: string;
+  type: 'product' | 'brand' | 'category' | 'campaign';
+  action: string;
+  title: string;
+  description: string;
+  timestamp: Date;
+  user: string;
+}
+
+export async function GET() {
   try {
     console.log('Fetching admin activity...');
     
@@ -71,7 +80,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Aktiviteleri birleştir ve sırala
-    const activities = [];
+    const activities: Activity[] = [];
 
     // Ürün aktiviteleri
     recentProducts.forEach(product => {

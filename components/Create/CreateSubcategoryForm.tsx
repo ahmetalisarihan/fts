@@ -5,6 +5,9 @@ import { CategoryData, SubcategoryData } from '@/app/types';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { Input } from '../ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import toast from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
 
 const CreateSubcategoryForm = () => {
   const [subcatName, setSubcatName] = useState('');
@@ -13,17 +16,27 @@ const CreateSubcategoryForm = () => {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
 
   // Kategorileri getir
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('/api/categories'); // Kategorileri çeken API endpoint'iniz
-        const data = await response.json();
-        setCategories(data.data);
+        const response = await fetch('/api/categories');
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          setCategories(result.data);
+        } else {
+          console.error('Kategori API hatası:', result);
+          toast.error('Kategoriler getirilemedi.');
+        }
       } catch (error) {
-        console.error(error);
-        setError('Kategoriler getirilemedi.');
+        console.error('Kategori fetch hatası:', error);
+        toast.error('Kategoriler getirilemedi.');
+      } finally {
+        setCategoriesLoading(false);
       }
     };
 
@@ -35,7 +48,19 @@ const CreateSubcategoryForm = () => {
     setError('');
     setSuccess('');
 
-    const data: SubcategoryData = { subcatName, description, catName };
+    // Validation
+    if (!subcatName.trim()) {
+      toast.error('Alt kategori adı gereklidir!');
+      return;
+    }
+    
+    if (!catName) {
+      toast.error('Ana kategori seçimi gereklidir!');
+      return;
+    }
+
+    setIsLoading(true);
+    const data: SubcategoryData = { subcatName: subcatName.trim(), description: description.trim(), catName };
 
     try {
       const response = await fetch('/api/subcategories', {
@@ -46,46 +71,93 @@ const CreateSubcategoryForm = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setError(errorData.message || 'Alt kategori oluşturulamadı.');
+        const errorMessage = errorData.error || errorData.message || 'Alt kategori oluşturulamadı.';
+        toast.error(errorMessage);
+        console.error('API Error:', errorData);
       } else {
-        setSuccess('Alt kategori başarıyla oluşturuldu!');
+        toast.success('Alt kategori başarıyla oluşturuldu!');
         setSubcatName('');
         setDescription('');
-        setCatName(''); // Veya dropdown'ı sıfırlayın
+        setCatName('');
       }
     } catch (error) {
       console.error(error);
-      setError('Bir hata oluştu.');
+      toast.error('Bir hata oluştu.');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  if (categoriesLoading) {
+    return (
+      <div className="flex justify-center items-center p-8">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Kategoriler yükleniyor...</span>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <p className='text-2xl font-bold my-4'>Alt Kategori Oluştur</p>
-      <Input
-        type="text"
-        value={subcatName}
-        onChange={(e) => setSubcatName(e.target.value)}
-        placeholder="Alt Kategori Adı"
-      />
-      <Textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Açıklama"
-      />
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Alt Kategori Adı *</label>
+        <Input
+          type="text"
+          value={subcatName}
+          onChange={(e) => setSubcatName(e.target.value)}
+          placeholder="Alt Kategori Adı"
+          disabled={isLoading}
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Açıklama</label>
+        <Textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Açıklama (opsiyonel)"
+          disabled={isLoading}
+          rows={3}
+        />
+      </div>
 
-      <select value={catName} onChange={(e) => setCatName(e.target.value)} className="border rounded p-2">
-        <option value="">Kategori Seçin</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.catName}>
-            {category.catName}
-          </option>
-        ))}
-      </select>
-      <Button type='submit' variant='default' size='default' className='max-w-[250px] m-auto'>Alt Kategori Oluştur</Button>
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Ana Kategori *</label>
+        <Select value={catName} onValueChange={setCatName} disabled={isLoading}>
+          <SelectTrigger>
+            <SelectValue placeholder="Kategori seçin" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((category) => (
+              <SelectItem key={category.id} value={category.catName}>
+                {category.catName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+      
+      <Button 
+        type='submit' 
+        variant='default' 
+        size='default' 
+        className='max-w-[250px] m-auto'
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Oluşturuluyor...
+          </>
+        ) : (
+          'Alt Kategori Oluştur'
+        )}
+      </Button>
 
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+      {success && <p className="text-green-500 text-sm">{success}</p>}
     </form>
   );
 };

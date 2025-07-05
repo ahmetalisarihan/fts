@@ -5,8 +5,8 @@ import prisma from "@/libs/prismadb";
 export async function POST(req: Request) {
     const { subcatName, description, catName } = await req.json();
 
-    if (!subcatName || !description || !catName) {
-        return NextResponse.json({ error: 'Alt kategori adı, açıklama ve ana kategori adı zorunludur!' }, { status: 400 });
+    if (!subcatName || !catName) {
+        return NextResponse.json({ error: 'Alt kategori adı ve ana kategori adı zorunludur!' }, { status: 400 });
     }
 
     try {
@@ -14,9 +14,7 @@ export async function POST(req: Request) {
             data: {
                 subcatName,
                 description,
-                category: {
-                    connect: { catName },
-                },
+                catName, // Doğrudan catName ataması
             },
         });
         return NextResponse.json(newSubcategory);
@@ -43,6 +41,10 @@ export async function GET(req: Request) {
                     include: {
                         products: true,
                     },
+                    orderBy: [
+                        { order: 'asc' },
+                        { subcatName: 'asc' }
+                    ]
                 },
             },
         });

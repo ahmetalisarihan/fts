@@ -1,9 +1,4 @@
 import prisma from '@/libs/prismadb';
-import { 
-  handleApiError, 
-  createSuccessResponse, 
-  withErrorHandling 
-} from '@/utils/api-helpers';
 
 interface Activity {
   id: string;
@@ -20,63 +15,55 @@ export async function GET() {
     console.log('Fetching admin activity...');
     
     // Son eklenen ürünleri getir
-    const recentProducts = await withErrorHandling(async () => {
-      return await prisma.product.findMany({
-        take: 3,
-        orderBy: {
-          createdAt: 'desc'
-        },
-        select: {
-          id: true,
-          name: true,
-          brandName: true,
-          catName: true,
-          createdAt: true,
-        }
-      });
+    const recentProducts = await prisma.product.findMany({
+      take: 3,
+      orderBy: {
+        createdAt: 'desc'
+      },
+      select: {
+        id: true,
+        name: true,
+        brandName: true,
+        catName: true,
+        createdAt: true,
+      }
     });
 
     // Son eklenen markaları getir
-    const recentBrands = await withErrorHandling(async () => {
-      return await prisma.brand.findMany({
-        take: 2,
-        orderBy: {
-          id: 'desc'
-        },
-        select: {
-          id: true,
-          brandName: true,
-        }
-      });
+    const recentBrands = await prisma.brand.findMany({
+      take: 2,
+      orderBy: {
+        id: 'desc'
+      },
+      select: {
+        id: true,
+        brandName: true,
+      }
     });
 
     // Son eklenen kategorileri getir
-    const recentCategories = await withErrorHandling(async () => {
-      return await prisma.category.findMany({
-        take: 2,
-        orderBy: {
-          id: 'desc'
-        },
-        select: {
-          id: true,
-          catName: true,
-        }
-      });
+    const recentCategories = await prisma.category.findMany({
+      take: 2,
+      orderBy: {
+        id: 'desc'
+      },
+      select: {
+        id: true,
+        catName: true,
+      }
     });
 
     // Son kampanyaları getir
-    const recentCampaigns = await withErrorHandling(async () => {
-      return await prisma.campaigns.findMany({
-        take: 2,
-        orderBy: {
-          createdAt: 'desc'
-        },
-        select: {
-          id: true,
-          title: true,
-          createdAt: true,
-        }
-      });
+    const recentCampaigns = await prisma.campaigns.findMany({
+      take: 2,
+      orderBy: {
+        createdAt: 'desc'
+      },
+      select: {
+        id: true,
+        title: true,
+        createdAt: true,
+      }
     });
 
     // Aktiviteleri birleştir ve sırala
@@ -145,11 +132,18 @@ export async function GET() {
 
     console.log('Activity data:', sortedActivities);
     
-    return createSuccessResponse(sortedActivities, 'Aktiviteler başarıyla getirildi');
+    return Response.json({
+      success: true,
+      data: sortedActivities,
+      message: 'Aktiviteler başarıyla getirildi'
+    });
     
   } catch (error) {
     console.error('Activity fetch error:', error);
-    return handleApiError(error);
+    return Response.json(
+      { success: false, error: { message: 'Aktiviteler getirilemedi' } },
+      { status: 500 }
+    );
   }
 }
 

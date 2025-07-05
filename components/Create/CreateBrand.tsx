@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import { useNotifications } from '@/contexts/NotificationContext';
 
 const CreateBrandForm = () => {
     const [brandName, setBrandName] = useState('');
@@ -14,6 +15,7 @@ const CreateBrandForm = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { addNotification } = useNotifications();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,6 +47,17 @@ const CreateBrandForm = () => {
                 const successMessage = 'Marka başarıyla oluşturuldu!';
                 setSuccess(successMessage);
                 toast.success(successMessage);
+                
+                // Bildirim ekle
+                addNotification({
+                    type: 'brand',
+                    title: 'Yeni Marka Eklendi',
+                    message: `${brandName} markası başarıyla oluşturuldu`,
+                    priority: 'medium',
+                    actionUrl: '/admin/brands',
+                    actionText: 'Markaları Görüntüle'
+                });
+                
                 setBrandName('');
                 setDescription('');
             }

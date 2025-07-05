@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import Breadcrumb from './Breadcrumb';
+import { NotificationProvider } from '@/contexts/NotificationContext';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -47,50 +48,52 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   };
 
   return (
-    <div className="flex h-screen bg-background">
-      {/* Mobile Overlay */}
-      {isMobile && isSidebarOpen && (
-        <div
-          className="fixed inset-0 z-40 bg-black/50"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div
-        className={cn(
-          'fixed inset-y-0 left-0 z-50 transition-transform duration-300 ease-in-out md:relative md:translate-x-0',
-          isMobile
-            ? isSidebarOpen
-              ? 'translate-x-0'
-              : '-translate-x-full'
-            : 'translate-x-0'
+    <NotificationProvider>
+      <div className="flex h-screen bg-background">
+        {/* Mobile Overlay */}
+        {isMobile && isSidebarOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/50"
+            onClick={() => setIsSidebarOpen(false)}
+          />
         )}
-      >
-        <Sidebar
-          isCollapsed={isMobile ? false : isSidebarCollapsed}
-          onCollapseAction={handleSidebarCollapseAction}
-        />
+
+        {/* Sidebar */}
+        <div
+          className={cn(
+            'fixed inset-y-0 left-0 z-50 transition-transform duration-300 ease-in-out md:relative md:translate-x-0',
+            isMobile
+              ? isSidebarOpen
+                ? 'translate-x-0'
+                : '-translate-x-full'
+              : 'translate-x-0'
+          )}
+        >
+          <Sidebar
+            isCollapsed={isMobile ? false : isSidebarCollapsed}
+            onCollapseAction={handleSidebarCollapseAction}
+          />
+        </div>
+
+        {/* Main Content Area */}
+        <div className="flex flex-1 flex-col overflow-hidden">
+          {/* Header */}
+          <Header
+            onMenuClickAction={handleMobileMenuClickAction}
+            isMobile={isMobile}
+          />
+
+          {/* Breadcrumb */}
+          <Breadcrumb />
+
+          {/* Main Content */}
+          <main className="flex-1 overflow-auto">
+            <div className="container mx-auto p-6">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-
-      {/* Main Content Area */}
-      <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Header */}
-        <Header
-          onMenuClickAction={handleMobileMenuClickAction}
-          isMobile={isMobile}
-        />
-
-        {/* Breadcrumb */}
-        <Breadcrumb />
-
-        {/* Main Content */}
-        <main className="flex-1 overflow-auto">
-          <div className="container mx-auto p-6">
-            {children}
-          </div>
-        </main>
-      </div>
-    </div>
+    </NotificationProvider>
   );
 }

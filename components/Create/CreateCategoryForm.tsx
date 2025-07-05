@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import { useNotifications } from '@/contexts/NotificationContext';
 
 const CreateCategoryForm = () => {
     const [catName, setCatName] = useState('');
@@ -14,6 +15,7 @@ const CreateCategoryForm = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { addNotification } = useNotifications();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,6 +47,17 @@ const CreateCategoryForm = () => {
                 const successMessage = 'Kategori başarıyla oluşturuldu!';
                 setSuccess(successMessage);
                 toast.success(successMessage);
+                
+                // Bildirim ekle
+                addNotification({
+                    type: 'category',
+                    title: 'Yeni Kategori Eklendi',
+                    message: `${catName} kategorisi başarıyla oluşturuldu`,
+                    priority: 'medium',
+                    actionUrl: '/admin/categories',
+                    actionText: 'Kategorileri Görüntüle'
+                });
+                
                 setCatName('');
                 setDescription('');
             }

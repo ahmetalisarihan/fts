@@ -40,8 +40,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialValue = '' }) =>
         setIsLoading(true);
         try {
           const response = await fetch(`/api/search?query=${encodeURIComponent(searchQuery)}`);
-          const products = await response.json();
-          setResults(products);
+          const json = await response.json();
+          setResults(json.data || []);
           setShowResults(true);
         } catch (error) {
           console.error('Ürünler alınırken bir hata oluştu:', error);

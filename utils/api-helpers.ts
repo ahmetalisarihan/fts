@@ -163,36 +163,36 @@ export const schemas = {
   // Category schemas
   createCategory: z.object({
     catName: z.string().min(1, 'Kategori adı gerekli').max(100, 'Kategori adı çok uzun'),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
   }),
 
   updateCategory: z.object({
     catName: z.string().min(1, 'Kategori adı gerekli').max(100, 'Kategori adı çok uzun').optional(),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
   }),
 
   // Subcategory schemas
   createSubcategory: z.object({
     subcatName: z.string().min(1, 'Alt kategori adı gerekli').max(100, 'Alt kategori adı çok uzun'),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
     catName: z.string().min(1, 'Kategori adı gerekli').max(100, 'Kategori adı çok uzun'),
   }),
 
   updateSubcategory: z.object({
     subcatName: z.string().min(1, 'Alt kategori adı gerekli').max(100, 'Alt kategori adı çok uzun').optional(),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
     catName: z.string().min(1, 'Kategori adı gerekli').max(100, 'Kategori adı çok uzun').optional(),
   }),
 
   // Brand schemas
   createBrand: z.object({
     brandName: z.string().min(1, 'Marka adı gerekli').max(100, 'Marka adı çok uzun'),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
   }),
 
   updateBrand: z.object({
     brandName: z.string().min(1, 'Marka adı gerekli').max(100, 'Marka adı çok uzun').optional(),
-    description: z.string().max(500, 'Açıklama çok uzun').optional(),
+    description: z.string().max(500, 'Açıklama çok uzun').optional().or(z.literal('')),
   }),
 
   // Campaign schemas

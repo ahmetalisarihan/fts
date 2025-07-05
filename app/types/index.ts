@@ -36,7 +36,7 @@ export type SubcategoryData = {
 export type TBrand = {
     id: string;
     brandName: string;
-
+    description?: string;
 };
 
 export type TProduct = {

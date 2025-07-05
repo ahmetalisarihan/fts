@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { CldImage, CldUploadButton } from 'next-cloudinary';
 import { Button } from '../ui/button';

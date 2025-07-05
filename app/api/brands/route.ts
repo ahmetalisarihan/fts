@@ -48,7 +48,10 @@ export async function POST(req: NextRequest) {
     // Create brand
     const newBrand = await withErrorHandling(async () => {
       return await prisma.brand.create({
-        data: validatedData,
+        data: {
+          brandName: validatedData.brandName,
+          description: validatedData.description || null,
+        },
       });
     });
 

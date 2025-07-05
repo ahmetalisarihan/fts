@@ -1,7 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { checkRole } from "@/utils/roles";
-import AdminPage from "@/components/AdminPage";
+import AdminLayout from "@/components/admin/layout/AdminLayout";
+import Dashboard from "@/components/admin/dashboard/Dashboard";
 
 export default function AdminDashboard() {
   const { sessionClaims } = auth();
@@ -16,8 +17,8 @@ export default function AdminDashboard() {
   // }
 
   return (
-    <>
-    <AdminPage/>
-    </>
+    <AdminLayout>
+      <Dashboard />
+    </AdminLayout>
   );
 }

@@ -9,6 +9,7 @@ import StructuredData from "@/components/StructuredData";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/utils/structured-data";
 import { generateMetadata } from "@/utils/seo";
+import { Toaster } from "react-hot-toast";
 
 const roboto = Roboto({ 
   weight: '500',
@@ -44,6 +45,17 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
           </div>
           <Footer />
         </div>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: 'hsl(var(--background))',
+              color: 'hsl(var(--foreground))',
+              border: '1px solid hsl(var(--border))',
+            },
+          }}
+        />
       </ThemeProvider>
     </body>
   </html>

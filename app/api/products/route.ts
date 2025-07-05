@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { CacheManager } from '@/utils/cache'
+// import { CacheManager } from '@/utils/cache'
 import prisma from "@/libs/prismadb";
 import { 
   handleApiError, 
@@ -113,8 +113,8 @@ export async function POST(req: NextRequest) {
       });
     });
     
-    // Cache'leri temizle
-    await CacheManager.invalidateProductCaches();
+    // Cache'leri temizle - geçici olarak kapalı
+    // await CacheManager.invalidateProductCaches();
     
     return createSuccessResponse(newProduct, 'Ürün başarıyla oluşturuldu', 201);
     

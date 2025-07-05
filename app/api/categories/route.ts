@@ -48,7 +48,10 @@ export async function POST(req: NextRequest) {
     // Create category
     const newCategory = await withErrorHandling(async () => {
       return await prisma.category.create({
-        data: validatedData,
+        data: {
+          catName: validatedData.catName,
+          description: validatedData.description || null,
+        },
       });
     });
 

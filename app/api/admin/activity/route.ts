@@ -12,7 +12,7 @@ interface Activity {
 
 export async function GET() {
   try {
-    console.log('Fetching admin activity...');
+    // console.log('Fetching admin activity...');
     
     // Son eklenen ürünleri getir
     const recentProducts = await prisma.product.findMany({
@@ -130,7 +130,7 @@ export async function GET() {
         timestamp: formatTimeAgo(activity.timestamp),
       }));
 
-    console.log('Activity data:', sortedActivities);
+    //console.log('Activity data:', sortedActivities);
     
     return Response.json({
       success: true,

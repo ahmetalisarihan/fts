@@ -1,4 +1,4 @@
-import { getProducts } from '@/libs/getProducts';
+import { TProduct } from '@/app/types';
 import { generateProductMetadata } from '@/libs/metadata';
 import { ResolvingMetadata } from 'next';
 import Head from 'next/head';
@@ -10,23 +10,48 @@ type Props = {
   params: { slug: string };
 };
 
+// Get single product by slug
+async function getProduct(slug: string): Promise<TProduct | null> {
+  try {
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/products/${slug}`, {
+      cache: 'no-store' // Always get fresh data
+    });
+    
+    if (res.ok) {
+      const product = await res.json();
+      return product;
+    } else {
+      console.error('Product not found:', res.status);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    return null;
+  }
+}
+
 // Metadata oluşturma fonksiyonu
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata) {
   return generateProductMetadata(params.slug, parent); // 'parent' argümanını ekledik
 }
 
 const ProductDetail = async ({ params }: Props) => {
-  const products = await getProducts();
-
-  // products null olabilir, kontrol ediyoruz
-  if (!products) {
-    return <div>Ürünler yüklenemedi!</div>;
-  }
-
-  const product = products.find((product) => product.slug === params.slug);
+  const product = await getProduct(params.slug);
 
   if (!product) {
-    return <div>Ürün Bulunamadı!</div>;
+    return (
+      <div className="flex items-center justify-center min-h-96">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Ürün Bulunamadı!</h1>
+          <p className="text-gray-600 mb-4">Aradığınız ürün mevcut değil veya kaldırılmış olabilir.</p>
+          <p className="text-sm text-gray-500">Slug: {params.slug}</p>
+          <Link href="/" className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+            Ana Sayfaya Dön
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

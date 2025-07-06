@@ -26,10 +26,25 @@ export async function POST(req: NextRequest) {
     // Parse and validate request body
     const body = await req.json();
     
+    // Türkçe karakterleri URL-safe hale getiren fonksiyon
+    const createSlug = (text: string): string => {
+      return text
+        .toLowerCase()
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ı/g, 'i')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c')
+        .replace(/[^a-z0-9]/g, '-') // Sadece harf, rakam ve tire bırak
+        .replace(/-+/g, '-') // Çoklu tireleri tek tire yap
+        .replace(/^-|-$/g, '') // Baştan ve sondan tireleri kaldır
+    }
+
     // Map form fields to expected schema fields
     const mappedData = {
       name: body.name,
-      slug: body.name?.toLowerCase().replace(/ /g, '-') || '',
+      slug: body.name ? createSlug(body.name) : '',
       description: body.description,
       imageUrl: body.imageUrl,
       publicId: body.publicId || `default_${Date.now()}`,

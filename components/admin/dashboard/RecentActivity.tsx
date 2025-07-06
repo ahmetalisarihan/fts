@@ -32,7 +32,6 @@ export default function RecentActivity() {
         
         if (response.ok) {
           const data = await response.json();
-          console.log('Activities response:', data);
           setActivities(data.data || []);
         } else {
           console.error('Failed to fetch activities:', response.status);

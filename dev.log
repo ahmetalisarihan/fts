@@ -1,0 +1,407 @@
+
+> fts@0.1.0 dev
+> next dev
+
+  ▲ Next.js 14.2.30
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1295ms
+ ✓ Compiled /middleware in 134ms (182 modules)
+ ✓ Compiled /api/products in 215ms (69 modules)
+ GET /api/products 200 in 1469ms
+ ✓ Compiled /api/products/[slug] in 55ms (71 modules)
+🔍 Looking for product with slug: duz-flans
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 328ms
+Warning: You're using `next/head` inside the `app` directory, please migrate to the Metadata API. See https://nextjs.org/docs/app/building-your-application/upgrading/app-router-migration#step-3-migrating-nexthead for more details.
+ ○ Compiling /products/[slug] ...
+ ✓ Compiled /products/[slug] in 4s (3460 modules)
+ ✓ Compiled in 191ms (792 modules)
+ ✓ Compiled /api/products/[slug] in 113ms (2685 modules)
+ ✓ Compiled (2687 modules)
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 931ms
+ GET /api/products 200 in 933ms
+Product not found: 404
+ GET /products/d%C3%BCz-flan%C5%9F 200 in 5381ms
+ ○ Compiling /api/categories ...
+ ✓ Compiled /api/categories in 1384ms (2716 modules)
+ ✓ Compiled (2718 modules)
+ GET /favicon.ico 200 in 1530ms
+ GET /api/categories 200 in 1865ms
+ ○ Compiling / ...
+ ✓ Compiled / in 648ms (3542 modules)
+ ✓ Compiled /api/campaigns in 133ms (2748 modules)
+ ✓ Compiled (2752 modules)
+ GET /api/carousels 200 in 395ms
+ GET /api/campaigns 200 in 396ms
+ ⚠ The "images.domains" configuration is deprecated. Please use "images.remotePatterns" configuration instead.
+ GET /api/recommended-products 200 in 828ms
+ ✓ Compiled /categories/[catName] in 227ms (3562 modules)
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 652ms
+ GET /api/categories 200 in 371ms
+🔍 Looking for product with slug: düz-flanş
+ GET /api/products 200 in 97ms
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 100ms
+Product not found: 404
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 97ms
+Product not found: 404
+ GET /api/products 200 in 102ms
+ GET /products/d%C3%BCz-flan%C5%9F 200 in 158ms
+ GET /favicon.ico 200 in 37ms
+ GET /api/categories 200 in 411ms
+ GET /api/carousels 200 in 102ms
+ GET /api/recommended-products 200 in 106ms
+ GET /api/campaigns 200 in 108ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 58ms
+ GET /api/categories 200 in 386ms
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 97ms
+Product not found: 404
+ GET /api/products 200 in 102ms
+ ✓ Compiled /_not-found in 403ms (3565 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 544ms
+ GET /api/carousels 200 in 106ms
+ GET /api/recommended-products 200 in 107ms
+ GET /api/campaigns 200 in 112ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 50ms
+ GET /api/categories 200 in 385ms
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 94ms
+Product not found: 404
+ GET /api/products 200 in 98ms
+ GET /api/recommended-products 200 in 99ms
+ GET /api/carousels 200 in 101ms
+ GET /api/campaigns 200 in 104ms
+🔍 Frontend: Kategori arıyor: Plastik%20Boru
+✅ API call completed: /api/categories/Plastik%20Boru
+✅ Frontend: Kategori bulundu - Plastik Boru, Toplam ürün: 4
+ GET /categories/Plastik%20Boru 200 in 39ms
+ GET /api/categories 200 in 403ms
+🔍 Looking for product with slug: hakan-plastik-beyaz-boru-pn20-pprc-32-mm
+🔍 Found product: 66a9a9ef5bc1abd122533b89
+ GET /api/products/hakan-plastik-beyaz-boru-pn20-pprc-32-mm 200 in 97ms
+ GET /api/products 200 in 102ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 39ms
+ GET /api/categories 200 in 398ms
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 99ms
+Product not found: 404
+ GET /api/products 200 in 102ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 41ms
+🔍 Looking for product with slug: installHook.js.map
+🔍 Found product: NOT FOUND
+ GET /api/products/installHook.js.map 404 in 113ms
+Product not found: 404
+ GET /api/products 200 in 115ms
+ GET /products/installHook.js.map 200 in 169ms
+🔍 Looking for product with slug: düz-flanş
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 101ms
+ GET /api/products 200 in 105ms
+Product not found: 404
+ GET /products/d%C3%BCz-flan%C5%9F 200 in 142ms
+ GET /favicon.ico 200 in 11ms
+ GET /api/categories 200 in 392ms
+ GET /api/campaigns 200 in 117ms
+ GET /api/carousels 200 in 119ms
+ GET /api/recommended-products 200 in 123ms
+ GET /favicon.ico 200 in 11ms
+ GET / 200 in 46ms
+ GET /favicon.ico 200 in 5ms
+ GET /api/campaigns 200 in 117ms
+ GET /api/carousels 200 in 120ms
+ GET /api/categories 200 in 399ms
+ GET /api/recommended-products 200 in 756ms
+🔍 Frontend: Kategori arıyor: Fittings
+ ✓ Compiled /api/categories/[catName] in 414ms (2768 modules)
+🔍 Aranan kategori: Fittings
+🔍 Orijinal param: Fittings
+✅ Kategori bulundu: Fittings
+ GET /api/categories/Fittings 200 in 960ms
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 1018ms
+ GET /favicon.ico 200 in 12ms
+ GET /api/categories 200 in 450ms
+🔍 Looking for product with slug: duz-flans
+ GET /api/products 200 in 109ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 117ms
+ GET /favicon.ico 200 in 7ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 77ms
+ GET /api/categories 200 in 387ms
+🔍 Frontend: Kategori arıyor: Plastik%20Boru
+✅ API call completed: /api/categories/Plastik%20Boru
+✅ Frontend: Kategori bulundu - Plastik Boru, Toplam ürün: 4
+ GET /categories/Plastik%20Boru 200 in 40ms
+ GET /api/categories 200 in 429ms
+🔍 Looking for product with slug: hakan-plastik-beyaz-boru-pn20-pprc-32-mm
+ GET /api/products 200 in 101ms
+🔍 Found product: 66a9a9ef5bc1abd122533b89
+ GET /api/products/hakan-plastik-beyaz-boru-pn20-pprc-32-mm 200 in 102ms
+🔍 Looking for product with slug: silenta-3a-muflu-boru
+🔍 Found product: 66cb07f4715519f0d6822fb9
+ GET /api/products/silenta-3a-muflu-boru 200 in 101ms
+ GET /api/products 200 in 102ms
+🔍 Looking for product with slug: koruge-boru
+ GET /api/products 200 in 98ms
+🔍 Found product: 66fdb45c51d896b8a77cf8ef
+ GET /api/products/koruge-boru 200 in 99ms
+🔍 Looking for product with slug: pp-r-boru
+ GET /api/products 200 in 98ms
+🔍 Found product: 686007760b1d68b54a4889fd
+ GET /api/products/pp-r-boru 200 in 99ms
+🔍 Frontend: Kategori arıyor: Fittings
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 41ms
+🔍 Looking for product with slug: duz-flans
+ GET /api/categories 200 in 369ms
+ GET /api/products 200 in 98ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 100ms
+ ✓ Compiled /pricelists/[priceName] in 450ms (3576 modules)
+ ✓ Compiled /api/pricelists/[priceName] in 192ms (2779 modules)
+ GET /api/pricelists/TRAKYA%20D%C3%96K%C3%9CM%20%C5%9EUBAT%202024%20F%C4%B0YAT%20L%C4%B0STES%C4%B0 200 in 626ms
+ GET /pricelists/TRAKYA%20D%C3%96K%C3%9CM%20%C5%9EUBAT%202024%20F%C4%B0YAT%20L%C4%B0STES%C4%B0 200 in 1493ms
+ GET /api/categories 200 in 394ms
+ ○ Compiling /fiyat-listeleri ...
+ ✓ Compiled /fiyat-listeleri in 595ms (3581 modules)
+ ✓ Compiled /api/search in 206ms (2784 modules)
+Search performed: "fl" - 3 results
+ GET /api/search?query=fl 200 in 346ms
+Search performed: "flas" - 0 results
+ GET /api/search?query=flas 200 in 115ms
+Search performed: "fla" - 1 results
+ GET /api/search?query=fla 200 in 112ms
+Search performed: "flans" - 0 results
+ GET /api/search?query=flans 200 in 113ms
+Search performed: "flan" - 1 results
+ GET /api/search?query=flan 200 in 109ms
+ GET /api/recommended-products 200 in 101ms
+ GET /api/carousels 200 in 103ms
+ GET /api/campaigns 200 in 104ms
+🔍 Looking for product with slug: düz-flanş
+ GET /api/products 200 in 104ms
+🔍 Found product: NOT FOUND
+ GET /api/products/d%C3%BCz-flan%C5%9F 404 in 104ms
+Product not found: 404
+ GET /products/d%C3%BCz-flan%C5%9F 200 in 252ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 540ms (2754 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 696ms
+ ✓ Compiled /favicon.ico in 373ms (2783 modules)
+ ✓ Compiled in 0ms (2783 modules)
+ ✓ Compiled in 1ms (2783 modules)
+ ✓ Compiled in 0ms (2783 modules)
+ GET /favicon.ico 200 in 1046ms
+ GET /api/categories 200 in 1393ms
+ GET /api/carousels 200 in 126ms
+ GET /api/campaigns 200 in 128ms
+ GET /api/recommended-products 200 in 131ms
+ GET / 200 in 62ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 67ms
+ GET /favicon.ico 200 in 55ms
+ GET /api/carousels 200 in 146ms
+ GET /api/recommended-products 200 in 152ms
+ GET /api/campaigns 200 in 157ms
+ GET /api/categories 200 in 415ms
+🔍 Frontend: Kategori arıyor: Fittings
+ ✓ Compiled /api/categories/[catName] in 200ms (2784 modules)
+🔍 Aranan kategori: Fittings
+🔍 Orijinal param: Fittings
+✅ Kategori bulundu: Fittings
+ GET /api/categories/Fittings 200 in 584ms
+✅ API call completed: /api/categories/Fittings
+✅ Frontend: Kategori bulundu - Fittings, Toplam ürün: 1
+ GET /categories/Fittings 200 in 712ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 132ms
+ GET /api/categories 200 in 452ms
+🔍 Looking for product with slug: duz-flans
+ GET /api/products 200 in 106ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 109ms
+ GET /api/campaigns 200 in 109ms
+ GET /api/carousels 200 in 112ms
+ GET /api/recommended-products 200 in 116ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 1768ms (4869 modules)
+ GET /admin 200 in 1903ms
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 75ms
+ ○ Compiling /api/brands ...
+ GET /api/categories 200 in 561ms
+ GET /api/categories 200 in 563ms
+ ✓ Compiled /api/brands in 743ms (3445 modules)
+ GET /api/campaigns 200 in 1157ms
+ GET /api/products 200 in 1159ms
+ GET /api/products 200 in 1171ms
+ GET /api/campaigns 200 in 109ms
+ GET /api/products 200 in 108ms
+ GET /api/campaigns 200 in 103ms
+ GET /api/categories 200 in 783ms
+ GET /api/brands 200 in 187ms
+ GET /api/products 200 in 105ms
+ GET /api/categories 200 in 380ms
+ GET /api/campaigns 200 in 113ms
+ GET /api/brands 200 in 206ms
+ GET /api/categories 200 in 395ms
+ ✓ Compiled /api/admin/activity in 245ms (3447 modules)
+ GET /api/brands 200 in 2037ms
+ GET /api/brands 200 in 1511ms
+ GET /api/admin/activity 200 in 583ms
+ GET /api/admin/activity 200 in 647ms
+ ✓ Compiled /api/test-db in 264ms (3447 modules)
+Testing database connection...
+Testing database connection...
+Database test results: {
+  productCount: 5,
+  brandCount: 8,
+  categoryCount: 7,
+  sampleProducts: [
+    {
+      id: '66a9a9ef5bc1abd122533b89',
+      name: 'Hakan Plastik Beyaz Boru PN20 PPRC 32 mm',
+      slug: 'hakan-plastik-beyaz-boru-pn20-pprc-32-mm',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    },
+    {
+      id: '66cb07f4715519f0d6822fb9',
+      name: 'Silenta 3A Muflu Boru',
+      slug: 'silenta-3a-muflu-boru',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    },
+    {
+      id: '66fdb45c51d896b8a77cf8ef',
+      name: 'Koruge Boru',
+      slug: 'koruge-boru',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    }
+  ],
+  sampleBrands: [
+    {
+      id: '66a99a0b5bc1abd122533b88',
+      brandName: 'GF Hakan Plastik',
+      description: 'GF Hakan Plastik'
+    },
+    {
+      id: '66ec17ae0ea2cc4e29d78d24',
+      brandName: 'KLEPSAN',
+      description: ''
+    },
+    {
+      id: '66ec2b892b02610d02756e5f',
+      brandName: 'BOĞAZİÇİ ',
+      description: ''
+    }
+  ]
+}
+ GET /api/test-db 200 in 754ms
+Database test results: {
+  productCount: 5,
+  brandCount: 8,
+  categoryCount: 7,
+  sampleProducts: [
+    {
+      id: '66a9a9ef5bc1abd122533b89',
+      name: 'Hakan Plastik Beyaz Boru PN20 PPRC 32 mm',
+      slug: 'hakan-plastik-beyaz-boru-pn20-pprc-32-mm',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    },
+    {
+      id: '66cb07f4715519f0d6822fb9',
+      name: 'Silenta 3A Muflu Boru',
+      slug: 'silenta-3a-muflu-boru',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    },
+    {
+      id: '66fdb45c51d896b8a77cf8ef',
+      name: 'Koruge Boru',
+      slug: 'koruge-boru',
+      brandName: 'GF Hakan Plastik',
+      catName: 'Plastik Boru'
+    }
+  ],
+  sampleBrands: [
+    {
+      id: '66a99a0b5bc1abd122533b88',
+      brandName: 'GF Hakan Plastik',
+      description: 'GF Hakan Plastik'
+    },
+    {
+      id: '66ec17ae0ea2cc4e29d78d24',
+      brandName: 'KLEPSAN',
+      description: ''
+    },
+    {
+      id: '66ec2b892b02610d02756e5f',
+      brandName: 'BOĞAZİÇİ ',
+      description: ''
+    }
+  ]
+}
+ GET /api/test-db 200 in 628ms
+ ○ Compiling /admin/products ...
+ ✓ Compiled /admin/products in 1673ms (5655 modules)
+ GET /admin/products?_rsc=1md77 200 in 30ms
+ GET /api/products?t=1751794719611 200 in 117ms
+ GET /api/products?t=1751794719612 200 in 120ms
+ ✓ Compiled /categories/[catName]/subcategories/[subcatName] in 420ms (5591 modules)
+ ✓ Compiled /api/subcategories/[subcatName] in 239ms (3778 modules)
+ GET /api/subcategories/Nitril%20Eldiven 200 in 622ms
+ GET /categories/H%C4%B1rdavat/subcategories/Nitril%20Eldiven 200 in 1468ms
+ ✓ Compiled /api/categories in 414ms (3780 modules)
+ GET /api/categories 200 in 864ms
+ ✓ Compiled /api/campaigns in 465ms (3776 modules)
+ ✓ Compiled (3780 modules)
+ GET /api/recommended-products 200 in 870ms
+ GET /api/campaigns 200 in 871ms
+ GET /api/carousels 200 in 890ms
+ GET /admin/products 200 in 142ms
+ GET /api/products?t=1751794786802 200 in 128ms
+ GET /api/products?t=1751794786819 200 in 109ms
+ GET /api/products?t=1751794786799 200 in 140ms
+ GET /api/products?t=1751794786821 200 in 120ms
+ GET /api/categories 200 in 431ms
+ GET /api/categories 200 in 443ms
+ ✓ Compiled /api/pricelists in 433ms (3782 modules)
+ ✓ Compiled in 0ms (3784 modules)
+ ✓ Compiled in 0ms (3784 modules)
+ ✓ Compiled in 0ms (3784 modules)
+ GET /api/brands 200 in 1311ms
+ GET /api/pricelists 200 in 1382ms
+ GET /api/pricelists 200 in 141ms
+ GET /api/brands 200 in 226ms
+ GET /api/categories 200 in 1178ms

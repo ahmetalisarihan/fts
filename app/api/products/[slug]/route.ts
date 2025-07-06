@@ -7,11 +7,15 @@ export const revalidate = 0; // Önbelleğe almayı devre dışı bırak
 export async function GET(_req: Request, { params }: { params: { slug: string } }) {
     try {
         const { slug } = params;
+        console.log('🔍 Looking for product with slug:', slug);
+        
         const product = await prisma.product.findUnique({
             where: {
                 slug: slug,
             },
         });
+        
+        console.log('🔍 Found product:', product ? product.id : 'NOT FOUND');
 
         if (!product) {
             return NextResponse.json({ message: "Ürün bulunamadı" }, { status: 404 });
@@ -26,7 +30,23 @@ export async function GET(_req: Request, { params }: { params: { slug: string } 
 
 export async function PUT(req: Request, { params }: { params: { slug: string } }) {
     const { name, description,isRecommended, selectedBrand, imageUrl, selectedCategory, selectedPriceList, publicId } = await req.json();
-    const slug = name.toLowerCase().replace(/ /g, "-");
+    
+    // Türkçe karakterleri URL-safe hale getiren fonksiyon
+    const createSlug = (text: string): string => {
+      return text
+        .toLowerCase()
+        .replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u')
+        .replace(/ş/g, 's')
+        .replace(/ı/g, 'i')
+        .replace(/ö/g, 'o')
+        .replace(/ç/g, 'c')
+        .replace(/[^a-z0-9]/g, '-') // Sadece harf, rakam ve tire bırak
+        .replace(/-+/g, '-') // Çoklu tireleri tek tire yap
+        .replace(/^-|-$/g, '') // Baştan ve sondan tireleri kaldır
+    }
+    
+    const slug = name ? createSlug(name) : '';
     try {
         const updatedProduct = await prisma.product.update({
             where: {

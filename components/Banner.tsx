@@ -7,7 +7,7 @@ const Banner = () => {
       <div className="flex items-center">
         <h3 className="font-bold text-lg pl-2">Avantajlı Fiyatlarımızdan Faydalanmak İçin Teklif Alın</h3>
       </div>
-      <Link href="/teklif-al" className="bg-white text-blue-500 px-4 py-1 rounded-md font-bold">
+      <Link href="/iletisim" className="bg-white text-blue-500 px-4 py-1 rounded-md font-bold">
         Hemen Teklif Alın
       </Link>
     </div>

@@ -136,7 +136,7 @@ const ProductDetail = ({ params }: Props) => {
                 <span className="text-gray-400">/</span>
               </>
             )}
-            {product.subcatName && (
+            {product.subcatName && product.catName && (
               <>
                 <Link href={`/categories/${encodeURIComponent(product.catName)}/subcategories/${encodeURIComponent(product.subcatName)}`} className="hover:text-gray-900 transition-colors">
                   {product.subcatName}
@@ -177,13 +177,13 @@ const ProductDetail = ({ params }: Props) => {
             
             {/* Mobile Action Buttons */}
             <div className="lg:hidden space-y-3">
-              <Link href="/teklif-al">
+              <Link href="/iletisim">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold">
                   <Phone className="h-5 w-5 mr-2" />
                   Fiyat Teklifi Al
                 </Button>
               </Link>
-              <Link href="/hakkimizda">
+              <Link href="/iletisim">
                 <Button variant="outline" className="w-full py-3 text-lg">
                   <Mail className="h-5 w-5 mr-2" />
                   İletişime Geç
@@ -300,13 +300,13 @@ const ProductDetail = ({ params }: Props) => {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:block space-y-3">
-              <Link href="/teklif-al">
+              <Link href="/iletisim">
                 <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg font-semibold">
                   <Phone className="h-5 w-5 mr-2" />
                   Fiyat Teklifi Al
                 </Button>
               </Link>
-              <Link href="/hakkimizda">
+              <Link href="/iletisim">
                 <Button variant="outline" className="w-full py-4 text-lg">
                   <Mail className="h-5 w-5 mr-2" />
                   İletişime Geç

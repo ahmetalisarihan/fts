@@ -1,7 +1,82 @@
-import React from 'react';
+'use client'
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import toast from 'react-hot-toast';
+import SimpleMap from '@/components/SimpleMap';
+
+interface ContactFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState<ContactFormData>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      console.log('Submitting contact form:', formData);
+      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      console.log('API Response:', result);
+
+      if (result.success) {
+        toast.success('Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.');
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        console.error('API Error:', result.error);
+        if (result.error?.details) {
+          // Validation errors
+          const validationErrors = result.error.details.map((err: any) => err.message).join(', ');
+          toast.error(`Doğrulama hatası: ${validationErrors}`);
+        } else {
+          toast.error(result.error?.message || 'Mesaj gönderilirken bir hata oluştu.');
+        }
+      }
+    } catch (error) {
+      toast.error('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+      console.error('Contact form error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
@@ -101,28 +176,34 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">Mesaj Gönderin</h2>
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Ad
+                    Ad *
                   </label>
                   <input
                     type="text"
                     id="firstName"
                     name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Adınız"
                   />
                 </div>
                 <div>
                   <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Soyad
+                    Soyad *
                   </label>
                   <input
                     type="text"
                     id="lastName"
                     name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="Soyadınız"
                   />
@@ -131,12 +212,15 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  E-posta
+                  E-posta *
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="e-posta@ornek.com"
                 />
@@ -150,6 +234,8 @@ export default function ContactPage() {
                   type="tel"
                   id="phone"
                   name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="05xx xxx xx xx"
                 />
@@ -157,12 +243,15 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Konu
+                  Konu *
                 </label>
                 <input
                   type="text"
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleInputChange}
+                  required
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                   placeholder="Mesaj konusu"
                 />
@@ -170,11 +259,14 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Mesaj
+                  Mesaj *
                 </label>
                 <textarea
                   id="message"
                   name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
                   rows={5}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
                   placeholder="Mesajınızı buraya yazın..."
@@ -183,10 +275,11 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
+                disabled={isSubmitting}
+                className="w-full bg-blue-600 dark:bg-blue-700 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="h-5 w-5" />
-                <span>Mesaj Gönder</span>
+                <Send className={`h-5 w-5 ${isSubmitting ? 'animate-spin' : ''}`} />
+                <span>{isSubmitting ? 'Gönderiliyor...' : 'Mesaj Gönder'}</span>
               </button>
             </form>
           </div>
@@ -196,18 +289,7 @@ export default function ContactPage() {
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center">Konumumuz</h2>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-            <div className="aspect-w-16 aspect-h-9 h-96">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3178.2468!2d29.1176983!3d36.6201114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c04730dfe89e21%3A0x4d1234567890abcd!2sKara%C3%A7ulha%20Mahallesi%20Dr.%20Devlet%20Bah%C3%A7eli%20Bulvar%C4%B1%20No%3A36%2FA%20Fethiye%2FMUGLA!5e0!3m2!1str!2str!4v1703123456789!5m2!1str!2str"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="w-full h-full"
-              ></iframe>
-            </div>
+            <SimpleMap height="h-96" className="rounded-lg" />
           </div>
         </div>
 

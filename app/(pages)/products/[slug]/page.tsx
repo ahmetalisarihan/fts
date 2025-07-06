@@ -314,30 +314,18 @@ const ProductDetail = ({ params }: Props) => {
               </Link>
             </div>
 
-            {/* Meta Information */}
-            {(product.metaTitle || product.metaDescription || product.metaKeywords) && (
+            {/* Technical Specifications */}
+            {product.technicalSpecs && (
               <Card className="bg-gray-50 shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Teknik Bilgiler</h3>
-                  <div className="space-y-2 text-sm">
-                    {product.metaTitle && (
-                      <div>
-                        <span className="font-medium text-gray-600">Meta Başlık:</span>
-                        <p className="text-gray-800">{product.metaTitle}</p>
-                      </div>
-                    )}
-                    {product.metaDescription && (
-                      <div>
-                        <span className="font-medium text-gray-600">Meta Açıklama:</span>
-                        <p className="text-gray-800">{product.metaDescription}</p>
-                      </div>
-                    )}
-                    {product.metaKeywords && (
-                      <div>
-                        <span className="font-medium text-gray-600">Anahtar Kelimeler:</span>
-                        <p className="text-gray-800">{product.metaKeywords}</p>
-                      </div>
-                    )}
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+                    <FileText className="h-5 w-5 text-gray-600" />
+                    <span>Teknik Bilgiler</span>
+                  </h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {product.technicalSpecs}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

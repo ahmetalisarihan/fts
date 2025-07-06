@@ -11,6 +11,7 @@ import { Textarea } from '../ui/textarea'
 const CreateProductForm = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [technicalSpecs, setTechnicalSpecs] = useState('')
   const [isRecommended, setIsRecommended] = useState(false)
   const [brands, setBrands] = useState<TBrand[]>([])
   const [selectedBrand, setSelectedBrand] = useState('')
@@ -91,6 +92,7 @@ const CreateProductForm = () => {
         body: JSON.stringify({
           name,
           description,
+          technicalSpecs,
           isRecommended,
           imageUrl,
           selectedBrand,
@@ -105,6 +107,7 @@ const CreateProductForm = () => {
       if (res.ok) {
         setName('');
         setDescription('');
+        setTechnicalSpecs('');
         setSelectedBrand('');
         setSelectedCategory('');
         setSelectedSubcategory('');
@@ -146,6 +149,20 @@ const CreateProductForm = () => {
     placeholder="Ürün Açıklaması"
     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
   />
+  
+  <div className="space-y-2">
+    <p className="font-bold text-lg">Teknik Bilgiler</p>
+    <p className="text-gray-500 text-sm">Ürünün teknik özelliklerini buraya yazabilirsiniz (isteğe bağlı).</p>
+    <Textarea
+      value={technicalSpecs}
+      onChange={e => setTechnicalSpecs(e.target.value)}
+      placeholder="Ürünün teknik özelliklerini buraya yazın..."
+      rows={4}
+      maxLength={2000}
+      className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+    />
+    <p className="text-xs text-gray-400">{technicalSpecs.length}/2000 karakter</p>
+  </div>
         <label >
           <input checked={isRecommended} onChange={e => setIsRecommended(e.target.checked)} type="checkbox" /> Tavsiye Edilen Ürünler
         </label>

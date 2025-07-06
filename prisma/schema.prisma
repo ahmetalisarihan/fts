@@ -55,6 +55,7 @@ model Product{
   name          String
   slug          String  @unique
   description   String?
+  technicalSpecs String?  // Teknik bilgiler için yeni alan
   isRecommended Boolean?
   brandName     String?
   brand         Brand? @relation(fields: [brandName], references: [brandName])

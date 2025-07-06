@@ -45,6 +45,7 @@ export type TProduct = {
     name: string;
     slug: string;
     description?: string;
+    technicalSpecs?: string; // Teknik bilgiler için yeni alan
     isRecommended?: boolean;
     imageUrl?: string;
     publicId: string;

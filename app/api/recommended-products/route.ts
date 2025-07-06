@@ -19,6 +19,7 @@ export async function GET() {
         isRecommended: true,
         metaTitle: true,
         metaDescription: true,
+        technicalSpecs: true,
         createdAt: true,
       },
       orderBy: {

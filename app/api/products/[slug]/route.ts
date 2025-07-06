@@ -26,7 +26,7 @@ export async function GET(_req: Request, { params }: { params: { slug: string } 
 }
 
 export async function PUT(req: Request, { params }: { params: { slug: string } }) {
-    const { name, description,isRecommended, selectedBrand, imageUrl, selectedCategory, selectedSubcategory, selectedPriceList, publicId, metaTitle, metaDescription, metaKeywords } = await req.json();
+    const { name, description, technicalSpecs, isRecommended, selectedBrand, imageUrl, selectedCategory, selectedSubcategory, selectedPriceList, publicId, metaTitle, metaDescription, metaKeywords } = await req.json();
     
     // Türkçe karakterleri URL-safe hale getiren fonksiyon
     const createSlug = (text: string): string => {
@@ -57,6 +57,7 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
                 name,
                 slug,
                 description,
+                technicalSpecs,
                 brandName: selectedBrand,
                 isRecommended,
                 imageUrl,

@@ -22,6 +22,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
   const [open, setOpen] = useState(false)
   const [name, setName] = useState(product.name)
   const [description, setDescription] = useState(product.description || '')
+  const [technicalSpecs, setTechnicalSpecs] = useState(product.technicalSpecs || '')
   const [isRecommended, setIsRecommended] = useState(product.isRecommended || false)
   const [brands, setBrands] = useState<TBrand[]>([])
   // Ürün verisinden direkt brandName, catName vb. alanlarını kullan
@@ -118,6 +119,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
         body: JSON.stringify({
           name,
           description,
+          technicalSpecs,
           isRecommended,
           imageUrl,
           selectedBrand,
@@ -191,6 +193,13 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
             onChange={e => setDescription(e.target.value)}
             placeholder="Ürün Açıklaması"
             required
+          />
+          
+          <Textarea
+            value={technicalSpecs}
+            onChange={e => setTechnicalSpecs(e.target.value)}
+            placeholder="Teknik Özellikler"
+            rows={4}
           />
           
           <label className="flex items-center gap-2">

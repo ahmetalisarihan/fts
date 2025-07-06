@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
       name: body.name,
       slug: body.name ? createSlug(body.name) : '',
       description: body.description,
+      technicalSpecs: body.technicalSpecs,
       imageUrl: body.imageUrl,
       publicId: body.publicId || `default_${Date.now()}`,
       brandName: body.selectedBrand,
@@ -127,6 +128,7 @@ export async function POST(req: NextRequest) {
         data: {
           ...validatedData,
           description: validatedData.description || null,
+          technicalSpecs: validatedData.technicalSpecs || null,
           isRecommended: validatedData.isRecommended || false,
           imageUrl: validatedData.imageUrl || null,
           brandName: validatedData.brandName || null,
@@ -168,6 +170,7 @@ export async function GET(req: NextRequest) {
           name: true,
           slug: true,
           description: true,
+          technicalSpecs: true,
           imageUrl: true,
           brandName: true,
           catName: true,

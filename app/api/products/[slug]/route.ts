@@ -7,15 +7,12 @@ export const revalidate = 0; // Önbelleğe almayı devre dışı bırak
 export async function GET(_req: Request, { params }: { params: { slug: string } }) {
     try {
         const { slug } = params;
-        console.log('🔍 Looking for product with slug:', slug);
         
         const product = await prisma.product.findUnique({
             where: {
                 slug: slug,
             },
         });
-        
-        console.log('🔍 Found product:', product ? product.id : 'NOT FOUND');
 
         if (!product) {
             return NextResponse.json({ message: "Ürün bulunamadı" }, { status: 404 });
@@ -29,7 +26,7 @@ export async function GET(_req: Request, { params }: { params: { slug: string } 
 }
 
 export async function PUT(req: Request, { params }: { params: { slug: string } }) {
-    const { name, description,isRecommended, selectedBrand, imageUrl, selectedCategory, selectedPriceList, publicId } = await req.json();
+    const { name, description,isRecommended, selectedBrand, imageUrl, selectedCategory, selectedSubcategory, selectedPriceList, publicId, metaTitle, metaDescription, metaKeywords } = await req.json();
     
     // Türkçe karakterleri URL-safe hale getiren fonksiyon
     const createSlug = (text: string): string => {
@@ -47,11 +44,15 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
     }
     
     const slug = name ? createSlug(name) : '';
+    
     try {
+        // Param ID mi yoksa slug mu kontrol et
+        const whereClause = params.slug.length === 24 && /^[0-9a-fA-F]{24}$/.test(params.slug)
+            ? { id: params.slug } // MongoDB ObjectId formatı
+            : { slug: params.slug }; // Slug formatı
+        
         const updatedProduct = await prisma.product.update({
-            where: {
-                slug: params.slug,
-            },
+            where: whereClause,
             data: {
                 name,
                 slug,
@@ -61,7 +62,11 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
                 imageUrl,
                 publicId,
                 catName: selectedCategory,
+                subcatName: selectedSubcategory,
                 priceName: selectedPriceList,
+                metaTitle,
+                metaDescription,
+                metaKeywords,
             },
         });
         return NextResponse.json(updatedProduct);

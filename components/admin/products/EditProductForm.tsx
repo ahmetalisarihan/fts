@@ -21,17 +21,18 @@ interface EditProductFormProps {
 const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpdated }) => {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState(product.name)
-  const [description, setDescription] = useState(product.description)
-  const [isRecommended, setIsRecommended] = useState(product.isRecommended)
+  const [description, setDescription] = useState(product.description || '')
+  const [isRecommended, setIsRecommended] = useState(product.isRecommended || false)
   const [brands, setBrands] = useState<TBrand[]>([])
-  const [selectedBrand, setSelectedBrand] = useState(product.brand?.brandName || '')
-  const [imageUrl, setImageUrl] = useState(product.imageUrl)
+  // Ürün verisinden direkt brandName, catName vb. alanlarını kullan
+  const [selectedBrand, setSelectedBrand] = useState(product.brandName || product.brand?.brandName || '')
+  const [imageUrl, setImageUrl] = useState(product.imageUrl || '')
   const [categories, setCategories] = useState<TCategory[]>([])
-  const [selectedCategory, setSelectedCategory] = useState(product.category?.catName || '')
+  const [selectedCategory, setSelectedCategory] = useState(product.catName || product.category?.catName || '')
   const [subcategories, setSubcategories] = useState<TSubCategory[]>([])
-  const [selectedSubcategory, setSelectedSubcategory] = useState(product.subcategory?.subcatName || '')
+  const [selectedSubcategory, setSelectedSubcategory] = useState(product.subcatName || product.subcategory?.subcatName || '')
   const [priceLists, setPriceLists] = useState<TPriceList[]>([])
-  const [selectedPriceList, setSelectedPriceList] = useState(product.priceList?.priceName || '')
+  const [selectedPriceList, setSelectedPriceList] = useState(product.priceName || product.priceList?.priceName || '')
   const [metaTitle, setMetaTitle] = useState(product.metaTitle || '')
   const [metaDescription, setMetaDescription] = useState(product.metaDescription || '')
   const [metaKeywords, setMetaKeywords] = useState(product.metaKeywords || '')
@@ -61,7 +62,8 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
       }
     }
 
-    if (selectedCategory !== product.category?.catName) {
+    // Eğer kategori değiştirilirse alt kategoriyi temizle
+    if (selectedCategory !== (product.catName || product.category?.catName)) {
       setSelectedSubcategory('')
     }
     fetchSubcategories()
@@ -83,8 +85,22 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
       setPriceLists(priceLists)
     }
     fetchAllPriceLists()
-  }
-    , [])
+  }, [])
+
+  // Ürün açıldığında mevcut kategori için alt kategorileri yükle
+  useEffect(() => {
+    const initialCategory = product.catName || product.category?.catName
+    if (initialCategory && categories.length > 0) {
+      const fetchInitialSubcategories = async () => {
+        const res = await fetch(`/api/categories/${initialCategory}/subcategories`)
+        if (res.ok) {
+          const subcatData = await res.json()
+          setSubcategories(subcatData.data)
+        }
+      }
+      fetchInitialSubcategories()
+    }
+  }, [categories, product.catName, product.category?.catName])
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!name || !description) {
@@ -131,13 +147,13 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
 
   const resetForm = () => {
     setName(product.name)
-    setDescription(product.description)
-    setIsRecommended(product.isRecommended)
-    setSelectedBrand(product.brand?.brandName || '')
-    setImageUrl(product.imageUrl)
-    setSelectedCategory(product.category?.catName || '')
-    setSelectedSubcategory(product.subcategory?.subcatName || '')
-    setSelectedPriceList(product.priceList?.priceName || '')
+    setDescription(product.description || '')
+    setIsRecommended(product.isRecommended || false)
+    setSelectedBrand(product.brandName || product.brand?.brandName || '')
+    setImageUrl(product.imageUrl || '')
+    setSelectedCategory(product.catName || product.category?.catName || '')
+    setSelectedSubcategory(product.subcatName || product.subcategory?.subcatName || '')
+    setSelectedPriceList(product.priceName || product.priceList?.priceName || '')
     setMetaTitle(product.metaTitle || '')
     setMetaDescription(product.metaDescription || '')
     setMetaKeywords(product.metaKeywords || '')
@@ -145,7 +161,8 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
 
   return (
     <Dialog open={open} onOpenChange={(newOpen) => {
-      if (!newOpen) {
+      if (newOpen) {
+        // Dialog açıldığında form verilerini sıfırla/yenile
         resetForm()
       }
       setOpen(newOpen)

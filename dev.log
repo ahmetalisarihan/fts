@@ -405,3 +405,83 @@ Database test results: {
  GET /api/pricelists 200 in 141ms
  GET /api/brands 200 in 226ms
  GET /api/categories 200 in 1178ms
+ ✓ Compiled in 1256ms (5582 modules)
+ ✓ Compiled /api/brands in 389ms (3759 modules)
+ ✓ Compiled /api/categories in 0ms (3763 modules)
+ ✓ Compiled in 0ms (3765 modules)
+ ✓ Compiled in 0ms (3765 modules)
+ GET /?_rsc=r3yhw 200 in 1090ms
+ GET /admin/products?_rsc=xdann 200 in 1023ms
+ ✓ Compiled /api/products/[slug] in 1ms (3765 modules)
+ GET /api/pricelists 200 in 1816ms
+ GET /api/categories/Fittings/subcategories 200 in 1853ms
+ GET /api/brands 200 in 1721ms
+ ✓ Compiled in 1ms (3780 modules)
+🔍 Looking for product with slug: duz-flans
+ GET /api/pricelists 200 in 450ms
+ GET /api/products 200 in 1088ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 1090ms
+ GET /products/duz-flans?_rsc=14gp8 200 in 2090ms
+ GET /api/categories 200 in 2022ms
+ GET /api/brands 200 in 560ms
+ GET /api/categories/Fittings/subcategories 200 in 582ms
+ GET /api/categories 200 in 394ms
+ ✓ Compiled in 550ms (5609 modules)
+ GET /?_rsc=r3yhw 200 in 72ms
+ GET /admin/products?_rsc=xdann 200 in 82ms
+🔍 Looking for product with slug: duz-flans
+ GET /api/products 200 in 164ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 173ms
+ GET /products/duz-flans?_rsc=4onq9 200 in 262ms
+ ✓ Compiled in 509ms (5609 modules)
+ GET /admin/products?_rsc=xdann 200 in 46ms
+ GET /?_rsc=r3yhw 200 in 47ms
+🔍 Looking for product with slug: duz-flans
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 115ms
+ GET /api/products 200 in 129ms
+ GET /products/duz-flans?_rsc=4onq9 200 in 186ms
+ ✓ Compiled in 540ms (5609 modules)
+ ✓ Compiled in 1ms (3780 modules)
+ ✓ Compiled in 0ms (3780 modules)
+ ✓ Compiled in 1ms (3780 modules)
+ GET /api/pricelists 200 in 1096ms
+ GET /api/brands 200 in 1190ms
+ GET /api/categories/Fittings/subcategories 200 in 1180ms
+ ✓ Compiled in 0ms (3780 modules)
+ GET /?_rsc=r3yhw 200 in 1119ms
+ GET /admin/products?_rsc=xdann 200 in 1121ms
+ GET /api/categories 200 in 1400ms
+ ✓ Compiled in 1ms (3780 modules)
+ ✓ Compiled in 1ms (3780 modules)
+ ✓ Compiled in 0ms (3780 modules)
+ GET /api/pricelists 200 in 949ms
+🔍 Looking for product with slug: duz-flans
+ GET /api/products 200 in 1135ms
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 1131ms
+ GET /products/duz-flans?_rsc=4onq9 200 in 2256ms
+ GET /api/brands 200 in 1232ms
+ GET /api/categories/Fittings/subcategories 200 in 1245ms
+ GET /api/categories 200 in 1205ms
+ GET /api/categories/Fittings/subcategories 200 in 209ms
+ GET /api/categories/Fittings/subcategories 200 in 208ms
+ ✓ Compiled in 726ms (5609 modules)
+ GET /admin/products?_rsc=xdann 200 in 48ms
+ GET /?_rsc=r3yhw 200 in 86ms
+🔍 Looking for product with slug: duz-flans
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 114ms
+ GET /api/products 200 in 143ms
+ GET /products/duz-flans?_rsc=4onq9 200 in 286ms
+ ✓ Compiled in 503ms (5609 modules)
+ GET /admin/products?_rsc=xdann 200 in 49ms
+ GET /?_rsc=r3yhw 200 in 60ms
+🔍 Looking for product with slug: duz-flans
+🔍 Found product: 686a29053492ec79ea51fdb3
+ GET /api/products/duz-flans 200 in 132ms
+ GET /api/products 200 in 152ms
+ GET /products/duz-flans?_rsc=4onq9 200 in 214ms
+[?25h

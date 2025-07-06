@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     });
 
     try {
-        const mail = await transporter.sendMail({
+        const _mail = await transporter.sendMail({
             from: username,
             to: myEmail,
             replyTo: email,

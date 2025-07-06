@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 import { normalizeCategoryName } from "@/utils/url-helpers";
 
-export async function GET(req: Request, { params }: { params: { catName: string } }) {
+export async function GET(_req: Request, { params }: { params: { catName: string } }) {
 
     try {
         // URL'i güvenli şekilde decode et

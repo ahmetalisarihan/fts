@@ -27,11 +27,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialValue = '' }) =>
 
   // URL'den query parametresini al ve input'u güncelle
   useEffect(() => {
-    const urlQuery = searchParams.get('query');
+    const urlQuery = searchParams?.get('query');
     if (urlQuery && urlQuery !== query) {
       setQuery(urlQuery);
     }
-  }, [searchParams]);
+  }, [searchParams, query]);
 
   // Debounced search function
   const debouncedSearch = useCallback(

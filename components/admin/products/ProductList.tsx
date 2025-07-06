@@ -236,8 +236,7 @@ export default function ProductList() {
       {editDialog.isOpen && editDialog.product && (
         <EditProductForm
           product={editDialog.product}
-          onClose={() => setEditDialog({ isOpen: false, product: null })}
-          onSave={() => {
+          onProductUpdated={() => {
             fetchProducts(); // Ürün listesini yenile
             setEditDialog({ isOpen: false, product: null });
           }}

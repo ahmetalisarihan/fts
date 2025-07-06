@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
     const newCampaign = await withErrorHandling(async () => {
       return await prisma.campaigns.create({
         data: {
-          title: validatedData.title,
+          title: validatedData.title || null,
           imageUrl: validatedData.imageUrl,
           link: validatedData.link,
         },

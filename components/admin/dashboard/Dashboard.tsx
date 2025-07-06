@@ -37,10 +37,10 @@ export default function Dashboard() {
       try {
         // Gerçek API'lerden veri çek
         const [productsRes, categoriesRes, brandsRes, campaignsRes] = await Promise.all([
-          fetch('/api/products', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/categories', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/brands', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/campaigns', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/products', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/categories', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/brands', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/campaigns', { cache: 'no-store' }).catch(() => new Response(null)),
         ]);
 
         let productCount = 0;
@@ -94,10 +94,10 @@ export default function Dashboard() {
     const fetchStats = async () => {
       try {
         const [productsRes, categoriesRes, brandsRes, campaignsRes] = await Promise.all([
-          fetch('/api/products', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/categories', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/brands', { cache: 'no-store' }).catch(() => ({ ok: false })),
-          fetch('/api/campaigns', { cache: 'no-store' }).catch(() => ({ ok: false })),
+          fetch('/api/products', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/categories', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/brands', { cache: 'no-store' }).catch(() => new Response(null)),
+          fetch('/api/campaigns', { cache: 'no-store' }).catch(() => new Response(null)),
         ]);
 
         let productCount = 0, categoryCount = 0, brandCount = 0, campaignCount = 0;

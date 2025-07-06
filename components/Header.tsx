@@ -8,12 +8,10 @@ import SearchBar from './SearchBar'
 import ContactPhone from './ContactPhone'
 import MobileMenu from './MobileMenu'
 import { SafeThemeToggle } from './SafeThemeToggle'
-import { Product } from '@/types'
-import { cn } from '@/utils/common'
-import { BREAKPOINTS } from '@/constants'
+import { TProduct } from '@/app/types'
 
 const Header: React.FC = () => {
-  const handleSearchResults = (products: Product[]) => {
+  const handleSearchResults = (products: TProduct[]) => {
     console.log(products)
   }
   return (

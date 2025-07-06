@@ -4,6 +4,7 @@ export type TCategory = {
     catName: string;
     description?: string;
     subcategories?: TSubCategory[];
+    products?: TProduct[];
 };
 
 export type TSubCategory = {

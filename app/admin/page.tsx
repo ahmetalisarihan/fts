@@ -1,6 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { checkRole } from "@/utils/roles";
 import AdminLayout from "@/components/admin/layout/AdminLayout";
 import Dashboard from "@/components/admin/dashboard/Dashboard";
 

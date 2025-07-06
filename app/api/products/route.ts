@@ -109,7 +109,19 @@ export async function POST(req: NextRequest) {
     // Create product
     const newProduct = await withErrorHandling(async () => {
       return await prisma.product.create({
-        data: validatedData,
+        data: {
+          ...validatedData,
+          description: validatedData.description || null,
+          isRecommended: validatedData.isRecommended || false,
+          imageUrl: validatedData.imageUrl || null,
+          brandName: validatedData.brandName || null,
+          catName: validatedData.catName || null,
+          subcatName: validatedData.subcatName || null,
+          priceName: validatedData.priceName || null,
+          metaTitle: validatedData.metaTitle || null,
+          metaDescription: validatedData.metaDescription || null,
+          metaKeywords: validatedData.metaKeywords || null,
+        },
       });
     });
     

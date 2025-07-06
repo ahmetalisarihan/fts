@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 
 
-export async function GET(req: Request, { params }: { params: { subcatName: string } }) {
+export async function GET(_req: Request, { params }: { params: { subcatName: string } }) {
 
     try {
         const subcatName  = params.subcatName; 

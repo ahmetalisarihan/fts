@@ -167,7 +167,7 @@ export function chunk<T>(array: T[], size: number): T[][] {
  * Array'den dublicate değerleri temizler
  */
 export function unique<T>(array: T[]): T[] {
-  return [...new Set(array)]
+  return Array.from(new Set(array))
 }
 
 /**

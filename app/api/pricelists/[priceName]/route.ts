@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 
-export async function GET(req: Request, { params }: { params: { priceName: string } }) {
+export async function GET(_req: Request, { params }: { params: { priceName: string } }) {
   try {
     const priceName = params.priceName; // URL'den fiyat adı parametresini al
     const priceList = await prisma.priceList.findUnique({ // Veritabanında eşleşen fiyat listesini bul
@@ -22,7 +22,7 @@ export async function GET(req: Request, { params }: { params: { priceName: strin
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { priceName: string } }) {
+export async function DELETE(_req: Request, { params }: { params: { priceName: string } }) {
   const { priceName } = params;  // URL'den priceName parametresini al
 
   if (!priceName) {  // priceName yoksa hata döndür

@@ -107,7 +107,7 @@ export default function Sidebar({ isCollapsed, onCollapseAction }: SidebarProps)
       <nav className="flex-1 space-y-1 p-2">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+          const isActive = pathname === item.href || (pathname?.startsWith(item.href + '/') ?? false);
 
           return (
             <Link key={item.href} href={item.href}>

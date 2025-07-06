@@ -1,5 +1,5 @@
 'use client'
-import { TBrand, TCategory, TSubCategory, TPriceList } from '@/app/types'
+import { TBrand, TCategory, TSubCategory, TPriceList, TProduct } from '@/app/types'
 import React, { useEffect, useState } from 'react'
 import { CldImage, CldUploadButton } from 'next-cloudinary'
 import { Button } from '@/components/ui/button'
@@ -8,23 +8,13 @@ import { Textarea } from '@/components/ui/textarea'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import toast from 'react-hot-toast'
 
-interface Product {
-  id: string
-  name: string
-  description: string
-  isRecommended: boolean
-  imageUrl: string
-  brand: { brandName: string }
-  category: { catName: string }
-  subcategory: { subcatName: string }
-  priceList: { priceName: string }
-  metaTitle: string
-  metaDescription: string
-  metaKeywords: string
-}
-
 interface EditProductFormProps {
-  product: Product
+  product: TProduct & {
+    brand?: { brandName: string }
+    category?: { catName: string }
+    subcategory?: { subcatName: string }
+    priceList?: { priceName: string }
+  }
   onProductUpdated: () => void
 }
 

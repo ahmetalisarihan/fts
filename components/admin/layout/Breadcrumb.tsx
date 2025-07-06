@@ -30,6 +30,7 @@ export default function Breadcrumb() {
   
   // Pathname'i breadcrumb item'larına çevir
   const generateBreadcrumbs = (): BreadcrumbItem[] => {
+    if (!pathname) return [];
     const pathSegments = pathname.split('/').filter(Boolean);
     const breadcrumbs: BreadcrumbItem[] = [];
     

@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const dynamic = 'force-dynamic'; // Her istek için yeni veri al
 export const revalidate = 0; // Önbelleğe almayı devre dışı bırak
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
+export async function GET(_req: Request, { params }: { params: { slug: string } }) {
     try {
         const { slug } = params;
         const product = await prisma.product.findUnique({
@@ -51,7 +51,7 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
     }
 }
 
-export async function DELETE(req: Request, { params }: { params: { slug: string } }) {
+export async function DELETE(_req: Request, { params }: { params: { slug: string } }) {
     try {
         const deletedProduct = await prisma.product.delete({
             where: {

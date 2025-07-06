@@ -6,7 +6,7 @@ interface SEOConfig {
   keywords?: string[]
   image?: string
   url?: string
-  type?: 'website' | 'article' | 'product'
+  type?: 'website' | 'article'
   publishedTime?: string
   modifiedTime?: string
   author?: string
@@ -143,12 +143,12 @@ export function generateProductMetadata(product: {
   return generateMetadata({
     title: name,
     description: `${description} - ${brand ? `${brand} markası` : 'Kaliteli'} ${category.toLowerCase()} ürünü. ${price ? `Fiyat: ${price} TL` : 'Uygun fiyat'}`,
-    keywords: [name, brand, category, 'fiyat', 'satış'].filter(Boolean),
+    keywords: [name, brand, category, 'fiyat', 'satış'].filter(Boolean) as string[],
     image: images[0] || defaultSEO.defaultImage,
     url: `/products/${slug}`,
     type: 'article',
     category,
-    tags: [name, brand, category, sku].filter(Boolean)
+    tags: [name, brand, category, sku].filter(Boolean) as string[]
   })
 }
 

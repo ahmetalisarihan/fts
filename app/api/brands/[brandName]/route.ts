@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 
 
-export async function GET(req: Request, { params }: { params: { brandName: string } }) {
+export async function GET(_req: Request, { params }: { params: { brandName: string } }) {
 
     try {
         const brandName  = params.brandName; 

@@ -71,7 +71,7 @@ export type TPriceList = {
 export type TCarousel = {
     id: string;
     imageUrl?: string;
-    carouselLink?: string;
+    carouselLink?: string | null;
 };
 
 export type TCampaigns = {

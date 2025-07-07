@@ -57,9 +57,6 @@ export default function GoogleMap({ height = "h-64 min-h-[280px]", zoom = 15, cl
                         center={position} 
                         mapId={process.env.NEXT_PUBLIC_MAP_ID}
                         className="w-full h-full"
-                        onLoadError={() => {
-                            console.error('Google Maps failed to load');
-                        }}
                     >
                         <AdvancedMarker position={position} onClick={handleClick}>
                             <Pin

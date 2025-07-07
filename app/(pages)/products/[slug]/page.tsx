@@ -190,7 +190,25 @@ const ProductDetail = ({ params }: Props) => {
                 </Button>
               </Link>
             </div>
+
+            {/* Technical Specifications */}
+            {product.technicalSpecs && (
+              <Card className="bg-blue-50 shadow-sm border-blue-200">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+                    <Package className="h-5 w-5 text-blue-600" />
+                    <span>Teknik Bilgiler</span>
+                  </h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {product.technicalSpecs}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
+          
 
           {/* Product Info */}
           <div className="space-y-6">
@@ -281,6 +299,7 @@ const ProductDetail = ({ params }: Props) => {
               </CardContent>
             </Card>
 
+
             {/* Description */}
             {product.description && (
               <Card className="bg-white shadow-sm">
@@ -298,6 +317,23 @@ const ProductDetail = ({ params }: Props) => {
               </Card>
             )}
 
+            {/* Technical Specifications */}
+            {/* {product.technicalSpecs && (
+              <Card className="bg-blue-50 shadow-sm border-blue-200">
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+                    <Package className="h-5 w-5 text-blue-600" />
+                    <span>Teknik Bilgiler</span>
+                  </h3>
+                  <div className="prose prose-gray max-w-none">
+                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+                      {product.technicalSpecs}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )} */}
+
             {/* Desktop Action Buttons */}
             <div className="hidden lg:block space-y-3">
               <Link href="/iletisim">
@@ -314,22 +350,6 @@ const ProductDetail = ({ params }: Props) => {
               </Link>
             </div>
 
-            {/* Technical Specifications */}
-            {product.technicalSpecs && (
-              <Card className="bg-gray-50 shadow-sm">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
-                    <FileText className="h-5 w-5 text-gray-600" />
-                    <span>Teknik Bilgiler</span>
-                  </h3>
-                  <div className="prose prose-gray max-w-none">
-                    <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
-                      {product.technicalSpecs}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
         </div>
       </div>

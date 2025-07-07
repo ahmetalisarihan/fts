@@ -31,7 +31,6 @@ export function CarouselPlugin() {
       try {
         const response = await OptimizedAPI.getCarousels();
         const carouselData = Array.isArray(response) ? response : [];
-        console.log('Fetched carousels:', carouselData);
         setCarousels(carouselData);
       } catch (error) {
         console.error('Failed to fetch carousels:', error);
@@ -67,16 +66,7 @@ export function CarouselPlugin() {
       setApi={setApi}
     >
       <CarouselContent>
-        {carousels.map((item, index) => {
-          console.log(`Rendering carousel item ${index}:`, {
-            id: item.id,
-            hasImage: !!item.imageUrl,
-            hasLink: !!item.carouselLink,
-            linkValue: item.carouselLink,
-            linkType: typeof item.carouselLink
-          });
-          
-          return (
+        {carousels.map((item, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
@@ -136,8 +126,7 @@ export function CarouselPlugin() {
               </Card>
             </div>
           </CarouselItem>
-          );
-        })}
+        ))}
       </CarouselContent>
       <CarouselPrevious className="left-0" />
       <CarouselNext className="right-0" />

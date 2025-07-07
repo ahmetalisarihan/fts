@@ -69,13 +69,22 @@ export async function optimizedFetch<T>(
   // Mark as loading
   loadingStates.set(cacheKey, true);
 
-  // Create request promise
+  // Create request promise  
   let fullUrl = url;
   
-  // If URL is relative, make it absolute
-  if (url.startsWith('/')) {
-    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  // Only make absolute URLs for server-side requests
+  if (url.startsWith('/') && typeof window === 'undefined') {
+    // Server environment - use environment variables
+    const baseUrl = process.env.NEXTAUTH_URL || 
+                   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
+                   (process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}` : '') ||
+                   'http://localhost:3000';
+    
     fullUrl = `${baseUrl}${url}`;
+    console.log(`🌐 Server-side request: ${baseUrl}${url}`);
+  } else if (url.startsWith('/')) {
+    // Browser environment - relative URLs work fine
+    console.log(`🌐 Client-side request: ${url}`);
   }
   
   const requestPromise = fetch(fullUrl, {

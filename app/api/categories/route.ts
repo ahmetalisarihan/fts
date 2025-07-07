@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
+import { handleApiError, createSuccessResponse, addCorsHeaders } from '@/utils/api-helpers';
 
 export async function POST(req: NextRequest) {
   try {
@@ -7,10 +8,11 @@ export async function POST(req: NextRequest) {
     const { catName, description } = body;
 
     if (!catName) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { success: false, error: { message: 'Kategori adı gereklidir' } },
         { status: 400 }
       );
+      return addCorsHeaders(response);
     }
 
     // Check if category already exists
@@ -19,10 +21,11 @@ export async function POST(req: NextRequest) {
     });
 
     if (existingCategory) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { success: false, error: { message: 'Bu kategori adı zaten kullanımda' } },
         { status: 409 }
       );
+      return addCorsHeaders(response);
     }
 
     // Create category
@@ -33,17 +36,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(
-      { success: true, data: newCategory, message: 'Kategori başarıyla oluşturuldu' },
-      { status: 201 }
-    );
+    return createSuccessResponse(newCategory, 'Kategori başarıyla oluşturuldu', 201);
     
   } catch (error) {
-    console.error('Category creation error:', error);
-    return NextResponse.json(
-      { success: false, error: { message: 'Kategori oluşturulamadı' } },
-      { status: 500 }
-    );
+    return handleApiError(error);
   }
 }
 
@@ -84,18 +80,17 @@ export async function GET(_req: NextRequest) {
       ]
     });
     
-    return NextResponse.json(
-      { success: true, data: categories, message: 'Kategoriler başarıyla getirildi' },
-      { status: 200 }
-    );
+    return createSuccessResponse(categories, 'Kategoriler başarıyla getirildi');
     
   } catch (error) {
-    console.error('Categories fetch error:', error);
-    return NextResponse.json(
-      { success: false, error: { message: 'Kategoriler getirilemedi' } },
-      { status: 500 }
-    );
+    return handleApiError(error);
   }
+}
+
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 200 });
+  return addCorsHeaders(response);
 }
 
 // Cache'i devre dışı bırak

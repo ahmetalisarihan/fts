@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from "@/libs/prismadb";
+import { handleApiError, createSuccessResponse, addCorsHeaders } from '@/utils/api-helpers';
 
 export async function GET() {
   try {
@@ -27,17 +28,16 @@ export async function GET() {
       },
     });
     
-    // Cache headers ekle
-    const response = NextResponse.json(products);
-    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-    
-    return response;
+    return createSuccessResponse(products, 'Önerilen ürünler başarıyla getirildi');
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: 'Bir hata oluştu. Lütfen tekrar deneyin.' }, { status: 500 });
+    return handleApiError(error);
   }
+}
+
+// Handle CORS preflight requests
+export async function OPTIONS() {
+  const response = new NextResponse(null, { status: 200 });
+  return addCorsHeaders(response);
 }
 
 // Cache'i devre dışı bırak

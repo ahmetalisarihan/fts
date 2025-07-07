@@ -1,59 +1,34 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/libs/prismadb';
+import { handleApiError, createSuccessResponse, addCorsHeaders } from '@/utils/api-helpers';
 
 export async function GET() {
     try {
         const carousels = await prisma.carousel.findMany();
-        return new Response(JSON.stringify(carousels), {
-            status: 200,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        return createSuccessResponse(carousels, 'Carousellar başarıyla getirildi');
     } catch (error) {
-        console.error(error);
-        return new Response(JSON.stringify({ message: 'Carouselları çekerken bir hata oluştu.' }), {
-            status: 500,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        return handleApiError(error);
     }
 }
 
 export async function POST(request: NextRequest) {
     try {
         const { imageUrl, carouselLink } = await request.json();
-        if (!imageUrl || !carouselLink) {
-            return new Response(JSON.stringify({ error: 'Resim URL i ve bağlantı gerekli.' }), {
-                status: 400,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+        if (!imageUrl) {
+            const response = NextResponse.json({ error: 'Resim URL\'i gerekli.' }, { status: 400 });
+            return addCorsHeaders(response);
         }
 
         const newCarousel = await prisma.carousel.create({
             data: {
                 imageUrl,
-                carouselLink,
+                carouselLink: carouselLink || null,
             },
         });
 
-        return new Response(JSON.stringify(newCarousel), {
-            status: 201,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        return createSuccessResponse(newCarousel, 'Carousel başarıyla oluşturuldu', 201);
     } catch (error) {
-        console.error(error);
-        return new Response(JSON.stringify({ message: 'Yeni carousel öğesi oluşturulurken bir hata oluştu.' }), {
-            status: 500,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        return handleApiError(error);
     }
 }
 
@@ -63,12 +38,8 @@ export async function DELETE(request: NextRequest) {
         const id = searchParams.get("id");
 
         if (!id) {
-            return new Response(JSON.stringify({ error: "ID gerekli." }), {
-                status: 400,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const response = NextResponse.json({ error: "ID gerekli." }, { status: 400 });
+            return addCorsHeaders(response);
         }
 
         // Veritabanından silme işlemi
@@ -76,24 +47,14 @@ export async function DELETE(request: NextRequest) {
             where: { id },
         });
 
-        return new Response(JSON.stringify({ message: "Carousel başarıyla silindi." }), {
-            status: 200,
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        return createSuccessResponse(null, "Carousel başarıyla silindi.");
     } catch (error) {
-        console.error(error);
-        return new Response(
-            JSON.stringify({
-                message: "Carousel silinirken bir hata oluştu.",
-            }),
-            {
-                status: 500,
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        return handleApiError(error);
     }
+}
+
+// Handle CORS preflight requests
+export async function OPTIONS() {
+    const response = new NextResponse(null, { status: 200 });
+    return addCorsHeaders(response);
 }

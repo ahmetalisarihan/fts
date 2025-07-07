@@ -40,7 +40,7 @@ export function handleApiError(error: unknown): NextResponse {
   console.error('API Error:', error);
 
   if (error instanceof AppError) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: false,
         error: {
@@ -51,10 +51,11 @@ export function handleApiError(error: unknown): NextResponse {
       },
       { status: error.statusCode }
     );
+    return addCorsHeaders(response);
   }
 
   if (error instanceof z.ZodError) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       {
         success: false,
         error: {
@@ -65,6 +66,7 @@ export function handleApiError(error: unknown): NextResponse {
       },
       { status: 400 }
     );
+    return addCorsHeaders(response);
   }
 
   // Database specific errors
@@ -73,7 +75,7 @@ export function handleApiError(error: unknown): NextResponse {
     
     // Prisma errors
     if (dbError.code === 'P2002') {
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           success: false,
           error: {
@@ -84,10 +86,11 @@ export function handleApiError(error: unknown): NextResponse {
         },
         { status: 409 }
       );
+      return addCorsHeaders(response);
     }
 
     if (dbError.code === 'P2025') {
-      return NextResponse.json(
+      const response = NextResponse.json(
         {
           success: false,
           error: {
@@ -97,11 +100,12 @@ export function handleApiError(error: unknown): NextResponse {
         },
         { status: 404 }
       );
+      return addCorsHeaders(response);
     }
   }
 
   // Default internal server error
-  return NextResponse.json(
+  const response = NextResponse.json(
     {
       success: false,
       error: {
@@ -111,11 +115,21 @@ export function handleApiError(error: unknown): NextResponse {
     },
     { status: 500 }
   );
+  return addCorsHeaders(response);
+}
+
+// CORS Headers Helper
+export function addCorsHeaders(response: NextResponse): NextResponse {
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  response.headers.set('Access-Control-Max-Age', '86400');
+  return response;
 }
 
 // Success Response Helper
 export function createSuccessResponse(data: any, message?: string, statusCode: number = 200) {
-  return NextResponse.json(
+  const response = NextResponse.json(
     {
       success: true,
       message,
@@ -123,6 +137,7 @@ export function createSuccessResponse(data: any, message?: string, statusCode: n
     },
     { status: statusCode }
   );
+  return addCorsHeaders(response);
 }
 
 // Validation Schemas

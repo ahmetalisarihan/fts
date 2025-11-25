@@ -154,8 +154,12 @@ export async function POST(req: NextRequest) {
       });
     });
     
-    // Cache'leri temizle - geçici olarak kapalı
-    // await CacheManager.invalidateProductCaches();
+    // Cache'leri akıllı şekilde temizle
+    const { shouldInvalidateCache } = await import('@/utils/cache-strategy');
+    if (shouldInvalidateCache('product_create')) {
+      const { CacheManager } = await import('@/utils/cache');
+      await CacheManager.invalidateProductCaches();
+    }
     
     return createSuccessResponse(newProduct, 'Ürün başarıyla oluşturuldu', 201);
     

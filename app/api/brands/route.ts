@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Cache'leri temizle
+    const { CacheManager } = await import('@/utils/cache');
+    await CacheManager.invalidateBrandCaches();
+
     return NextResponse.json(
       { success: true, data: newBrand, message: 'Marka başarıyla oluşturuldu' },
       { status: 201 }

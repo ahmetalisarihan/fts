@@ -35,6 +35,10 @@ export async function DELETE(_req: Request, { params }: { params: { priceName: s
       where: { priceName },
     });
 
+    // Cache'leri temizle
+    const { CacheManager } = await import('@/utils/cache');
+    await CacheManager.invalidatePriceListCaches();
+
     return NextResponse.json({ message: 'Fiyat listesi başarıyla silindi.' });
   } catch (error) {  // Silme işlemi sırasında hata oluşursa
     console.error(error);  // Hatayı konsola yaz

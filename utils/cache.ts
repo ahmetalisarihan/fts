@@ -81,6 +81,7 @@ export class CacheManager {
       revalidatePath('/pricelists');
       revalidatePath('/pricelists/[priceName]', 'page');
       revalidateTag('pricelists');
+      revalidateTag('pricelists');
       
       console.log('Price list cache invalidation completed');
     } catch (error) {

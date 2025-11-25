@@ -5,6 +5,8 @@ import CategoriesList from '@/components/CategoriesList';
 import BrandList from '@/components/BrandList';
 import ProductCard from '@/components/ProductCard';
 
+// ISR - Free Plan dostu ayarlar
+export const revalidate = 14400 // 4 saat
 
 const getProducts = async ():Promise<TProduct[] | null> => {
   try {

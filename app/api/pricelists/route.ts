@@ -14,6 +14,11 @@ export async function POST(req: Request) {
                 pdfUrl,
             },
         });
+        
+        // Cache'leri temizle
+        const { CacheManager } = await import('@/utils/cache');
+        await CacheManager.invalidatePriceListCaches();
+        
         return NextResponse.json(pricelist);
     } catch (error) {
         return NextResponse.json({ error: 'Veritabanı işlemi sırasında bir hata oluştu.', details: error }, { status: 500 });
@@ -43,6 +48,10 @@ export async function DELETE(req: Request) {
         await prisma.priceList.delete({
             where: { priceName },
         });
+
+        // Cache'leri temizle
+        const { CacheManager } = await import('@/utils/cache');
+        await CacheManager.invalidatePriceListCaches();
 
         return NextResponse.json({ message: 'Fiyat listesi başarıyla silindi.' });
     } catch (error) {

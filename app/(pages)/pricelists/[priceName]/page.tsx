@@ -4,6 +4,9 @@ import Link from 'next/link';
 import React from 'react';
 import prisma from '@/libs/prismadb';
 
+// ISR - Free Plan dostu ayarlar
+export const revalidate = 28800 // 8 saat
+
 const getPriceLists = async (priceName: string): Promise<TPriceList | undefined> => {
   try {
     // Server-side component'te doğrudan Prisma kullan

@@ -9,6 +9,9 @@ import { generateLocalBusinessSchema } from '@/utils/structured-data';
 import { createWhatsAppUrl } from '@/utils/common';
 import { CONTACT_INFO } from '@/constants';
 
+// ISR - Free Plan dostu ayarlar
+export const revalidate = 21600 // 6 saat
+
 export default function Home() {
   return (
     <>

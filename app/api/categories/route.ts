@@ -36,6 +36,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    // Cache'leri temizle
+    const { CacheManager } = await import('@/utils/cache');
+    await CacheManager.invalidateCategoryCaches();
+
     return createSuccessResponse(newCategory, 'Kategori başarıyla oluşturuldu', 201);
     
   } catch (error) {

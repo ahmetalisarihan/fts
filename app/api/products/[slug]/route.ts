@@ -46,6 +46,20 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
     const slug = name ? createSlug(name) : '';
     
     try {
+        // Verify that priceList exists if provided
+        if (selectedPriceList) {
+            const priceList = await prisma.priceList.findUnique({
+                where: { priceName: selectedPriceList }
+            });
+            
+            if (!priceList) {
+                return NextResponse.json(
+                    { message: "Seçilen fiyat listesi bulunamadı" }, 
+                    { status: 400 }
+                );
+            }
+        }
+        
         // Param ID mi yoksa slug mu kontrol et
         const whereClause = params.slug.length === 24 && /^[0-9a-fA-F]{24}$/.test(params.slug)
             ? { id: params.slug } // MongoDB ObjectId formatı

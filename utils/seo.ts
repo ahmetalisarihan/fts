@@ -64,6 +64,7 @@ export function generateMetadata(config: SEOConfig = {}): Metadata {
   ].join(', ')
 
   const metadata: Metadata = {
+    metadataBase: new URL(defaultSEO.siteUrl),
     title: fullTitle,
     description,
     keywords: allKeywords,

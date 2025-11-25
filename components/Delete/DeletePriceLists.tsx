@@ -2,14 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '../ui/button';
-
-interface PriceList {
-    priceName: string;
-    pdfUrl: string;
-}
+import { TPriceList } from '@/app/types';
 
 const DeletePriceLists: React.FC = () => {
-    const [priceLists, setPriceLists] = useState<PriceList[]>([]);
+    const [priceLists, setPriceLists] = useState<TPriceList[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     // Fetch existing price lists
@@ -20,7 +16,7 @@ const DeletePriceLists: React.FC = () => {
                 if (!response.ok) {
                     throw new Error('Fiyat listeleri alınamadı.');
                 }
-                const data: PriceList[] = await response.json();
+                const data: TPriceList[] = await response.json();
                 setPriceLists(data);
             } catch (err) {
                 setError((err as Error).message);
@@ -48,7 +44,7 @@ const DeletePriceLists: React.FC = () => {
     
             // Verileri yeniden çek
             const updatedResponse = await fetch('/api/pricelists', { method: 'GET' });
-            const updatedData: PriceList[] = await updatedResponse.json();
+            const updatedData: TPriceList[] = await updatedResponse.json();
             setPriceLists(updatedData);
         } catch (err) {
             setError((err as Error).message);

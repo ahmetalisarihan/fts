@@ -286,7 +286,7 @@ const ProductDetail = ({ params }: Props) => {
                     <div>
                       <span className="text-sm text-gray-500 block">Fiyat Listesi</span>
                       <Link 
-                        href={`/pricelists/${product.priceName}`} 
+                        href={`/pricelists/${encodeURIComponent(product.priceName)}`} 
                         target="_blank"
                         className="font-semibold text-purple-600 hover:text-purple-800 transition-colors inline-flex items-center space-x-1"
                       >

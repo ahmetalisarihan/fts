@@ -77,8 +77,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Verify that category, subcategory, and brand exist
-    const [category, subcategory, brand] = await Promise.all([
+    // Verify that category, subcategory, brand, and priceList exist
+    const [category, subcategory, brand, priceList] = await Promise.all([
       validatedData.catName ? withErrorHandling(() => 
         prisma.category.findUnique({ where: { catName: validatedData.catName } })
       ) : null,
@@ -92,6 +92,9 @@ export async function POST(req: NextRequest) {
       ) : null,
       validatedData.brandName ? withErrorHandling(() => 
         prisma.brand.findUnique({ where: { brandName: validatedData.brandName } })
+      ) : null,
+      validatedData.priceName ? withErrorHandling(() => 
+        prisma.priceList.findUnique({ where: { priceName: validatedData.priceName } })
       ) : null
     ]);
 
@@ -119,6 +122,15 @@ export async function POST(req: NextRequest) {
         'Seçilen marka bulunamadı',
         400,
         { field: 'selectedBrand', value: validatedData.brandName }
+      );
+    }
+
+    if (validatedData.priceName && !priceList) {
+      throw new AppError(
+        ErrorCode.NOT_FOUND,
+        'Seçilen fiyat listesi bulunamadı',
+        400,
+        { field: 'selectedPriceList', value: validatedData.priceName }
       );
     }
 

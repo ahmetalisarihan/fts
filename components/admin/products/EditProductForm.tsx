@@ -68,7 +68,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
       setSelectedSubcategory('')
     }
     fetchSubcategories()
-  }, [selectedCategory, product.category?.catName])
+  }, [selectedCategory, product.category?.catName, product.catName])
 
   useEffect(() => {
     const fetchAllBrands = async () => {

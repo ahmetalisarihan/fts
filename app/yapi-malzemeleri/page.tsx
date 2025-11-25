@@ -8,13 +8,17 @@ import ProductCard from '@/components/ProductCard';
 
 const getProducts = async ():Promise<TProduct[] | null> => {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/`)
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/products/`, {
+      cache: 'no-store'
+    })
     if(res.ok) {
-      const products = await res.json()
-      return products
+      const response = await res.json()
+      // API response'u success wrapper içinde olabilir
+      const products = response.data || response
+      return Array.isArray(products) ? products : null
     }
   } catch (error) {
-    console.log(error)
+    console.error('Products fetch error:', error)
   }
   return null
 };

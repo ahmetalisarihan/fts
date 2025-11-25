@@ -3,7 +3,7 @@ import prisma from "@/libs/prismadb";
 
 export async function GET(_req: Request, { params }: { params: { priceName: string } }) {
   try {
-    const priceName = params.priceName; // URL'den fiyat adı parametresini al
+    const priceName = decodeURIComponent(params.priceName); // URL'den fiyat adı parametresini al ve decode et
     const priceList = await prisma.priceList.findUnique({ // Veritabanında eşleşen fiyat listesini bul
       where: { priceName },
       include: {
@@ -23,7 +23,7 @@ export async function GET(_req: Request, { params }: { params: { priceName: stri
 }
 
 export async function DELETE(_req: Request, { params }: { params: { priceName: string } }) {
-  const { priceName } = params;  // URL'den priceName parametresini al
+  const priceName = decodeURIComponent(params.priceName);  // URL'den priceName parametresini al ve decode et
 
   if (!priceName) {  // priceName yoksa hata döndür
     return NextResponse.json({ error: 'priceName alanı gereklidir.' }, { status: 400 });

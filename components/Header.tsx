@@ -5,11 +5,12 @@ import Link from 'next/link'
 import logo from '@/public/logo.png'
 import React, { useState, useEffect } from 'react'
 import SearchBar from './SearchBar'
-import ContactPhone from './ContactPhone'
+
 import MobileMenu from './MobileMenu'
 import { SafeThemeToggle } from './SafeThemeToggle'
 import { TProduct } from '@/app/types'
 import CartButton from './cart/CartButton'
+import UserMenu from './UserMenu'
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -61,9 +62,9 @@ const Header: React.FC = () => {
             
             {/* Desktop Actions */}
             <div className='hidden lg:flex items-center gap-3'>
-              <ContactPhone />
-              <div className='w-px h-6 bg-gray-300 dark:bg-gray-600' />
               <CartButton />
+              <div className='w-px h-6 bg-gray-300 dark:bg-gray-600' />
+              <UserMenu />
               <div className='w-px h-6 bg-gray-300 dark:bg-gray-600' />
               <SafeThemeToggle />
             </div>
@@ -71,6 +72,7 @@ const Header: React.FC = () => {
             {/* Mobile Actions */}
             <div className='lg:hidden flex items-center gap-3'>
               <CartButton />
+              <UserMenu />
               <SafeThemeToggle />
               <MobileMenu />
             </div>

@@ -1,3 +1,4 @@
+import { NextResponse } from 'next/server';
 import prisma from '@/libs/prismadb';
 
 interface Activity {
@@ -130,9 +131,9 @@ export async function GET() {
         timestamp: formatTimeAgo(activity.timestamp),
       }));
 
-    //console.log('Activity data:', sortedActivities);
+    console.log('Activity data fetched:', sortedActivities.length, 'items');
     
-    return Response.json({
+    return NextResponse.json({
       success: true,
       data: sortedActivities,
       message: 'Aktiviteler başarıyla getirildi'
@@ -140,7 +141,7 @@ export async function GET() {
     
   } catch (error) {
     console.error('Activity fetch error:', error);
-    return Response.json(
+    return NextResponse.json(
       { success: false, error: { message: 'Aktiviteler getirilemedi' } },
       { status: 500 }
     );

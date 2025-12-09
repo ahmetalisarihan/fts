@@ -37,6 +37,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
   const [metaTitle, setMetaTitle] = useState(product.metaTitle || '')
   const [metaDescription, setMetaDescription] = useState(product.metaDescription || '')
   const [metaKeywords, setMetaKeywords] = useState(product.metaKeywords || '')
+  const [price, setPrice] = useState(product.price?.toString() || '')
+  const [currency, setCurrency] = useState(product.currency || 'TRY')
+  const [sku, setSku] = useState(product.sku || '')
+  const [stock, setStock] = useState(product.stock?.toString() || '')
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -111,7 +115,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
 
     setLoading(true)
     try {
-      const res = await fetch(`/api/products/${product.id}`, {
+      const res = await fetch(`/api/admin/products/${product.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -129,6 +133,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
           metaTitle,
           metaDescription,
           metaKeywords,
+          price: price ? parseFloat(price) : null,
+          currency,
+          sku: sku || null,
+          stock: stock ? parseInt(stock) : null,
         }),
       })
 
@@ -150,6 +158,7 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
   const resetForm = () => {
     setName(product.name)
     setDescription(product.description || '')
+    setTechnicalSpecs(product.technicalSpecs || '')
     setIsRecommended(product.isRecommended || false)
     setSelectedBrand(product.brandName || product.brand?.brandName || '')
     setImageUrl(product.imageUrl || '')
@@ -159,6 +168,10 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
     setMetaTitle(product.metaTitle || '')
     setMetaDescription(product.metaDescription || '')
     setMetaKeywords(product.metaKeywords || '')
+    setPrice(product.price?.toString() || '')
+    setCurrency(product.currency || 'TRY')
+    setSku(product.sku || '')
+    setStock(product.stock?.toString() || '')
   }
 
   return (
@@ -272,6 +285,59 @@ const EditProductForm: React.FC<EditProductFormProps> = ({ product, onProductUpd
                 </option>
               ))}
           </select>
+
+          <div className="space-y-4 border-t pt-4">
+            <p className="font-bold text-lg">Fiyat ve Stok Bilgileri</p>
+            <p className="text-gray-500 text-sm">Fiyat bilgisi girilirse ürün sepete eklenebilir olur.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">Fiyat</label>
+                <Input
+                  value={price}
+                  onChange={e => setPrice(e.target.value)}
+                  type="number"
+                  step="0.01"
+                  placeholder="0.00"
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium mb-2 block">Para Birimi</label>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="TRY">TRY (₺)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="text-sm font-medium mb-2 block">SKU / Stok Kodu</label>
+                <Input
+                  value={sku}
+                  onChange={e => setSku(e.target.value)}
+                  type="text"
+                  placeholder="Örn: PRD-001"
+                />
+              </div>
+              
+              <div>
+                <label className="text-sm font-medium mb-2 block">Stok Miktarı</label>
+                <Input
+                  value={stock}
+                  onChange={e => setStock(e.target.value)}
+                  type="number"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+          </div>
 
           <div className="space-y-2">
             <p className="font-bold text-lg">SEO</p>

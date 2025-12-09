@@ -57,6 +57,10 @@ export async function POST(req: NextRequest) {
       metaTitle: body.metaTitle,
       metaDescription: body.metaDescription,
       metaKeywords: body.metaKeywords,
+      price: body.price,
+      currency: body.currency || 'TRY',
+      sku: body.sku,
+      stock: body.stock,
     };
 
     const validatedData = validateRequest(schemas.createProduct, mappedData);
@@ -150,6 +154,10 @@ export async function POST(req: NextRequest) {
           metaTitle: validatedData.metaTitle || null,
           metaDescription: validatedData.metaDescription || null,
           metaKeywords: validatedData.metaKeywords || null,
+          price: validatedData.price || null,
+          currency: validatedData.currency || 'TRY',
+          sku: validatedData.sku || null,
+          stock: validatedData.stock || null,
         },
       });
     });
@@ -196,6 +204,10 @@ export async function GET(req: NextRequest) {
           metaTitle: true,
           metaDescription: true,
           metaKeywords: true,
+          price: true,
+          currency: true,
+          sku: true,
+          stock: true,
           createdAt: true,
           updatedAt: true,
         },

@@ -9,6 +9,7 @@ import ContactPhone from './ContactPhone'
 import MobileMenu from './MobileMenu'
 import { SafeThemeToggle } from './SafeThemeToggle'
 import { TProduct } from '@/app/types'
+import CartButton from './cart/CartButton'
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -62,11 +63,14 @@ const Header: React.FC = () => {
             <div className='hidden lg:flex items-center gap-3'>
               <ContactPhone />
               <div className='w-px h-6 bg-gray-300 dark:bg-gray-600' />
+              <CartButton />
+              <div className='w-px h-6 bg-gray-300 dark:bg-gray-600' />
               <SafeThemeToggle />
             </div>
             
             {/* Mobile Actions */}
             <div className='lg:hidden flex items-center gap-3'>
+              <CartButton />
               <SafeThemeToggle />
               <MobileMenu />
             </div>

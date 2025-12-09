@@ -10,6 +10,8 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { generateOrganizationSchema, generateWebsiteSchema } from "@/utils/structured-data";
 import { generateMetadata } from "@/utils/seo";
 import { Toaster } from "react-hot-toast";
+import { CartProvider } from "@/contexts/CartContext";
+import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 
 const roboto = Roboto({ 
   weight: '500',
@@ -36,26 +38,29 @@ const RootLayout = ({ children }: React.PropsWithChildren) => (
     </head>
     <body className={`${roboto.className} theme-transition dark-scrollbar`}>
       <ThemeProvider defaultTheme="system">
-        <div className="max-w-6xl lg:px-16 mx-auto py-2 dark-shadow min-h-screen 
-        flex flex-col px-4 sm:px-6 md:px-8 bg-background">
-          <Banner />
-          <Header />
-          <div className="flex-auto">
-            {children}
+        <CartProvider>
+          <div className="max-w-6xl lg:px-16 mx-auto py-2 dark-shadow min-h-screen 
+          flex flex-col px-4 sm:px-6 md:px-8 bg-background">
+            <Banner />
+            <Header />
+            <div className="flex-auto">
+              {children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            duration: 4000,
-            style: {
-              background: 'hsl(var(--background))',
-              color: 'hsl(var(--foreground))',
-              border: '1px solid hsl(var(--border))',
-            },
-          }}
-        />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'hsl(var(--background))',
+                color: 'hsl(var(--foreground))',
+                border: '1px solid hsl(var(--border))',
+              },
+            }}
+          />
+          <ShadcnToaster />
+        </CartProvider>
       </ThemeProvider>
     </body>
   </html>

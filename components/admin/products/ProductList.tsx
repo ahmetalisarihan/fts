@@ -80,7 +80,7 @@ export default function ProductList() {
     setDeleteDialog(prev => ({ ...prev, isDeleting: true }));
 
     try {
-      const response = await fetch(`/api/products/${deleteDialog.product.slug}`, {
+      const response = await fetch(`/api/admin/products/${deleteDialog.product.id}`, {
         method: 'DELETE',
       });
 

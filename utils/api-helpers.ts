@@ -158,6 +158,10 @@ export const schemas = {
     metaTitle: z.string().max(60, 'Meta title çok uzun').optional(),
     metaDescription: z.string().max(160, 'Meta description çok uzun').optional(),
     metaKeywords: z.string().max(255, 'Meta keywords çok uzun').optional(),
+    price: z.number().positive('Fiyat pozitif olmalı').optional().nullable(),
+    currency: z.enum(['TRY', 'USD', 'EUR']).optional(),
+    sku: z.string().max(100, 'SKU çok uzun').optional().nullable(),
+    stock: z.number().int('Stok tam sayı olmalı').nonnegative('Stok negatif olamaz').optional().nullable(),
   }),
 
   updateProduct: z.object({
@@ -175,6 +179,10 @@ export const schemas = {
     metaTitle: z.string().max(60, 'Meta title çok uzun').optional(),
     metaDescription: z.string().max(160, 'Meta description çok uzun').optional(),
     metaKeywords: z.string().max(255, 'Meta keywords çok uzun').optional(),
+    price: z.number().positive('Fiyat pozitif olmalı').optional().nullable(),
+    currency: z.enum(['TRY', 'USD', 'EUR']).optional(),
+    sku: z.string().max(100, 'SKU çok uzun').optional().nullable(),
+    stock: z.number().int('Stok tam sayı olmalı').nonnegative('Stok negatif olamaz').optional().nullable(),
   }),
 
   // Category schemas

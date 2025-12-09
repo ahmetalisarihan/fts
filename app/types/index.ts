@@ -56,6 +56,11 @@ export type TProduct = {
     metaTitle?: string;
     metaDescription?: string;
     metaKeywords?: string;
+    // Fiyat ve stok bilgileri
+    price?: number | null;
+    currency?: string | null;
+    sku?: string | null;
+    stock?: number | null;
 };
 
 export type TPriceList = {

@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Tag, Building2, Package, FileText, Star, Share2, Phone, Mail } from 'lucide-react';
+import AddToCartButton from '@/components/cart/AddToCartButton';
 
 type Props = {
   params: { slug: string };
@@ -177,18 +178,41 @@ const ProductDetail = ({ params }: Props) => {
             
             {/* Mobile Action Buttons */}
             <div className="lg:hidden space-y-3">
-              <Link href="/iletisim">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold">
-                  <Phone className="h-5 w-5 mr-2" />
-                  Fiyat Teklifi Al
-                </Button>
-              </Link>
-              <Link href="/iletisim">
-                <Button variant="outline" className="w-full py-3 text-lg">
-                  <Mail className="h-5 w-5 mr-2" />
-                  İletişime Geç
-                </Button>
-              </Link>
+              {product.price ? (
+                <>
+                  <AddToCartButton 
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      slug: product.slug,
+                      price: product.price,
+                      currency: product.currency,
+                      imageUrl: product.imageUrl,
+                      sku: product.sku
+                    }}
+                    size="lg"
+                    className="w-full py-3 text-lg font-semibold"
+                  />
+                  <div className="flex items-center justify-center text-2xl font-bold text-green-600">
+                    {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} {product.currency === 'TRY' ? '₺' : product.currency === 'USD' ? '$' : '€'}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <Link href="/iletisim">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-semibold">
+                      <Phone className="h-5 w-5 mr-2" />
+                      Fiyat Teklifi Al
+                    </Button>
+                  </Link>
+                  <Link href="/iletisim">
+                    <Button variant="outline" className="w-full py-3 text-lg">
+                      <Mail className="h-5 w-5 mr-2" />
+                      İletişime Geç
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
 
             {/* Technical Specifications */}
@@ -336,18 +360,41 @@ const ProductDetail = ({ params }: Props) => {
 
             {/* Desktop Action Buttons */}
             <div className="hidden lg:block space-y-3">
-              <Link href="/iletisim">
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg font-semibold">
-                  <Phone className="h-5 w-5 mr-2" />
-                  Fiyat Teklifi Al
-                </Button>
-              </Link>
-              <Link href="/iletisim">
-                <Button variant="outline" className="w-full py-4 text-lg">
-                  <Mail className="h-5 w-5 mr-2" />
-                  İletişime Geç
-                </Button>
-              </Link>
+              {product.price ? (
+                <>
+                  <div className="flex items-center justify-center text-3xl font-bold text-green-600 mb-4">
+                    {product.price.toLocaleString('tr-TR', { minimumFractionDigits: 2 })} {product.currency === 'TRY' ? '₺' : product.currency === 'USD' ? '$' : '€'}
+                  </div>
+                  <AddToCartButton 
+                    product={{
+                      id: product.id,
+                      name: product.name,
+                      slug: product.slug,
+                      price: product.price,
+                      currency: product.currency,
+                      imageUrl: product.imageUrl,
+                      sku: product.sku
+                    }}
+                    size="lg"
+                    className="w-full py-4 text-lg font-semibold"
+                  />
+                </>
+              ) : (
+                <>
+                  <Link href="/iletisim">
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 text-lg font-semibold">
+                      <Phone className="h-5 w-5 mr-2" />
+                      Fiyat Teklifi Al
+                    </Button>
+                  </Link>
+                  <Link href="/iletisim">
+                    <Button variant="outline" className="w-full py-4 text-lg">
+                      <Mail className="h-5 w-5 mr-2" />
+                      İletişime Geç
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
 
           </div>

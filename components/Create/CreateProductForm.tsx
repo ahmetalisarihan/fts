@@ -25,6 +25,10 @@ const CreateProductForm = () => {
   const [metaTitle, setMetaTitle] = useState('');
   const [metaDescription, setMetaDescription] = useState('');
   const [metaKeywords, setMetaKeywords] = useState('');
+  const [price, setPrice] = useState('');
+  const [currency, setCurrency] = useState('TRY');
+  const [sku, setSku] = useState('');
+  const [stock, setStock] = useState('');
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('');
 
@@ -102,6 +106,10 @@ const CreateProductForm = () => {
           metaTitle,
           metaDescription,
           metaKeywords,
+          price: price ? parseFloat(price) : null,
+          currency,
+          sku: sku || null,
+          stock: stock ? parseInt(stock) : null,
         }),
       });
       if (res.ok) {
@@ -117,6 +125,10 @@ const CreateProductForm = () => {
         setMetaTitle('');
         setMetaDescription('');
         setMetaKeywords('');
+        setPrice('');
+        setCurrency('TRY');
+        setSku('');
+        setStock('');
         setSuccess('Başarıyla ürün eklendi! Sayfa yenileniyor...');
         setError('');
         
@@ -162,6 +174,62 @@ const CreateProductForm = () => {
       className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
     />
     <p className="text-xs text-gray-400">{technicalSpecs.length}/2000 karakter</p>
+  </div>
+
+  <div className="space-y-4 border-t pt-4">
+    <p className="font-bold text-lg">Fiyat ve Stok Bilgileri</p>
+    <p className="text-gray-500 text-sm">Fiyat bilgisi girilirse ürün sepete eklenebilir olur. Girilmezse "Teklif Al" butonu gösterilir.</p>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label className="text-sm font-medium mb-2 block">Fiyat (İsteğe Bağlı)</label>
+        <Input
+          value={price}
+          onChange={e => setPrice(e.target.value)}
+          type="number"
+          step="0.01"
+          placeholder="0.00"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+        />
+      </div>
+      
+      <div>
+        <label className="text-sm font-medium mb-2 block">Para Birimi</label>
+        <select
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value)}
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+        >
+          <option value="TRY">TRY (₺)</option>
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+        </select>
+      </div>
+    </div>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label className="text-sm font-medium mb-2 block">SKU / Stok Kodu (İsteğe Bağlı)</label>
+        <Input
+          value={sku}
+          onChange={e => setSku(e.target.value)}
+          type="text"
+          placeholder="Örn: PRD-001"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+        />
+      </div>
+      
+      <div>
+        <label className="text-sm font-medium mb-2 block">Stok Miktarı (İsteğe Bağlı)</label>
+        <Input
+          value={stock}
+          onChange={e => setStock(e.target.value)}
+          type="number"
+          placeholder="0"
+          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+        />
+      </div>
+    </div>
   </div>
         <label >
           <input checked={isRecommended} onChange={e => setIsRecommended(e.target.checked)} type="checkbox" /> Tavsiye Edilen Ürünler
